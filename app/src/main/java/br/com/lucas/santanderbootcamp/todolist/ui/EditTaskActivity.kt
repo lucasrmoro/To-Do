@@ -3,11 +3,14 @@ package br.com.lucas.santanderbootcamp.todolist.ui
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.widget.doAfterTextChanged
+import br.com.lucas.santanderbootcamp.todolist.R
 import br.com.lucas.santanderbootcamp.todolist.databinding.ActivityEditTaskBinding
 import br.com.lucas.santanderbootcamp.todolist.core.extensions.formatDateToPtBr
 import br.com.lucas.santanderbootcamp.todolist.core.extensions.getColorResCompat
@@ -21,6 +24,7 @@ class EditTaskActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditTaskBinding
     private lateinit var viewModel: EditTaskViewModel
 
+    @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEditTaskBinding.inflate(layoutInflater)
@@ -32,24 +36,26 @@ class EditTaskActivity : AppCompatActivity() {
         viewModel.isTaskTitleValid.observe(this){
             if(it == false){
                 binding.edtTitle.setTextColor(Color.RED)
+//                binding.edtTitleLayout.boxStrokeColor =
             } else {
                 binding.edtTitle.setTextColor(this.getColorResCompat(android.R.attr.textColorPrimary))
+//                binding.edtTitleLayout.setBoxBackgroundColorResource(this.getColorResCompat(android.R.attr.textColorPrimary))
             }
         }
 
         viewModel.isTaskHourValid.observe(this){
             if(it == false){
-                binding.edtHour.setTextColor(Color.RED)
+//                binding.edtHourLayout.boxStrokeColor = this.getColorResCompat(android.R.attr.textColorPrimary)
             } else {
-                binding.edtHour.setTextColor(Color.BLACK)
+//                binding.edtHourLayout.boxStrokeColor = this.getColorResCompat(android.R.attr.textColorPrimary)
             }
         }
 
         viewModel.isTaskDateValid.observe(this){
             if(it == false){
-                binding.edtDate.setTextColor(Color.RED)
+//                binding.edtDate.setTextColor(Color.RED)
             } else {
-                binding.edtDate.setTextColor(Color.BLACK)
+//                binding.edtDate.setTextColor(Color.BLACK)
             }
         }
 
@@ -81,7 +87,9 @@ class EditTaskActivity : AppCompatActivity() {
                 .build()
             timePicker.show(supportFragmentManager, "HOUR_PICKER_TAG")
             timePicker.addOnPositiveButtonClickListener {
-                val hourSelected = "${timePicker.hour}:${timePicker.minute}"
+                val hours = if (timePicker.hour in 0..9) "0${timePicker.hour}" else timePicker.hour
+                val minutes = if (timePicker.minute in 0..9) "0${timePicker.minute}" else timePicker.minute
+                val hourSelected = "$hours:$minutes"
                 viewModel.checkTaskHourIsValid(hourSelected)
                 binding.edtHour.setText(hourSelected)
             }
