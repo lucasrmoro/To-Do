@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
 import br.com.lucas.santanderbootcamp.todolist.databinding.ActivityEditTaskBinding
 import br.com.lucas.santanderbootcamp.todolist.core.extensions.formatDateToPtBr
+import br.com.lucas.santanderbootcamp.todolist.core.extensions.getColorResCompat
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -31,8 +32,8 @@ class EditTaskActivity : AppCompatActivity() {
         viewModel.isTaskTitleValid.observe(this){
             if(it == false){
                 binding.edtTitle.setTextColor(Color.RED)
-            } else{
-                binding.edtTitle.setTextColor(Color.BLACK)
+            } else {
+                binding.edtTitle.setTextColor(this.getColorResCompat(android.R.attr.textColorPrimary))
             }
         }
 
