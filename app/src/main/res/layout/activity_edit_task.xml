@@ -97,7 +97,7 @@
             android:layout_height="wrap_content"
             android:textAllCaps="false"
             style="@style/Widget.MaterialComponents.Button"
-            android:text="@string/btn_create_task"
+            android:text="@string/create_task"
             app:layout_constraintTop_toBottomOf="@+id/ed_hour"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
