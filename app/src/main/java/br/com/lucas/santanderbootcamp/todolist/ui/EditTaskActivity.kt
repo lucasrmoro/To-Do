@@ -6,11 +6,10 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import br.com.lucas.santanderbootcamp.todolist.databinding.ActivityEditTaskBinding
-import br.com.lucas.santanderbootcamp.todolist.extensions.formatDateToPtBr
+import br.com.lucas.santanderbootcamp.todolist.core.extensions.formatDateToPtBr
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
-import java.sql.Time
 import java.util.*
 
 class EditTaskActivity : AppCompatActivity() {

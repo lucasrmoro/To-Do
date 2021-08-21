@@ -1,6 +1,5 @@
-package br.com.lucas.santanderbootcamp.todolist.extensions
+package br.com.lucas.santanderbootcamp.todolist.core.extensions
 
-import com.google.android.material.textfield.TextInputLayout
 import java.text.SimpleDateFormat
 import java.util.*
 
