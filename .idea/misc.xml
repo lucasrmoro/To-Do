@@ -3,39 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="../../../../layout/custom_preview.xml" value="0.15208333333333332" />
-        <entry key="..\:/Users/Lucas/AndroidStudioProjects/Personal/To-Do/app/src/main/res/layout/fragment_list_task.xml" value="0.3625" />
-        <entry key="..\:/Users/Lucas/AndroidStudioProjects/Personal/To-Do/app/src/main/res/layout/fragment_splash_screen.xml" value="0.3625" />
-        <entry key="..\:/Users/Lucas/AndroidStudioProjects/Personal/To-Do/app/src/main/res/layout/list_task_day_header_item.xml" value="0.3614583333333333" />
-        <entry key="..\:/Users/Lucas/AndroidStudioProjects/Personal/To-Do/app/src/main/res/layout/list_task_header_item_1.xml" value="0.3625" />
-        <entry key="..\:/Users/Lucas/AndroidStudioProjects/Personal/To-Do/app/src/main/res/layout/list_task_header_item_2.xml" value="0.3625" />
-        <entry key="..\:/Users/Lucas/AndroidStudioProjects/Personal/To-Do/app/src/main/res/layout/list_task_header_item_3.xml" value="0.3625" />
-        <entry key="..\:/Users/Lucas/AndroidStudioProjects/Personal/To-Do/app/src/main/res/layout/list_task_item.xml" value="0.3625" />
-        <entry key="..\:/Users/Lucas/AndroidStudioProjects/Personal/To-Do/app/src/main/res/layout/list_task_month_header_item.xml" value="0.33" />
-        <entry key="..\:/Users/Lucas/AndroidStudioProjects/Personal/To-Do/app/src/main/res/layout/list_task_year_header_item.xml" value="0.3625" />
-        <entry key="app/src/main/res/drawable-night/ic_empty_state.xml" value="0.33" />
-        <entry key="app/src/main/res/drawable-night/ic_splash_screen.xml" value="0.20462962962962963" />
-        <entry key="app/src/main/res/drawable-night/splash_fg.xml" value="0.27037037037037037" />
-        <entry key="app/src/main/res/drawable-v24/splash_fg.xml" value="0.20462962962962963" />
-        <entry key="app/src/main/res/drawable/bg_gradient.xml" value="0.18518518518518517" />
-        <entry key="app/src/main/res/drawable/ic_add.xml" value="0.3717948717948718" />
-        <entry key="app/src/main/res/drawable/ic_calendar.xml" value="0.3717948717948718" />
-        <entry key="app/src/main/res/drawable/ic_empty_state.xml" value="0.25" />
-        <entry key="app/src/main/res/drawable/ic_launcher.xml" value="0.33" />
-        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.18518518518518517" />
-        <entry key="app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.18518518518518517" />
-        <entry key="app/src/main/res/drawable/ic_org_103143.xml" value="0.18518518518518517" />
-        <entry key="app/src/main/res/drawable/splash_background.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_add_task.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_edit_task.xml" value="0.3614583333333333" />
-        <entry key="app/src/main/res/layout/activity_info_task.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/activity_list_task.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.33714285714285713" />
-        <entry key="app/src/main/res/layout/empty_state.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/list_task_item.xml" value="0.2642089093701997" />
-        <entry key="app/src/main/res/menu/popup_menu.xml" value="0.3614583333333333" />
-        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.18518518518518517" />
       </map>
     </option>
   </component>
