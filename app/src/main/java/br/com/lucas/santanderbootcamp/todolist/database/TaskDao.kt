@@ -7,7 +7,7 @@ interface TaskDao {
     @Insert
     suspend fun insertTask(task: Task)
     @Query("SELECT * FROM task_table")
-    suspend fun getAllTasks() : List<Task>? = null
+    suspend fun getAllTasks() : List<Task>
     @Update
     suspend fun updateTask(task: Task)
     @Delete
