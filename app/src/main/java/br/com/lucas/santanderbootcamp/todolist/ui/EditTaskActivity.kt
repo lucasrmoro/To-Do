@@ -3,8 +3,11 @@ package br.com.lucas.santanderbootcamp.todolist.ui
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doAfterTextChanged
 import br.com.lucas.santanderbootcamp.todolist.databinding.ActivityEditTaskBinding
 import br.com.lucas.santanderbootcamp.todolist.core.extensions.formatDateToPtBr
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -15,13 +18,43 @@ import java.util.*
 class EditTaskActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityEditTaskBinding
+    private lateinit var viewModel: EditTaskViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEditTaskBinding.inflate(layoutInflater)
+        viewModel = EditTaskViewModel()
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        viewModel.isTaskTitleValid.observe(this){
+            if(it == false){
+                binding.edtTitle.setTextColor(Color.RED)
+            } else{
+                binding.edtTitle.setTextColor(Color.BLACK)
+            }
+        }
+
+        viewModel.isTaskHourValid.observe(this){
+            if(it == false){
+                binding.edtHour.setTextColor(Color.RED)
+            } else {
+                binding.edtHour.setTextColor(Color.BLACK)
+            }
+        }
+
+        viewModel.isTaskDateValid.observe(this){
+            if(it == false){
+                binding.edtDate.setTextColor(Color.RED)
+            } else {
+                binding.edtDate.setTextColor(Color.BLACK)
+            }
+        }
+
+        binding.edtTitle.doAfterTextChanged {
+            viewModel.checkTaskTitleIsValid(it.toString())
+        }
 
         insertListeners()
     }
@@ -34,6 +67,7 @@ class EditTaskActivity : AppCompatActivity() {
                 val timeZone = TimeZone.getDefault()
                 val offset = timeZone.getOffset(Date().time) * -1
                 val selectedDate = Date(it + offset).formatDateToPtBr()
+                viewModel.checkTaskDateIsValid(selectedDate)
                 binding.edtDate.setText(selectedDate)
             }
             datePicker.show(supportFragmentManager, "DATE_PICKER_TAG")
@@ -44,19 +78,27 @@ class EditTaskActivity : AppCompatActivity() {
                 .setTimeFormat(TimeFormat.CLOCK_24H)
                 .setTitleText("          ")
                 .build()
-            timePicker.addOnPositiveButtonClickListener {
-                binding.edtHour.setText("${timePicker.hour} ${timePicker.minute}")
-            }
             timePicker.show(supportFragmentManager, "HOUR_PICKER_TAG")
+            timePicker.addOnPositiveButtonClickListener {
+                val hourSelected = "${timePicker.hour}:${timePicker.minute}"
+                viewModel.checkTaskHourIsValid(hourSelected)
+                binding.edtHour.setText(hourSelected)
+            }
         }
 
         binding.btnCreateTask.setOnClickListener{
-
+            viewModel.onSaveEvent(context = this,
+                taskTitle = binding.edtTitle.text.toString(),
+                taskDescription = binding.edtDescription.text.toString(),
+                taskDate = binding.edtDate.text.toString(),
+                taskHour = binding.edtHour.text.toString(),
+                closeScreen = { finish() })
         }
 
         binding.btnCancelTask.setOnClickListener {
             finish()
         }
+
     }
 
     companion object {

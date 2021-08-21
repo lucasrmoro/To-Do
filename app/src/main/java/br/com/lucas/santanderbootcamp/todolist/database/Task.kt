@@ -15,5 +15,5 @@ data class Task(
     @ColumnInfo
     val taskDate: String,
     @ColumnInfo
-    val taskHour: Int
+    val taskHour: String
 )

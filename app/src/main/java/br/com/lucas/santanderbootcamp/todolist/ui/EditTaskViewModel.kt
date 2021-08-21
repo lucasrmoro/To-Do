@@ -12,7 +12,6 @@ import kotlinx.coroutines.launch
 class EditTaskViewModel : ViewModel() {
 
     val isTaskTitleValid = MutableLiveData<Boolean>()
-    val isTaskDescriptionValid = MutableLiveData<Boolean>()
     val isTaskDateValid = MutableLiveData<Boolean>()
     val isTaskHourValid = MutableLiveData<Boolean>()
 
@@ -23,11 +22,7 @@ class EditTaskViewModel : ViewModel() {
         isTaskTitleValid.value = content.length >= 3
     }
 
-    fun checkTaskDescriptionIsValid(content: String) {
-        isTaskDescriptionValid.value = content.length >= 5
-    }
-
-    fun checkTaskDateIsValid(content: String){
+    fun checkTaskDateIsValid(content: String) {
         isTaskDateValid.value = content.isNotEmpty()
     }
 
@@ -35,8 +30,10 @@ class EditTaskViewModel : ViewModel() {
         isTaskHourValid.value = content.isNotEmpty()
     }
 
-    fun onSaveEvent(context: Context, task: Task, closeScreen: (() -> Unit)) {
-        saveNewTask(context, task, closeScreen)
+    fun onSaveEvent(context: Context, taskTitle: String, taskDescription: String,
+                    taskDate: String, taskHour: String,
+                    closeScreen: (() -> Unit)) {
+        saveNewTask(context, taskTitle, taskDescription, taskDate, taskHour,  closeScreen)
     }
 
     fun delete(context: Context, closeScreen: () -> Unit) {
@@ -49,26 +46,28 @@ class EditTaskViewModel : ViewModel() {
 
     private fun saveNewTask(
         context: Context,
-        task: Task,
+        taskTitle: String, taskDescription: String, taskDate: String, taskHour: String,
         closeScreen: () -> Unit
     ) {
-        if (isTaskTitleValid.value == true && isTaskDescriptionValid.value == true &&
-                isTaskDateValid.value == true && isTaskHourValid.value == true) {
+        if (isTaskTitleValid.value == true &&
+            isTaskDateValid.value == true &&
+            isTaskHourValid.value == true
+        ) {
             viewModelScope.launch {
                 DataBaseConnect.getTaskDao(context).insertTask(
                     Task(
-                        taskTitle= task.taskTitle,
-                        taskDescription = task.taskDescription,
-                        taskDate = task.taskDate,
-                        taskHour = task.taskHour,
+                        taskTitle = taskTitle,
+                        taskDescription = taskDescription,
+                        taskDate = taskDate,
+                        taskHour = taskHour,
                         uid = 0
                     )
                 )
-                Toast.makeText(context, "Successfully saved!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Tarefa criada com sucesso!", Toast.LENGTH_SHORT).show()
                 closeScreen()
             }
         } else {
-            Toast.makeText(context, "Fill all required fields!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Preencha todos os campos!", Toast.LENGTH_SHORT).show()
         }
     }
 }
