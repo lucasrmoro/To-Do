@@ -1,6 +1,7 @@
 package br.com.lucas.santanderbootcamp.todolist.ui
 
 import android.app.Application
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -12,6 +13,17 @@ class ListTaskViewModel(private val context: Application) : AndroidViewModel(con
 
     val taskList = MutableLiveData<List<Task>>()
 
+    var task: Task? = null
+        private set
+
+    fun delete(task:Task, closeScreen: () -> Unit){
+        viewModelScope.launch {
+            DataBaseConnect.getTaskDao(context).deleteTask(task)
+            refreshScreen()
+            closeScreen()
+        }
+    }
+
     fun refreshScreen() {
         viewModelScope.launch {
             taskList.postValue(
@@ -19,6 +31,4 @@ class ListTaskViewModel(private val context: Application) : AndroidViewModel(con
             )
         }
     }
-
-    fun findTaskByPosition(position: Int) = taskList.value?.get(position)
 }

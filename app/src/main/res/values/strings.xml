@@ -9,5 +9,10 @@
     <string name="btn_cancel">Cancelar</string>
     <string name="task_title_item">Título da tarefa</string>
     <string name="popup_menu_item_edit">Editar</string>
-    <string name="popup_menu_item_delete">Deletar</string>
+    <string name="popup_menu_item_delete">Excluir</string>
+    <string name="edit_task">Editar Tarefa</string>
+    <string name="fill_all_required_fields">Preencha todos os campos!</string>
+    <string name="successfully_edited">Tarefa editada com sucesso!</string>
+    <string name="successfully_created">Tarefa criada com sucesso!</string>
+    <string name="successfully_deleted">Tarefa excluída com sucesso!</string>
 </resources>

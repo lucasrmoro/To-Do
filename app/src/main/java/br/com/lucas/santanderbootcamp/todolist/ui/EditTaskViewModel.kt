@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.com.lucas.santanderbootcamp.todolist.R
 import br.com.lucas.santanderbootcamp.todolist.database.DataBaseConnect
 import br.com.lucas.santanderbootcamp.todolist.database.Task
 import kotlinx.coroutines.launch
@@ -37,14 +38,16 @@ class EditTaskViewModel : ViewModel() {
     fun onSaveEvent(context: Context, taskTitle: String, taskDescription: String,
                     taskDate: String, taskHour: String,
                     closeScreen: (() -> Unit)) {
-        saveNewTask(context, taskTitle, taskDescription, taskDate, taskHour,  closeScreen)
-    }
-
-    fun delete(context: Context, closeScreen: () -> Unit) {
-        val task = task ?: return
-        viewModelScope.launch {
-            DataBaseConnect.getTaskDao(context).deleteTask(task)
-            closeScreen()
+        if(task == null){
+            saveNewTask(context, taskTitle, taskDescription, taskDate, taskHour,  closeScreen)
+        } else {
+            task!!.taskTitle = taskTitle
+            task!!.taskHour = taskHour
+            task!!.taskDescription = taskDescription
+            checkTaskTitleIsValid(task!!.taskTitle)
+            checkTaskDateIsValid(task!!.taskDate)
+            checkTaskHourIsValid(task!!.taskHour)
+            saveSameTask(context, task!!, closeScreen)
         }
     }
 
@@ -67,11 +70,32 @@ class EditTaskViewModel : ViewModel() {
                         uid = 0
                     )
                 )
-                Toast.makeText(context, "Tarefa criada com sucesso!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, context.getString(R.string.successfully_created), Toast.LENGTH_SHORT).show()
                 closeScreen()
             }
         } else {
-            Toast.makeText(context, "Preencha todos os campos!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(R.string.fill_all_required_fields), Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun saveSameTask(
+        context: Context,
+        task: Task,
+        closeScreen: () -> Unit
+    ) {
+        if (isTaskTitleValid.value == true &&
+            isTaskDateValid.value == true &&
+            isTaskHourValid.value == true
+        ) {
+            viewModelScope.launch {
+                DataBaseConnect.getTaskDao(context).updateTask(
+                    task
+                )
+                Toast.makeText(context, context.getString(R.string.successfully_edited), Toast.LENGTH_SHORT).show()
+                closeScreen()
+            }
+        } else {
+            Toast.makeText(context, context.getString(R.string.fill_all_required_fields), Toast.LENGTH_SHORT).show()
         }
     }
 }

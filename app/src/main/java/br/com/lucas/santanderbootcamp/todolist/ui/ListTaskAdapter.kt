@@ -2,7 +2,7 @@ package br.com.lucas.santanderbootcamp.todolist.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.appcompat.widget.PopupMenu
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import br.com.lucas.santanderbootcamp.todolist.R
 import br.com.lucas.santanderbootcamp.todolist.database.Task
@@ -11,6 +11,8 @@ import br.com.lucas.santanderbootcamp.todolist.databinding.ListTaskItemBinding
 class ListTaskAdapter: RecyclerView.Adapter<ListTaskAdapter.TaskViewHolder>() {
 
     private val tasks = mutableListOf<Task>()
+    var listenerEdit: (Task) -> Unit = {}
+    var listenerDelete: (Task) -> Unit = {}
 
     fun addTask(tasks: List<Task>) {
         this.tasks.clear()
@@ -36,7 +38,24 @@ class ListTaskAdapter: RecyclerView.Adapter<ListTaskAdapter.TaskViewHolder>() {
             fun bind(task: Task){
                 binding.tvTitle.text = task.taskTitle
                 binding.tvDate.text = "${task.taskDate} ${task.taskHour}"
+                binding.ivMore.setOnClickListener {
+                    showPopUp(task)
+                }
             }
+
+        private fun showPopUp(task: Task) {
+            val ivMore = binding.ivMore
+            val popUpMenu = PopupMenu(ivMore.context, ivMore)
+            popUpMenu.menuInflater.inflate(R.menu.popup_menu, popUpMenu.menu)
+            popUpMenu.setOnMenuItemClickListener {
+                when(it.itemId) {
+                    R.id.popup_menu_edit_action -> listenerEdit(task)
+                        R.id.popup_menu_delete_action -> listenerDelete(task)
+                }
+                true
+            }
+            popUpMenu.show()
+        }
 
     }
 }

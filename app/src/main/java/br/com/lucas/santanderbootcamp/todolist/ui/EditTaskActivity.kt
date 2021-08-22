@@ -3,18 +3,15 @@ package br.com.lucas.santanderbootcamp.todolist.ui
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.widget.doAfterTextChanged
 import br.com.lucas.santanderbootcamp.todolist.R
-import br.com.lucas.santanderbootcamp.todolist.databinding.ActivityEditTaskBinding
 import br.com.lucas.santanderbootcamp.todolist.core.extensions.formatDateToPtBr
 import br.com.lucas.santanderbootcamp.todolist.core.extensions.getColorResCompat
 import br.com.lucas.santanderbootcamp.todolist.database.Task
+import br.com.lucas.santanderbootcamp.todolist.databinding.ActivityEditTaskBinding
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -38,6 +35,8 @@ class EditTaskActivity : AppCompatActivity() {
 
         if (task != null) {
             viewModel.setup(task)
+            binding.btnCreateTask.text = getString(R.string.edit_task)
+            binding.toolbar.title = getString(R.string.edit_task)
             binding.edtTitle.setText("${viewModel.task?.taskTitle}")
             binding.edtDescription.setText("${viewModel.task?.taskDescription}")
             binding.edtDate.setText("${viewModel.task?.taskDate}")

@@ -12,9 +12,9 @@ data class Task(
     @ColumnInfo
     var taskTitle: String,
     @ColumnInfo
-    val taskDescription: String,
+    var taskDescription: String,
     @ColumnInfo
     val taskDate: String,
     @ColumnInfo
-    val taskHour: String
+    var taskHour: String
 ) : Serializable
