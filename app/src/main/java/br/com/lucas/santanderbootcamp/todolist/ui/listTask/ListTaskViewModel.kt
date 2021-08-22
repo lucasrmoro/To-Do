@@ -1,7 +1,7 @@
-package br.com.lucas.santanderbootcamp.todolist.ui
+package br.com.lucas.santanderbootcamp.todolist.ui.listTask
 
 import android.app.Application
-import android.widget.Toast
+import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -11,16 +11,13 @@ import kotlinx.coroutines.launch
 
 class ListTaskViewModel(private val context: Application) : AndroidViewModel(context) {
 
-    val taskList = MutableLiveData<List<Task>>()
+    val taskList = MutableLiveData<List<Task>>(emptyList())
 
-    var task: Task? = null
-        private set
-
-    fun delete(task:Task, closeScreen: () -> Unit){
+    fun delete(task: Task, toast: () -> Unit) {
         viewModelScope.launch {
             DataBaseConnect.getTaskDao(context).deleteTask(task)
             refreshScreen()
-            closeScreen()
+            toast()
         }
     }
 

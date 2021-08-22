@@ -1,4 +1,4 @@
-package br.com.lucas.santanderbootcamp.todolist.ui
+package br.com.lucas.santanderbootcamp.todolist.ui.editTask
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -38,6 +38,7 @@ class EditTaskActivity : AppCompatActivity() {
             binding.btnCreateTask.text = getString(R.string.edit_task)
             binding.toolbar.title = getString(R.string.edit_task)
             binding.edtTitle.setText("${viewModel.task?.taskTitle}")
+            binding.edtTitle.setSelection(viewModel.task?.taskTitle?.length ?: 0)
             binding.edtDescription.setText("${viewModel.task?.taskDescription}")
             binding.edtDate.setText("${viewModel.task?.taskDate}")
             binding.edtHour.setText("${viewModel.task?.taskHour}")

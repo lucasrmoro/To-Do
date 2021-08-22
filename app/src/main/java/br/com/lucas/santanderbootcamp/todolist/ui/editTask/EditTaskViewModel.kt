@@ -1,4 +1,4 @@
-package br.com.lucas.santanderbootcamp.todolist.ui
+package br.com.lucas.santanderbootcamp.todolist.ui.editTask
 
 import android.content.Context
 import android.widget.Toast
@@ -31,15 +31,17 @@ class EditTaskViewModel : ViewModel() {
         isTaskDateValid.value = content.isNotEmpty()
     }
 
-    fun checkTaskHourIsValid(content: String){
+    fun checkTaskHourIsValid(content: String) {
         isTaskHourValid.value = content.isNotEmpty()
     }
 
-    fun onSaveEvent(context: Context, taskTitle: String, taskDescription: String,
-                    taskDate: String, taskHour: String,
-                    closeScreen: (() -> Unit)) {
-        if(task == null){
-            saveNewTask(context, taskTitle, taskDescription, taskDate, taskHour,  closeScreen)
+    fun onSaveEvent(
+        context: Context, taskTitle: String, taskDescription: String,
+        taskDate: String, taskHour: String,
+        closeScreen: (() -> Unit)
+    ) {
+        if (task == null) {
+            saveNewTask(context, taskTitle, taskDescription, taskDate, taskHour, closeScreen)
         } else {
             task!!.taskTitle = taskTitle
             task!!.taskHour = taskHour
@@ -70,11 +72,19 @@ class EditTaskViewModel : ViewModel() {
                         uid = 0
                     )
                 )
-                Toast.makeText(context, context.getString(R.string.successfully_created), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.successfully_created),
+                    Toast.LENGTH_SHORT
+                ).show()
                 closeScreen()
             }
         } else {
-            Toast.makeText(context, context.getString(R.string.fill_all_required_fields), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                context.getString(R.string.fill_all_required_fields),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -91,11 +101,19 @@ class EditTaskViewModel : ViewModel() {
                 DataBaseConnect.getTaskDao(context).updateTask(
                     task
                 )
-                Toast.makeText(context, context.getString(R.string.successfully_edited), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.successfully_edited),
+                    Toast.LENGTH_SHORT
+                ).show()
                 closeScreen()
             }
         } else {
-            Toast.makeText(context, context.getString(R.string.fill_all_required_fields), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                context.getString(R.string.fill_all_required_fields),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 }
