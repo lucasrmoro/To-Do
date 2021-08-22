@@ -8,4 +8,6 @@
     <string name="hour_hint">Hora</string>
     <string name="btn_cancel">Cancelar</string>
     <string name="task_title_item">Título da tarefa</string>
+    <string name="popup_menu_item_edit">Editar</string>
+    <string name="popup_menu_item_delete">Deletar</string>
 </resources>

@@ -1,14 +1,16 @@
 package br.com.lucas.santanderbootcamp.todolist.ui
 
-import android.content.Context
 import android.os.Bundle
-import android.view.View
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import br.com.lucas.santanderbootcamp.todolist.R
 import br.com.lucas.santanderbootcamp.todolist.databinding.ActivityListTaskBinding
 
+
 private lateinit var binding: ActivityListTaskBinding
-private lateinit var viewModel: ListTaskViewModel
+lateinit var viewModel: ListTaskViewModel
 
 class ListTaskActivity : AppCompatActivity() {
 
@@ -24,10 +26,23 @@ class ListTaskActivity : AppCompatActivity() {
             (binding.recyclerViewTasks.adapter as ListTaskAdapter).addTask(tasks)
         }
 
+        configureList()
+        insertListeners()
+    }
+
+    private fun insertListeners() {
         binding.fabAddTask.setOnClickListener { _ ->
             EditTaskActivity.launchNewTaskScreen(this)
         }
-        configureList()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.popup_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return super.onOptionsItemSelected(item)
     }
 
     private fun configureList() {

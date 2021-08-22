@@ -18,6 +18,10 @@ class EditTaskViewModel : ViewModel() {
     var task: Task? = null
         private set
 
+    fun setup(task: Task) {
+        this.task = task
+    }
+
     fun checkTaskTitleIsValid(content: String) {
         isTaskTitleValid.value = content.length >= 3
     }

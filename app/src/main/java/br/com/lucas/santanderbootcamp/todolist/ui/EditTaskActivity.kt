@@ -14,6 +14,7 @@ import br.com.lucas.santanderbootcamp.todolist.R
 import br.com.lucas.santanderbootcamp.todolist.databinding.ActivityEditTaskBinding
 import br.com.lucas.santanderbootcamp.todolist.core.extensions.formatDateToPtBr
 import br.com.lucas.santanderbootcamp.todolist.core.extensions.getColorResCompat
+import br.com.lucas.santanderbootcamp.todolist.database.Task
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -32,6 +33,16 @@ class EditTaskActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        val task: Task? = intent.getSerializableExtra(TASK_NAME_KEY) as? Task
+
+        if (task != null) {
+            viewModel.setup(task)
+            binding.edtTitle.setText("${viewModel.task?.taskTitle}")
+            binding.edtDescription.setText("${viewModel.task?.taskDescription}")
+            binding.edtDate.setText("${viewModel.task?.taskDate}")
+            binding.edtHour.setText("${viewModel.task?.taskHour}")
+        }
 
         viewModel.isTaskTitleValid.observe(this){
             if(it == false){
@@ -115,5 +126,11 @@ class EditTaskActivity : AppCompatActivity() {
             val intent = Intent(context, EditTaskActivity::class.java)
             context.startActivity(intent)
         }
+        fun launchEditTaskScreen(context: Context, task: Task?) {
+            val intent = Intent(context, EditTaskActivity::class.java)
+            intent.putExtra(TASK_NAME_KEY, task)
+            context.startActivity(intent)
+        }
+        private const val TASK_NAME_KEY = "task"
     }
 }
