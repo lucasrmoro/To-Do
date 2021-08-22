@@ -9,9 +9,10 @@ import br.com.lucas.santanderbootcamp.todolist.database.Task
 import kotlinx.coroutines.launch
 
 class ListTaskViewModel(private val context: Application) : AndroidViewModel(context) {
-    private val taskList = MutableLiveData<List<Task>>()
 
-    fun refresh() {
+    val taskList = MutableLiveData<List<Task>>()
+
+    fun refreshScreen() {
         viewModelScope.launch {
             taskList.postValue(
                 DataBaseConnect.getTaskDao(context).getAllTasks()
