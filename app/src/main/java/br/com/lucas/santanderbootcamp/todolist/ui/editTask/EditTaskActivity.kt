@@ -10,6 +10,7 @@ import androidx.core.widget.doAfterTextChanged
 import br.com.lucas.santanderbootcamp.todolist.R
 import br.com.lucas.santanderbootcamp.todolist.core.extensions.formatDateToPtBr
 import br.com.lucas.santanderbootcamp.todolist.core.extensions.getColorResCompat
+import br.com.lucas.santanderbootcamp.todolist.core.extensions.getHourFormatted
 import br.com.lucas.santanderbootcamp.todolist.database.Task
 import br.com.lucas.santanderbootcamp.todolist.databinding.ActivityEditTaskBinding
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -98,11 +99,8 @@ class EditTaskActivity : AppCompatActivity() {
                 .build()
             timePicker.show(supportFragmentManager, "HOUR_PICKER_TAG")
             timePicker.addOnPositiveButtonClickListener {
-                val hours = if (timePicker.hour in 0..9) "0${timePicker.hour}" else timePicker.hour
-                val minutes = if (timePicker.minute in 0..9) "0${timePicker.minute}" else timePicker.minute
-                val hourSelected = "$hours:$minutes"
-                viewModel.checkTaskHourIsValid(hourSelected)
-                binding.edtHour.setText(hourSelected)
+                viewModel.checkTaskHourIsValid(timePicker.getHourFormatted())
+                binding.edtHour.setText(timePicker.getHourFormatted())
             }
         }
 
