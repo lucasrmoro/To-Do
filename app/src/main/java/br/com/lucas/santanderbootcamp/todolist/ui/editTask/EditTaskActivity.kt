@@ -45,8 +45,8 @@ class EditTaskActivity : AppCompatActivity() {
             binding.edtHour.setText("${viewModel.task?.taskHour}")
         }
 
-        viewModel.isTaskTitleValid.observe(this){
-            if(it == false){
+        viewModel.isTaskTitleValid.observe(this) {
+            if (it == false) {
                 binding.edtTitle.setTextColor(Color.RED)
 //                binding.edtTitleLayout.boxStrokeColor =
             } else {
@@ -55,16 +55,16 @@ class EditTaskActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.isTaskHourValid.observe(this){
-            if(it == false){
+        viewModel.isTaskHourValid.observe(this) {
+            if (it == false) {
 //                binding.edtHourLayout.boxStrokeColor = this.getColorResCompat(android.R.attr.textColorPrimary)
             } else {
 //                binding.edtHourLayout.boxStrokeColor = this.getColorResCompat(android.R.attr.textColorPrimary)
             }
         }
 
-        viewModel.isTaskDateValid.observe(this){
-            if(it == false){
+        viewModel.isTaskDateValid.observe(this) {
+            if (it == false) {
 //                binding.edtDate.setTextColor(Color.RED)
             } else {
 //                binding.edtDate.setTextColor(Color.BLACK)
@@ -79,7 +79,7 @@ class EditTaskActivity : AppCompatActivity() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun insertListeners(){
+    private fun insertListeners() {
         binding.edtDate.setOnClickListener {
             val datePicker = MaterialDatePicker.Builder.datePicker().build()
             datePicker.addOnPositiveButtonClickListener {
@@ -104,7 +104,7 @@ class EditTaskActivity : AppCompatActivity() {
             }
         }
 
-        binding.btnCreateTask.setOnClickListener{
+        binding.btnCreateTask.setOnClickListener {
             viewModel.onSaveEvent(context = this,
                 taskTitle = binding.edtTitle.text.toString(),
                 taskDescription = binding.edtDescription.text.toString(),
@@ -124,11 +124,13 @@ class EditTaskActivity : AppCompatActivity() {
             val intent = Intent(context, EditTaskActivity::class.java)
             context.startActivity(intent)
         }
+
         fun launchEditTaskScreen(context: Context, task: Task?) {
             val intent = Intent(context, EditTaskActivity::class.java)
             intent.putExtra(TASK_NAME_KEY, task)
             context.startActivity(intent)
         }
-        private const val TASK_NAME_KEY = "task"
+
+        const val TASK_NAME_KEY = "task"
     }
 }

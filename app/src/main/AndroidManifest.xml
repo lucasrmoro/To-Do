@@ -10,18 +10,26 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ToDoList">
         <activity
+            android:name=".ui.InfoTaskActivity"
+            android:exported="true"
+            android:parentActivityName=".ui.listTask.ListTaskActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.listTask.ListTaskActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.editTask.EditTaskActivity"
+        <activity
+            android:name=".ui.editTask.EditTaskActivity"
             android:exported="true"
-            android:screenOrientation="portrait"
             android:parentActivityName=".ui.listTask.ListTaskActivity"
-            android:windowSoftInputMode="stateHidden">
-        </activity>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
     </application>
+
 </manifest>

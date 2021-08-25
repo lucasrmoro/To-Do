@@ -7,7 +7,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import br.com.lucas.santanderbootcamp.todolist.R
+import br.com.lucas.santanderbootcamp.todolist.core.extensions.OnItemClickListener
+import br.com.lucas.santanderbootcamp.todolist.core.extensions.addOnItemClickListener
 import br.com.lucas.santanderbootcamp.todolist.databinding.ActivityListTaskBinding
+import br.com.lucas.santanderbootcamp.todolist.ui.InfoTaskActivity
 import br.com.lucas.santanderbootcamp.todolist.ui.editTask.EditTaskActivity
 
 
@@ -34,10 +37,10 @@ class ListTaskActivity : AppCompatActivity() {
 
     private fun setupList() {
         binding.recyclerViewTasks.adapter = adapter
-        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver(){
+        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             override fun onChanged() {
                 super.onChanged()
-                if(adapter.itemCount == 0){
+                if (adapter.itemCount == 0) {
                     binding.includeState.emptyState.visibility = View.VISIBLE
                     binding.recyclerViewTasks.visibility = View.INVISIBLE
                 } else {
@@ -52,6 +55,12 @@ class ListTaskActivity : AppCompatActivity() {
         binding.fabAddTask.setOnClickListener {
             EditTaskActivity.launchNewTaskScreen(context)
         }
+        binding.recyclerViewTasks.addOnItemClickListener(object : OnItemClickListener {
+            override fun onItemClicked(position: Int, view: View) {
+                val task = viewModel.findTaskByPosition(position)
+                task?.let { InfoTaskActivity.launchInfoTaskActivity(context, task = it) }
+            }
+        })
         adapter.listenerEdit = {
             EditTaskActivity.launchEditTaskScreen(context, it)
         }
