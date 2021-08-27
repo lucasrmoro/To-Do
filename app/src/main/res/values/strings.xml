@@ -16,6 +16,7 @@
     <string name="successfully_created">Tarefa criada com sucesso!</string>
     <string name="successfully_deleted">Tarefa excluída com sucesso!</string>
     <string name="you_dont_have_a_task_yet">Oops! Você ainda não possui nenhuma tarefa!</string>
-    <string name="description_not_inserted">Descrição não inserida</string>
+    <string name="description_not_informed">Não informada</string>
     <string name="task_information">Informações da Tarefa</string>
+    <string name="description_text">Descrição</string>
 </resources>

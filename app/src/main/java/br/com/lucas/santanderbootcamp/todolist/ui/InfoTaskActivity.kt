@@ -3,6 +3,7 @@ package br.com.lucas.santanderbootcamp.todolist.ui
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import br.com.lucas.santanderbootcamp.todolist.R
@@ -27,10 +28,13 @@ class InfoTaskActivity : AppCompatActivity() {
         if (task != null) {
             binding.tvTaskTitle.text = task.taskTitle
             if (task.taskDescription.isBlank()) {
-                binding.tvTaskDescription.text = getString(R.string.description_not_inserted)
-            } else binding.tvTaskDescription.text = task.taskDescription
-            binding.tvTaskDate.text = "Data: ${task.taskDate}"
-            binding.tvTaskHour.text = "Hora: ${task.taskHour}"
+                binding.tvTaskDescription.text = getString(R.string.description_not_informed)
+                binding.tvTaskDescription.setTypeface(null, Typeface.ITALIC)
+            } else {
+                binding.tvTaskDescription.text = task.taskDescription
+            }
+            binding.tvTaskDate.text = task.taskDate
+            binding.tvTaskHour.text = task.taskHour
         }
     }
 

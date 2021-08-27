@@ -20,51 +20,86 @@
             app:title="@string/task_information" />
 
         <TextView
-            android:id="@+id/tv_task_title"
+            android:id="@+id/_tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:text="@string/title_hint"
+            app:layout_constraintStart_toStartOf="@id/toolbar"
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+        <TextView
+            android:id="@+id/tv_task_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_hint"
             android:textColor="?android:colorPrimary"
             android:textSize="24sp"
             android:textStyle="bold"
+            android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+            app:layout_constraintTop_toBottomOf="@id/_tv_title" />
+
+        <TextView
+            android:id="@+id/_tv_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/description_text"
+            app:layout_constraintStart_toStartOf="@id/_tv_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_task_title" />
 
         <TextView
             android:id="@+id/tv_task_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
             android:text="@string/description_hint"
             android:textColor="?android:colorPrimary"
             android:textSize="18sp"
+            android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="@id/tv_task_title"
-            app:layout_constraintTop_toBottomOf="@id/tv_task_title" />
+            app:layout_constraintTop_toBottomOf="@id/_tv_description" />
+
+        <ImageView
+            android:id="@+id/_iv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_calendar"
+            app:layout_constraintEnd_toStartOf="@+id/tv_task_date"
+            app:layout_constraintTop_toBottomOf="@id/tv_task_description" />
 
         <TextView
             android:id="@+id/tv_task_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
             android:layout_marginEnd="24dp"
             android:text="@string/date_hint"
             android:textColor="?android:colorPrimary"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/guideline"
-            app:layout_constraintTop_toBottomOf="@id/tv_task_description" />
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="@id/_iv_date" />
+
+        <ImageView
+            android:id="@+id/_tv_hour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:src="@drawable/ic_timer"
+            app:layout_constraintStart_toEndOf="@id/guideline"
+            app:layout_constraintTop_toTopOf="@id/_iv_date" />
 
         <TextView
             android:id="@+id/tv_task_hour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="8dp"
             android:text="@string/hour_hint"
             android:textColor="?android:colorPrimary"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@id/guideline" />
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@id/_tv_hour"
+            app:layout_constraintTop_toTopOf="@id/_tv_hour" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
