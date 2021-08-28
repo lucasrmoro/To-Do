@@ -10,7 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ToDoList">
         <activity
-            android:name=".ui.InfoTaskActivity"
+            android:name=".ui.customSplashScreen.CustomSplashScreenActivity"
+            android:theme="@style/Theme.SplashScreen"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.infoTask.InfoTaskActivity"
             android:exported="true"
             android:parentActivityName=".ui.listTask.ListTaskActivity"
             android:screenOrientation="portrait" />
@@ -18,11 +27,6 @@
             android:name=".ui.listTask.ListTaskActivity"
             android:exported="true"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.editTask.EditTaskActivity"
@@ -31,5 +35,4 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
     </application>
-
 </manifest>

@@ -1,4 +1,4 @@
-package br.com.lucas.santanderbootcamp.todolist.ui
+package br.com.lucas.santanderbootcamp.todolist.ui.infoTask
 
 import android.annotation.SuppressLint
 import android.content.Context

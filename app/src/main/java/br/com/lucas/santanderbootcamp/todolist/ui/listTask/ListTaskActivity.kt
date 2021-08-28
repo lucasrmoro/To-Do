@@ -10,7 +10,7 @@ import br.com.lucas.santanderbootcamp.todolist.R
 import br.com.lucas.santanderbootcamp.todolist.core.extensions.OnItemClickListener
 import br.com.lucas.santanderbootcamp.todolist.core.extensions.addOnItemClickListener
 import br.com.lucas.santanderbootcamp.todolist.databinding.ActivityListTaskBinding
-import br.com.lucas.santanderbootcamp.todolist.ui.InfoTaskActivity
+import br.com.lucas.santanderbootcamp.todolist.ui.infoTask.InfoTaskActivity
 import br.com.lucas.santanderbootcamp.todolist.ui.editTask.EditTaskActivity
 
 
