@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.15208333333333332" />
         <entry key="app/src/main/res/drawable-night/ic_empty_state.xml" value="0.33" />
         <entry key="app/src/main/res/drawable-night/ic_splash_screen.xml" value="0.20462962962962963" />
         <entry key="app/src/main/res/drawable-night/splash_fg.xml" value="0.27037037037037037" />

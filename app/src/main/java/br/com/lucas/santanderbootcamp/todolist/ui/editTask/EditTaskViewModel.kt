@@ -1,13 +1,17 @@
 package br.com.lucas.santanderbootcamp.todolist.ui.editTask
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.widget.Toast
+import androidx.annotation.ColorRes
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.lucas.santanderbootcamp.todolist.R
 import br.com.lucas.santanderbootcamp.todolist.database.DataBaseConnect
 import br.com.lucas.santanderbootcamp.todolist.database.Task
+import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
 
 class EditTaskViewModel : ViewModel() {
@@ -33,6 +37,12 @@ class EditTaskViewModel : ViewModel() {
 
     fun checkTaskHourIsValid(content: String) {
         isTaskHourValid.value = content.isNotEmpty()
+    }
+
+    fun setTextInputLayoutHintColor(
+        textInputLayout: TextInputLayout, context: Context, @ColorRes colorIdRes: Int) {
+        textInputLayout.defaultHintTextColor =
+            ColorStateList.valueOf(ContextCompat.getColor(context, colorIdRes))
     }
 
     fun onSaveEvent(

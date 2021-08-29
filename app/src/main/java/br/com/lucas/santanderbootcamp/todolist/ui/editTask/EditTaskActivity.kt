@@ -13,6 +13,8 @@ import br.com.lucas.santanderbootcamp.todolist.core.extensions.getColorResCompat
 import br.com.lucas.santanderbootcamp.todolist.core.extensions.getHourFormatted
 import br.com.lucas.santanderbootcamp.todolist.database.Task
 import br.com.lucas.santanderbootcamp.todolist.databinding.ActivityEditTaskBinding
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -48,10 +50,8 @@ class EditTaskActivity : AppCompatActivity() {
         viewModel.isTaskTitleValid.observe(this) {
             if (it == false) {
                 binding.edtTitle.setTextColor(Color.RED)
-//                binding.edtTitleLayout.boxStrokeColor =
             } else {
                 binding.edtTitle.setTextColor(this.getColorResCompat(android.R.attr.textColorPrimary))
-//                binding.edtTitleLayout.setBoxBackgroundColorResource(this.getColorResCompat(android.R.attr.textColorPrimary))
             }
         }
 
@@ -81,7 +81,11 @@ class EditTaskActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun insertListeners() {
         binding.edtDate.setOnClickListener {
-            val datePicker = MaterialDatePicker.Builder.datePicker().build()
+            val today = Calendar.getInstance().timeInMillis
+            val constraints = CalendarConstraints.Builder().setStart(today)
+            val validator = DateValidatorPointForward.now()
+            constraints.setValidator(validator)
+            val datePicker = MaterialDatePicker.Builder.datePicker().setCalendarConstraints(constraints.build()).build()
             datePicker.addOnPositiveButtonClickListener {
                 val timeZone = TimeZone.getDefault()
                 val offset = timeZone.getOffset(Date().time) * -1
