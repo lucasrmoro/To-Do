@@ -29,26 +29,25 @@ class ListTaskActivity : AppCompatActivity() {
         viewModel.taskList.observe(
             this
         ) { tasks ->
-            (binding.recyclerViewTasks.adapter as ListTaskAdapter).addTask(tasks)
+            adapter.addTask(tasks)
+            checkEmptyStateAfterAddTasks()
         }
         setupList()
         insertListeners(this)
     }
 
+    private fun checkEmptyStateAfterAddTasks(){
+        if (viewModel.isTaskListEmpty() == true) {
+            binding.includeState.emptyState.visibility = View.VISIBLE
+            binding.recyclerViewTasks.visibility = View.INVISIBLE
+        } else {
+            binding.includeState.emptyState.visibility = View.GONE
+            binding.recyclerViewTasks.visibility = View.VISIBLE
+        }
+    }
+
     private fun setupList() {
         binding.recyclerViewTasks.adapter = adapter
-        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-            override fun onChanged() {
-                super.onChanged()
-                if (adapter.itemCount == 0) {
-                    binding.includeState.emptyState.visibility = View.VISIBLE
-                    binding.recyclerViewTasks.visibility = View.INVISIBLE
-                } else {
-                    binding.includeState.emptyState.visibility = View.GONE
-                    binding.recyclerViewTasks.visibility = View.VISIBLE
-                }
-            }
-        })
     }
 
     private fun insertListeners(context: Context) {

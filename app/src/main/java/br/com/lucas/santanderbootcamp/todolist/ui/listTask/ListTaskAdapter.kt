@@ -11,7 +11,7 @@ import br.com.lucas.santanderbootcamp.todolist.databinding.ListTaskItemBinding
 
 class ListTaskAdapter : RecyclerView.Adapter<ListTaskAdapter.TaskViewHolder>() {
 
-    private val tasks = mutableListOf<Task>()
+    val tasks = mutableListOf<Task>()
     var listenerEdit: (Task) -> Unit = {}
     var listenerDelete: (Task) -> Unit = {}
 

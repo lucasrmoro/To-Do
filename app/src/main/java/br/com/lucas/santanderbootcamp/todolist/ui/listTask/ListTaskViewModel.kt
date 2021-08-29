@@ -11,7 +11,11 @@ import kotlinx.coroutines.launch
 
 class ListTaskViewModel(private val context: Application) : AndroidViewModel(context) {
 
-    val taskList = MutableLiveData<List<Task>>(emptyList())
+    val taskList = MutableLiveData<List<Task>>()
+
+    fun isTaskListEmpty(): Boolean? {
+        return taskList.value?.isEmpty()
+    }
 
     fun delete(task: Task, toast: () -> Unit) {
         viewModelScope.launch {
