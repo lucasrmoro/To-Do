@@ -5,12 +5,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
 import br.com.lucas.santanderbootcamp.todolist.R
-import br.com.lucas.santanderbootcamp.todolist.core.extensions.OnItemClickListener
-import br.com.lucas.santanderbootcamp.todolist.core.extensions.addOnItemClickListener
 import br.com.lucas.santanderbootcamp.todolist.databinding.ActivityListTaskBinding
-import br.com.lucas.santanderbootcamp.todolist.ui.infoTask.InfoTaskActivity
 import br.com.lucas.santanderbootcamp.todolist.ui.editTask.EditTaskActivity
 
 
@@ -30,13 +26,14 @@ class ListTaskActivity : AppCompatActivity() {
             this
         ) { tasks ->
             adapter.addTask(tasks)
+            adapter.sortTaskListByDateAfterAddTasks()
             checkEmptyStateAfterAddTasks()
         }
         setupList()
         insertListeners(this)
     }
 
-    private fun checkEmptyStateAfterAddTasks(){
+    private fun checkEmptyStateAfterAddTasks() {
         if (viewModel.isTaskListEmpty() == true) {
             binding.includeState.emptyState.visibility = View.VISIBLE
             binding.recyclerViewTasks.visibility = View.INVISIBLE
@@ -54,12 +51,9 @@ class ListTaskActivity : AppCompatActivity() {
         binding.fabAddTask.setOnClickListener {
             EditTaskActivity.launchNewTaskScreen(context)
         }
-        binding.recyclerViewTasks.addOnItemClickListener(object : OnItemClickListener {
-            override fun onItemClicked(position: Int, view: View) {
-                val task = viewModel.findTaskByPosition(position)
-                task?.let { InfoTaskActivity.launchInfoTaskActivity(context, task = it) }
-            }
-        })
+
+        adapter.listenerLaunchInfoTask(context, binding.recyclerViewTasks)
+
         adapter.listenerEdit = {
             EditTaskActivity.launchEditTaskScreen(context, it)
         }
@@ -74,5 +68,6 @@ class ListTaskActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         viewModel.refreshScreen()
+        adapter.sortTaskListByDateAfterAddTasks()
     }
 }

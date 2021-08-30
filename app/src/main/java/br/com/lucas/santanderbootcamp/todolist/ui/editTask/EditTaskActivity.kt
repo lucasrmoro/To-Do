@@ -8,7 +8,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
 import br.com.lucas.santanderbootcamp.todolist.R
-import br.com.lucas.santanderbootcamp.todolist.core.extensions.formatDateToPtBr
+import br.com.lucas.santanderbootcamp.todolist.core.extensions.convertLongToDate
+import br.com.lucas.santanderbootcamp.todolist.core.extensions.formatDateToString
 import br.com.lucas.santanderbootcamp.todolist.core.extensions.getColorResCompat
 import br.com.lucas.santanderbootcamp.todolist.core.extensions.getHourFormatted
 import br.com.lucas.santanderbootcamp.todolist.database.Task
@@ -43,7 +44,7 @@ class EditTaskActivity : AppCompatActivity() {
             binding.edtTitle.setText("${viewModel.task?.taskTitle}")
             binding.edtTitle.setSelection(viewModel.task?.taskTitle?.length ?: 0)
             binding.edtDescription.setText("${viewModel.task?.taskDescription}")
-            binding.edtDate.setText("${viewModel.task?.taskDate}")
+            binding.edtDate.setText("${viewModel.task?.taskDate?.convertLongToDate()}")
             binding.edtHour.setText("${viewModel.task?.taskHour}")
         }
 
@@ -102,7 +103,7 @@ class EditTaskActivity : AppCompatActivity() {
                 val timeZone = TimeZone.getDefault()
                 val offset = timeZone.getOffset(Date().time) * -1
                 val selectedDate = Date(it + offset)
-                binding.edtDate.setText(selectedDate.formatDateToPtBr())
+                binding.edtDate.setText(selectedDate.formatDateToString())
             }
             datePicker.show(supportFragmentManager, "DATE_PICKER_TAG")
         }

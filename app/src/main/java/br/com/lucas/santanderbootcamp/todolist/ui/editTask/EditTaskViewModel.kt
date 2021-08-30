@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.lucas.santanderbootcamp.todolist.R
+import br.com.lucas.santanderbootcamp.todolist.core.extensions.convertStringToLong
 import br.com.lucas.santanderbootcamp.todolist.database.DataBaseConnect
 import br.com.lucas.santanderbootcamp.todolist.database.Task
 import kotlinx.coroutines.launch
@@ -45,7 +46,7 @@ class EditTaskViewModel : ViewModel() {
         } else {
             task!!.taskTitle = taskTitle
             task!!.taskHour = taskHour
-            task!!.taskDate = taskDate
+            task!!.taskDate = taskDate.convertStringToLong()
             task!!.taskDescription = taskDescription
             saveSameTask(context, task!!, closeScreen)
         }
@@ -69,7 +70,7 @@ class EditTaskViewModel : ViewModel() {
                     Task(
                         taskTitle = taskTitle,
                         taskDescription = taskDescription,
-                        taskDate = taskDate,
+                        taskDate = taskDate.convertStringToLong(),
                         taskHour = taskHour,
                         uid = 0
                     )
@@ -96,7 +97,7 @@ class EditTaskViewModel : ViewModel() {
         closeScreen: () -> Unit
     ) {
         checkTaskTitleIsValid(task.taskTitle)
-        checkTaskDateIsEmpty(task.taskDate)
+        checkTaskDateIsEmpty(task.taskDate.toString())
         checkTaskHourIsEmpty(task.taskHour)
 
         if (isTaskTitleValid.value == true &&

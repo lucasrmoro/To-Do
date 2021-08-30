@@ -14,7 +14,7 @@ data class Task(
     @ColumnInfo
     var taskDescription: String,
     @ColumnInfo
-    var taskDate: String,
+    var taskDate: Long,
     @ColumnInfo
     var taskHour: String
 ) : Serializable

@@ -1,13 +1,19 @@
 package br.com.lucas.santanderbootcamp.todolist.ui.listTask
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import br.com.lucas.santanderbootcamp.todolist.R
+import br.com.lucas.santanderbootcamp.todolist.core.extensions.OnItemClickListener
+import br.com.lucas.santanderbootcamp.todolist.core.extensions.addOnItemClickListener
+import br.com.lucas.santanderbootcamp.todolist.core.extensions.convertLongToDate
 import br.com.lucas.santanderbootcamp.todolist.database.Task
 import br.com.lucas.santanderbootcamp.todolist.databinding.ListTaskItemBinding
+import br.com.lucas.santanderbootcamp.todolist.ui.infoTask.InfoTaskActivity
 
 class ListTaskAdapter : RecyclerView.Adapter<ListTaskAdapter.TaskViewHolder>() {
 
@@ -15,10 +21,24 @@ class ListTaskAdapter : RecyclerView.Adapter<ListTaskAdapter.TaskViewHolder>() {
     var listenerEdit: (Task) -> Unit = {}
     var listenerDelete: (Task) -> Unit = {}
 
+    @SuppressLint("NotifyDataSetChanged")
     fun addTask(tasks: List<Task>) {
         this.tasks.clear()
         this.tasks.addAll(tasks)
         notifyDataSetChanged()
+    }
+
+    fun sortTaskListByDateAfterAddTasks() {
+        tasks.sortBy { it.taskDate }
+    }
+
+    fun listenerLaunchInfoTask(context: Context, listOfTasks: RecyclerView) {
+        listOfTasks.addOnItemClickListener(object : OnItemClickListener {
+            override fun onItemClicked(position: Int, view: View) {
+                val task = tasks[position]
+                InfoTaskActivity.launchInfoTaskActivity(context, task)
+            }
+        })
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder =
@@ -40,7 +60,7 @@ class ListTaskAdapter : RecyclerView.Adapter<ListTaskAdapter.TaskViewHolder>() {
         @SuppressLint("SetTextI18n")
         fun bind(task: Task) {
             binding.tvTitle.text = task.taskTitle
-            binding.tvDate.text = "${task.taskDate} ${task.taskHour}"
+            binding.tvDate.text = "${task.taskDate.convertLongToDate()} ${task.taskHour}"
             binding.ivMore.setOnClickListener {
                 showPopUp(task)
             }
