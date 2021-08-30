@@ -19,5 +19,6 @@
     <string name="description_not_informed">Não informada</string>
     <string name="task_information">Informações da Tarefa</string>
     <string name="description_text">Descrição</string>
-    <string name="made_by_lucas_moro">Feito por Lucas Moro</string>
+    <string name="made_by_lucas_moro">by Lucas Moro</string>
+    <string name="required_field">* Campo obrigatório</string>
 </resources>

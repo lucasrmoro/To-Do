@@ -1,24 +1,20 @@
 package br.com.lucas.santanderbootcamp.todolist.ui.editTask
 
 import android.content.Context
-import android.content.res.ColorStateList
 import android.widget.Toast
-import androidx.annotation.ColorRes
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.lucas.santanderbootcamp.todolist.R
 import br.com.lucas.santanderbootcamp.todolist.database.DataBaseConnect
 import br.com.lucas.santanderbootcamp.todolist.database.Task
-import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
 
 class EditTaskViewModel : ViewModel() {
 
     val isTaskTitleValid = MutableLiveData<Boolean>()
-    val isTaskDateValid = MutableLiveData<Boolean>()
-    val isTaskHourValid = MutableLiveData<Boolean>()
+    val isTaskDateEmpty = MutableLiveData<Boolean>()
+    val isTaskHourEmpty = MutableLiveData<Boolean>()
 
     var task: Task? = null
         private set
@@ -31,18 +27,12 @@ class EditTaskViewModel : ViewModel() {
         isTaskTitleValid.value = content.length >= 3
     }
 
-    fun checkTaskDateIsValid(content: String) {
-        isTaskDateValid.value = content.isNotEmpty()
+    fun checkTaskDateIsEmpty(content: String) {
+        isTaskDateEmpty.value = content.isNotEmpty()
     }
 
-    fun checkTaskHourIsValid(content: String) {
-        isTaskHourValid.value = content.isNotEmpty()
-    }
-
-    fun setTextInputLayoutHintColor(
-        textInputLayout: TextInputLayout, context: Context, @ColorRes colorIdRes: Int) {
-        textInputLayout.defaultHintTextColor =
-            ColorStateList.valueOf(ContextCompat.getColor(context, colorIdRes))
+    fun checkTaskHourIsEmpty(content: String) {
+        isTaskHourEmpty.value = content.isNotEmpty()
     }
 
     fun onSaveEvent(
@@ -55,10 +45,8 @@ class EditTaskViewModel : ViewModel() {
         } else {
             task!!.taskTitle = taskTitle
             task!!.taskHour = taskHour
+            task!!.taskDate = taskDate
             task!!.taskDescription = taskDescription
-            checkTaskTitleIsValid(task!!.taskTitle)
-            checkTaskDateIsValid(task!!.taskDate)
-            checkTaskHourIsValid(task!!.taskHour)
             saveSameTask(context, task!!, closeScreen)
         }
     }
@@ -68,9 +56,13 @@ class EditTaskViewModel : ViewModel() {
         taskTitle: String, taskDescription: String, taskDate: String, taskHour: String,
         closeScreen: () -> Unit
     ) {
+        checkTaskTitleIsValid(taskTitle)
+        checkTaskDateIsEmpty(taskDate)
+        checkTaskHourIsEmpty(taskHour)
+
         if (isTaskTitleValid.value == true &&
-            isTaskDateValid.value == true &&
-            isTaskHourValid.value == true
+            isTaskDateEmpty.value == true &&
+            isTaskHourEmpty.value == true
         ) {
             viewModelScope.launch {
                 DataBaseConnect.getTaskDao(context).insertTask(
@@ -103,9 +95,13 @@ class EditTaskViewModel : ViewModel() {
         task: Task,
         closeScreen: () -> Unit
     ) {
+        checkTaskTitleIsValid(task.taskTitle)
+        checkTaskDateIsEmpty(task.taskDate)
+        checkTaskHourIsEmpty(task.taskHour)
+
         if (isTaskTitleValid.value == true &&
-            isTaskDateValid.value == true &&
-            isTaskHourValid.value == true
+            isTaskDateEmpty.value == true &&
+            isTaskHourEmpty.value == true
         ) {
             viewModelScope.launch {
                 DataBaseConnect.getTaskDao(context).updateTask(

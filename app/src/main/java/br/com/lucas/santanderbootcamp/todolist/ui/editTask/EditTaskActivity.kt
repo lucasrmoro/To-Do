@@ -50,29 +50,39 @@ class EditTaskActivity : AppCompatActivity() {
         viewModel.isTaskTitleValid.observe(this) {
             if (it == false) {
                 binding.edtTitle.setTextColor(Color.RED)
+                binding.edtTitleLayout.error = getString(R.string.required_field)
             } else {
                 binding.edtTitle.setTextColor(this.getColorResCompat(android.R.attr.textColorPrimary))
+                binding.edtTitleLayout.error = null
             }
         }
 
-        viewModel.isTaskHourValid.observe(this) {
+        viewModel.isTaskHourEmpty.observe(this) {
             if (it == false) {
-//                binding.edtHourLayout.boxStrokeColor = this.getColorResCompat(android.R.attr.textColorPrimary)
+                binding.edtHourLayout.error = getString(R.string.required_field)
             } else {
-//                binding.edtHourLayout.boxStrokeColor = this.getColorResCompat(android.R.attr.textColorPrimary)
+                binding.edtHourLayout.error = null
             }
         }
 
-        viewModel.isTaskDateValid.observe(this) {
+        viewModel.isTaskDateEmpty.observe(this) {
             if (it == false) {
-//                binding.edtDate.setTextColor(Color.RED)
+                binding.edtDateLayout.error = getString(R.string.required_field)
             } else {
-//                binding.edtDate.setTextColor(Color.BLACK)
+                binding.edtDateLayout.error = null
             }
         }
 
         binding.edtTitle.doAfterTextChanged {
             viewModel.checkTaskTitleIsValid(it.toString())
+        }
+
+        binding.edtDate.doAfterTextChanged {
+            viewModel.checkTaskDateIsEmpty(it.toString())
+        }
+
+        binding.edtHour.doAfterTextChanged {
+            viewModel.checkTaskHourIsEmpty(it.toString())
         }
 
         insertListeners()
@@ -85,13 +95,14 @@ class EditTaskActivity : AppCompatActivity() {
             val constraints = CalendarConstraints.Builder().setStart(today)
             val validator = DateValidatorPointForward.now()
             constraints.setValidator(validator)
-            val datePicker = MaterialDatePicker.Builder.datePicker().setCalendarConstraints(constraints.build()).build()
+            val datePicker =
+                MaterialDatePicker.Builder.datePicker().setCalendarConstraints(constraints.build())
+                    .build()
             datePicker.addOnPositiveButtonClickListener {
                 val timeZone = TimeZone.getDefault()
                 val offset = timeZone.getOffset(Date().time) * -1
-                val selectedDate = Date(it + offset).formatDateToPtBr()
-                viewModel.checkTaskDateIsValid(selectedDate)
-                binding.edtDate.setText(selectedDate)
+                val selectedDate = Date(it + offset)
+                binding.edtDate.setText(selectedDate.formatDateToPtBr())
             }
             datePicker.show(supportFragmentManager, "DATE_PICKER_TAG")
         }
@@ -103,7 +114,6 @@ class EditTaskActivity : AppCompatActivity() {
                 .build()
             timePicker.show(supportFragmentManager, "HOUR_PICKER_TAG")
             timePicker.addOnPositiveButtonClickListener {
-                viewModel.checkTaskHourIsValid(timePicker.getHourFormatted())
                 binding.edtHour.setText(timePicker.getHourFormatted())
             }
         }
@@ -120,7 +130,6 @@ class EditTaskActivity : AppCompatActivity() {
         binding.btnCancelTask.setOnClickListener {
             finish()
         }
-
     }
 
     companion object {
