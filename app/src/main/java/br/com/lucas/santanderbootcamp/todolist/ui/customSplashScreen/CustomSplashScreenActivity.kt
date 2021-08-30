@@ -1,8 +1,8 @@
 package br.com.lucas.santanderbootcamp.todolist.ui.customSplashScreen
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.content.Intent
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import br.com.lucas.santanderbootcamp.todolist.databinding.ActivitySplashScreenBinding
 import br.com.lucas.santanderbootcamp.todolist.ui.listTask.ListTaskActivity
 
@@ -17,9 +17,9 @@ class CustomSplashScreenActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.ivCheck.alpha = 0f
-        binding.ivCheck.animate().setDuration(3000).alpha(1f).withEndAction{
+        binding.ivCheck.animate().setDuration(3000).alpha(1f).withEndAction {
             startActivity(Intent(this@CustomSplashScreenActivity, ListTaskActivity::class.java))
-            overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out)
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             finish()
         }
     }

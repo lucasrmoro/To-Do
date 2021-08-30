@@ -30,7 +30,7 @@ class ListTaskAdapter : RecyclerView.Adapter<ListTaskAdapter.TaskViewHolder>() {
     }
 
     fun sortTaskListByDateAfterAddTasks() {
-        tasks.sortWith(compareBy({it.taskDate}, {it.taskTime}))
+        tasks.sortWith(compareBy({ it.taskDate }, { it.taskTime }))
     }
 
     fun listenerLaunchInfoTask(context: Context, listOfTasks: RecyclerView) {
