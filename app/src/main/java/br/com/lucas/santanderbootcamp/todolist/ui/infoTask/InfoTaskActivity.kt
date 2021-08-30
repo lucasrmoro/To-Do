@@ -8,6 +8,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import br.com.lucas.santanderbootcamp.todolist.R
 import br.com.lucas.santanderbootcamp.todolist.core.extensions.convertLongToDate
+import br.com.lucas.santanderbootcamp.todolist.core.extensions.convertIntTimeToString
 import br.com.lucas.santanderbootcamp.todolist.database.Task
 import br.com.lucas.santanderbootcamp.todolist.databinding.ActivityInfoTaskBinding
 import br.com.lucas.santanderbootcamp.todolist.ui.editTask.EditTaskActivity
@@ -35,7 +36,7 @@ class InfoTaskActivity : AppCompatActivity() {
                 binding.tvTaskDescription.text = task.taskDescription
             }
             binding.tvTaskDate.text = task.taskDate.convertLongToDate()
-            binding.tvTaskHour.text = task.taskHour
+            binding.tvTaskHour.text = task.taskTime.convertIntTimeToString()
         }
     }
 

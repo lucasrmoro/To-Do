@@ -68,6 +68,5 @@ class ListTaskActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         viewModel.refreshScreen()
-        adapter.sortTaskListByDateAfterAddTasks()
     }
 }

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.lucas.santanderbootcamp.todolist.R
 import br.com.lucas.santanderbootcamp.todolist.core.extensions.OnItemClickListener
 import br.com.lucas.santanderbootcamp.todolist.core.extensions.addOnItemClickListener
+import br.com.lucas.santanderbootcamp.todolist.core.extensions.convertIntTimeToString
 import br.com.lucas.santanderbootcamp.todolist.core.extensions.convertLongToDate
 import br.com.lucas.santanderbootcamp.todolist.database.Task
 import br.com.lucas.santanderbootcamp.todolist.databinding.ListTaskItemBinding
@@ -29,7 +30,7 @@ class ListTaskAdapter : RecyclerView.Adapter<ListTaskAdapter.TaskViewHolder>() {
     }
 
     fun sortTaskListByDateAfterAddTasks() {
-        tasks.sortBy { it.taskDate }
+        tasks.sortWith(compareBy({it.taskDate}, {it.taskTime}))
     }
 
     fun listenerLaunchInfoTask(context: Context, listOfTasks: RecyclerView) {
@@ -60,7 +61,8 @@ class ListTaskAdapter : RecyclerView.Adapter<ListTaskAdapter.TaskViewHolder>() {
         @SuppressLint("SetTextI18n")
         fun bind(task: Task) {
             binding.tvTitle.text = task.taskTitle
-            binding.tvDate.text = "${task.taskDate.convertLongToDate()} ${task.taskHour}"
+            binding.tvDate.text =
+                "${task.taskDate.convertLongToDate()} ${task.taskTime.convertIntTimeToString()}"
             binding.ivMore.setOnClickListener {
                 showPopUp(task)
             }

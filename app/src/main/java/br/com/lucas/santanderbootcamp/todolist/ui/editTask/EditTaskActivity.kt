@@ -8,10 +8,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
 import br.com.lucas.santanderbootcamp.todolist.R
-import br.com.lucas.santanderbootcamp.todolist.core.extensions.convertLongToDate
-import br.com.lucas.santanderbootcamp.todolist.core.extensions.formatDateToString
-import br.com.lucas.santanderbootcamp.todolist.core.extensions.getColorResCompat
-import br.com.lucas.santanderbootcamp.todolist.core.extensions.getHourFormatted
+import br.com.lucas.santanderbootcamp.todolist.core.extensions.*
 import br.com.lucas.santanderbootcamp.todolist.database.Task
 import br.com.lucas.santanderbootcamp.todolist.databinding.ActivityEditTaskBinding
 import com.google.android.material.datepicker.CalendarConstraints
@@ -45,7 +42,7 @@ class EditTaskActivity : AppCompatActivity() {
             binding.edtTitle.setSelection(viewModel.task?.taskTitle?.length ?: 0)
             binding.edtDescription.setText("${viewModel.task?.taskDescription}")
             binding.edtDate.setText("${viewModel.task?.taskDate?.convertLongToDate()}")
-            binding.edtHour.setText("${viewModel.task?.taskHour}")
+            binding.edtHour.setText(viewModel.task?.taskTime?.convertIntTimeToString())
         }
 
         viewModel.isTaskTitleValid.observe(this) {
@@ -58,7 +55,7 @@ class EditTaskActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.isTaskHourEmpty.observe(this) {
+        viewModel.isTaskTimeEmpty.observe(this) {
             if (it == false) {
                 binding.edtHourLayout.error = getString(R.string.required_field)
             } else {
@@ -83,7 +80,7 @@ class EditTaskActivity : AppCompatActivity() {
         }
 
         binding.edtHour.doAfterTextChanged {
-            viewModel.checkTaskHourIsEmpty(it.toString())
+            viewModel.checkTaskTimeIsEmpty()
         }
 
         insertListeners()
@@ -115,7 +112,8 @@ class EditTaskActivity : AppCompatActivity() {
                 .build()
             timePicker.show(supportFragmentManager, "HOUR_PICKER_TAG")
             timePicker.addOnPositiveButtonClickListener {
-                binding.edtHour.setText(timePicker.getHourFormatted())
+                viewModel.convertHourAndMinutesToFullTime(timePicker.hour, timePicker.minute)
+                binding.edtHour.setText(viewModel.totalTaskTime?.convertIntTimeToString())
             }
         }
 
@@ -124,7 +122,6 @@ class EditTaskActivity : AppCompatActivity() {
                 taskTitle = binding.edtTitle.text.toString(),
                 taskDescription = binding.edtDescription.text.toString(),
                 taskDate = binding.edtDate.text.toString(),
-                taskHour = binding.edtHour.text.toString(),
                 closeScreen = { finish() })
         }
 

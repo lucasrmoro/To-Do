@@ -15,9 +15,12 @@ class EditTaskViewModel : ViewModel() {
 
     val isTaskTitleValid = MutableLiveData<Boolean>()
     val isTaskDateEmpty = MutableLiveData<Boolean>()
-    val isTaskHourEmpty = MutableLiveData<Boolean>()
+    val isTaskTimeEmpty = MutableLiveData<Boolean>()
 
     var task: Task? = null
+        private set
+
+    var totalTaskTime: Int? = null
         private set
 
     fun setup(task: Task) {
@@ -32,20 +35,26 @@ class EditTaskViewModel : ViewModel() {
         isTaskDateEmpty.value = content.isNotEmpty()
     }
 
-    fun checkTaskHourIsEmpty(content: String) {
-        isTaskHourEmpty.value = content.isNotEmpty()
+
+    fun convertHourAndMinutesToFullTime(hour: Int, minutes: Int) {
+        val hoursInMinutes = hour * 60
+        totalTaskTime = hoursInMinutes + minutes
+    }
+
+    fun checkTaskTimeIsEmpty() {
+        isTaskTimeEmpty.value = totalTaskTime != null
     }
 
     fun onSaveEvent(
         context: Context, taskTitle: String, taskDescription: String,
-        taskDate: String, taskHour: String,
+        taskDate: String,
         closeScreen: (() -> Unit)
     ) {
         if (task == null) {
-            saveNewTask(context, taskTitle, taskDescription, taskDate, taskHour, closeScreen)
+            saveNewTask(context, taskTitle, taskDescription, taskDate, closeScreen)
         } else {
             task!!.taskTitle = taskTitle
-            task!!.taskHour = taskHour
+            task!!.taskTime = totalTaskTime!!
             task!!.taskDate = taskDate.convertStringToLong()
             task!!.taskDescription = taskDescription
             saveSameTask(context, task!!, closeScreen)
@@ -54,16 +63,16 @@ class EditTaskViewModel : ViewModel() {
 
     private fun saveNewTask(
         context: Context,
-        taskTitle: String, taskDescription: String, taskDate: String, taskHour: String,
+        taskTitle: String, taskDescription: String, taskDate: String,
         closeScreen: () -> Unit
     ) {
         checkTaskTitleIsValid(taskTitle)
         checkTaskDateIsEmpty(taskDate)
-        checkTaskHourIsEmpty(taskHour)
+        checkTaskTimeIsEmpty()
 
         if (isTaskTitleValid.value == true &&
             isTaskDateEmpty.value == true &&
-            isTaskHourEmpty.value == true
+            isTaskTimeEmpty.value == true
         ) {
             viewModelScope.launch {
                 DataBaseConnect.getTaskDao(context).insertTask(
@@ -71,7 +80,7 @@ class EditTaskViewModel : ViewModel() {
                         taskTitle = taskTitle,
                         taskDescription = taskDescription,
                         taskDate = taskDate.convertStringToLong(),
-                        taskHour = taskHour,
+                        taskTime = totalTaskTime!!,
                         uid = 0
                     )
                 )
@@ -98,11 +107,11 @@ class EditTaskViewModel : ViewModel() {
     ) {
         checkTaskTitleIsValid(task.taskTitle)
         checkTaskDateIsEmpty(task.taskDate.toString())
-        checkTaskHourIsEmpty(task.taskHour)
+        checkTaskTimeIsEmpty()
 
         if (isTaskTitleValid.value == true &&
             isTaskDateEmpty.value == true &&
-            isTaskHourEmpty.value == true
+            isTaskTimeEmpty.value == true
         ) {
             viewModelScope.launch {
                 DataBaseConnect.getTaskDao(context).updateTask(
