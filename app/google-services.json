@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "96931996073",
+    "project_id": "to-do-app-lucasm",
+    "storage_bucket": "to-do-app-lucasm.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:96931996073:android:2c88d77927f8d2193464b8",
+        "android_client_info": {
+          "package_name": "br.com.lucas.santanderbootcamp.todolist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "96931996073-ngath6vsgkcbsibtlcj3ndg4fhrs62du.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB40ezwUUrfL1NLDmyoFnImb7Ssbcl2dIo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "96931996073-ngath6vsgkcbsibtlcj3ndg4fhrs62du.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
