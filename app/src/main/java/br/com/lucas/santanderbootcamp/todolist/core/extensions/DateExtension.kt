@@ -9,12 +9,14 @@ fun Date.formatDateToString(): String {
     return SimpleDateFormat("dd/MM/yyyy", locale).format(this)
 }
 
-fun Long.convertLongToDate(): String {
-    val format = SimpleDateFormat("dd/MM/yyyy")
-    return format.format(this)
+fun Long.convertLongToCompactDate(): String {
+    return SimpleDateFormat("dd/MM/yyyy", locale).format(this)
+}
+
+fun Long.convertLongToFullDate(): String {
+    return SimpleDateFormat("EEE d, MMM ''yy", locale).format(this)
 }
 
 fun String.convertStringToLong(): Long {
-    val df = SimpleDateFormat("dd/MM/yyyy")
-    return df.parse(this).time
+    return SimpleDateFormat("dd/MM/yyyy").parse(this).time
 }

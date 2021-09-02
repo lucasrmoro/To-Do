@@ -41,7 +41,7 @@ class EditTaskActivity : AppCompatActivity() {
             binding.edtTitle.setText("${viewModel.task?.taskTitle}")
             binding.edtTitle.setSelection(viewModel.task?.taskTitle?.length ?: 0)
             binding.edtDescription.setText("${viewModel.task?.taskDescription}")
-            binding.edtDate.setText("${viewModel.task?.taskDate?.convertLongToDate()}")
+            binding.edtDate.setText("${viewModel.task?.taskDate?.convertLongToCompactDate()}")
             binding.edtHour.setText(viewModel.task?.taskTime?.convertIntTimeToString())
         }
 
