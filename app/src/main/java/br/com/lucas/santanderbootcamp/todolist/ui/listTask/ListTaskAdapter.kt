@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import br.com.lucas.santanderbootcamp.todolist.R
 import br.com.lucas.santanderbootcamp.todolist.core.extensions.OnItemClickListener
@@ -16,23 +18,19 @@ import br.com.lucas.santanderbootcamp.todolist.database.Task
 import br.com.lucas.santanderbootcamp.todolist.databinding.ListTaskItemBinding
 import br.com.lucas.santanderbootcamp.todolist.ui.infoTask.InfoTaskActivity
 
-class ListTaskAdapter : RecyclerView.Adapter<ListTaskAdapter.TaskViewHolder>() {
+class ListTaskAdapter : ListAdapter<Task, ListTaskAdapter.TaskViewHolder>(DiffCallback()) {
 
-    val tasks = mutableListOf<Task>()
     var listenerEdit: (Task) -> Unit = {}
     var listenerDelete: (Task) -> Unit = {}
 
-    @SuppressLint("NotifyDataSetChanged")
     fun addTask(tasks: List<Task>) {
-        this.tasks.clear()
-        this.tasks.addAll(tasks)
-        notifyDataSetChanged()
+        submitList(tasks)
     }
 
     fun listenerLaunchInfoTask(context: Context, listOfTasks: RecyclerView) {
         listOfTasks.addOnItemClickListener(object : OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
-                val task = tasks[position]
+                val task = getItem(position)
                 InfoTaskActivity.launchInfoTaskActivity(context, task)
             }
         })
@@ -48,9 +46,7 @@ class ListTaskAdapter : RecyclerView.Adapter<ListTaskAdapter.TaskViewHolder>() {
         )
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) =
-        holder.bind(tasks[position])
-
-    override fun getItemCount(): Int = tasks.size
+        holder.bind(getItem(position))
 
     inner class TaskViewHolder(private val binding: ListTaskItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -78,5 +74,15 @@ class ListTaskAdapter : RecyclerView.Adapter<ListTaskAdapter.TaskViewHolder>() {
             popUpMenu.show()
         }
 
+    }
+
+    private class DiffCallback: DiffUtil.ItemCallback<Task>(){
+        override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {
+            return oldItem.uid == newItem.uid
+        }
+
+        override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean {
+            return oldItem == newItem
+        }
     }
 }
