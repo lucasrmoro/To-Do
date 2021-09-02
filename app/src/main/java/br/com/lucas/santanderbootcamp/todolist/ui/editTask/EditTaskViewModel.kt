@@ -92,11 +92,7 @@ class EditTaskViewModel : ViewModel() {
                 closeScreen()
             }
         } else {
-            Toast.makeText(
-                context,
-                context.getString(R.string.fill_all_required_fields),
-                Toast.LENGTH_SHORT
-            ).show()
+            fillAllRequiredFieldsToast(context)
         }
     }
 
@@ -125,11 +121,15 @@ class EditTaskViewModel : ViewModel() {
                 closeScreen()
             }
         } else {
-            Toast.makeText(
-                context,
-                context.getString(R.string.fill_all_required_fields),
-                Toast.LENGTH_SHORT
-            ).show()
+            fillAllRequiredFieldsToast(context)
         }
+    }
+
+    private fun fillAllRequiredFieldsToast(context: Context) {
+        Toast.makeText(
+            context,
+            context.getString(R.string.fill_all_required_fields),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 }
