@@ -29,10 +29,6 @@ class ListTaskAdapter : RecyclerView.Adapter<ListTaskAdapter.TaskViewHolder>() {
         notifyDataSetChanged()
     }
 
-    fun sortTaskListByDateAfterAddTasks() {
-        tasks.sortWith(compareBy({ it.taskDate }, { it.taskTime }))
-    }
-
     fun listenerLaunchInfoTask(context: Context, listOfTasks: RecyclerView) {
         listOfTasks.addOnItemClickListener(object : OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {

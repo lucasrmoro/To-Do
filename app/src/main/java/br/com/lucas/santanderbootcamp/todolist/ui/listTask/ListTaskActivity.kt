@@ -26,7 +26,6 @@ class ListTaskActivity : AppCompatActivity() {
             this
         ) { tasks ->
             adapter.addTask(tasks)
-            adapter.sortTaskListByDateAfterAddTasks()
             checkEmptyStateAfterAddTasks()
         }
         setupList()

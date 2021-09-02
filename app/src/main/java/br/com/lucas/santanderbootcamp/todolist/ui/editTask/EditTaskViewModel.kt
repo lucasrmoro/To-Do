@@ -25,6 +25,7 @@ class EditTaskViewModel : ViewModel() {
 
     fun setup(task: Task) {
         this.task = task
+        totalTaskTime = task.taskTime
     }
 
     fun checkTaskTitleIsValid(content: String) {
@@ -34,7 +35,6 @@ class EditTaskViewModel : ViewModel() {
     fun checkTaskDateIsEmpty(content: String) {
         isTaskDateEmpty.value = content.isNotEmpty()
     }
-
 
     fun convertHourAndMinutesToFullTime(hour: Int, minutes: Int) {
         val hoursInMinutes = hour * 60

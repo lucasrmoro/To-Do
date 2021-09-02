@@ -26,8 +26,10 @@ class ListTaskViewModel(private val context: Application) : AndroidViewModel(con
 
     fun refreshScreen() {
         viewModelScope.launch {
+            val tasks = DataBaseConnect.getTaskDao(context).getAllTasks()
+            val sortedTasks = tasks.sortedWith(compareBy({ it.taskDate }, { it.taskTime }))
             taskList.postValue(
-                DataBaseConnect.getTaskDao(context).getAllTasks()
+                sortedTasks
             )
         }
     }
