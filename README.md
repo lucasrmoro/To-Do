@@ -21,7 +21,7 @@
 <!--te-->
 
 ## Descrição do projeto
-Este é um projeto com o objetivo de ser um aplicativo para organizar suas tarefas à fazer, com todas as propriedades de um CRUD.
+Este é o projeto final solicitado pelo Bootcamp Mobile do Santander em parceria com a Digital Innovation One com o objetivo de ser um aplicativo para organizar suas tarefas à fazer, com todas as propriedades de um CRUD.
 
 
 ## Como utilizar
