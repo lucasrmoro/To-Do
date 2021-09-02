@@ -8,10 +8,10 @@
 <!--ts-->
    * [Descrição do projeto](#descrição-do-projeto)
    * [Como utilizar](#como-utilizar)
-	* [Adição de uma nova tarefa](#adição-de-uma-nova-tarefa)
-	* [Visualização de uma tarefa](#visualização-de-uma-tarefa)
-	* [Edição de uma tarefa](#edição-de-uma-tarefa)
-	* [Remoção de uma tarefa](#remoção-de-uma-tarefa)
+		* [Adição de uma nova tarefa](#adição-de-uma-nova-tarefa)
+		* [Visualização de uma tarefa](#visualização-de-uma-tarefa)
+		* [Edição de uma tarefa](#edição-de-uma-tarefa)
+		* [Remoção de uma tarefa](#remoção-de-uma-tarefa)
    * [Demonstrações (Light mode & Dark mode)](#demonstrações)
       * [Criação da tarefa](#criação-da-tarefa)
       * [Visualização da tarefa](#visualização-da-tarefa)
@@ -21,7 +21,7 @@
 <!--te-->
 
 ## Descrição do projeto
-Este é o projeto final solicitado pelo Bootcamp Mobile do Santander em parceria com a Digital Innovation One com o objetivo de ser um aplicativo para organizar suas tarefas à fazer, com todas as propriedades de um CRUD.
+Este é o projeto final solicitado pelo Bootcamp Mobile do Santander em parceria com a Digital Innovation One com o objetivo de ser um aplicativo para organizar suas tarefas à fazer, com todas as propriedades CRUD.
 
 
 ## Como utilizar
