@@ -1,8 +1,9 @@
 
 # To Do App
+  
+[![Build Status](https://app.bitrise.io/app/a83c9eaa20931009/status.svg?token=oALBGibsk9HVUFsmju21pA&branch=main)](https://github.com/lucasrmoro/ToDoListSantanderBootcamp/blob/main/bitrise/bitrise.yml) [![codebeat badge](https://codebeat.co/badges/8543caad-5159-4f95-ae33-088189265a67)](https://codebeat.co/projects/github-com-lucasrmoro-todolistsantanderbootcamp-main)
 
-**Badges**  
-![Bitrise badge](https://app.bitrise.io/app/a83c9eaa20931009/status.svg?token=oALBGibsk9HVUFsmju21pA&branch=main) ![codebeat badge](https://codebeat.co/badges/8543caad-5159-4f95-ae33-088189265a67)
+_Obs.: Não foi possível vincular a badge o histórico de builds do Bitrise, pois ele permite criar somente 1 projeto público. Porém, foi adicionado ao repositório raiz o bitrise.yml, para caso alguém queira replicar em ambiente Ci-Cd._
 
 # Tabela de conteúdos
 <!--ts-->
