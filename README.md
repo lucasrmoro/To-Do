@@ -64,7 +64,7 @@ Para remover uma tarefa, pressiona o ícone pontilhado a direita da tarefa que d
 ## Componentes Utilizados
 
 - Kotlin
-- Bitrise and Firebase (para distribuição do aplicativo)
+- Bitrise & Firebase para CI/CD
 - Material Design
-- Room Database
+- Jetpack Components
 - MVVM Architecture
