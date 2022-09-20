@@ -1,4 +1,4 @@
-package br.com.lucas.santanderbootcamp.todolist.ui.infoTask
+package br.com.lucas.todo.ui.infoTask
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -6,12 +6,12 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import br.com.lucas.santanderbootcamp.todolist.R
-import br.com.lucas.santanderbootcamp.todolist.core.extensions.convertIntTimeToString
-import br.com.lucas.santanderbootcamp.todolist.core.extensions.convertLongToFullDate
-import br.com.lucas.santanderbootcamp.todolist.database.Task
-import br.com.lucas.santanderbootcamp.todolist.databinding.ActivityInfoTaskBinding
-import br.com.lucas.santanderbootcamp.todolist.ui.editTask.EditTaskActivity
+import br.com.lucas.todo.R
+import br.com.lucas.todo.core.extensions.convertIntTimeToString
+import br.com.lucas.todo.core.extensions.convertLongToFullDate
+import br.com.lucas.todo.database.Task
+import br.com.lucas.todo.databinding.ActivityInfoTaskBinding
+import br.com.lucas.todo.ui.editTask.EditTaskActivity
 
 class InfoTaskActivity : AppCompatActivity() {
 

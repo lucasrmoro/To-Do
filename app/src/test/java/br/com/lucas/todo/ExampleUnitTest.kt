@@ -1,4 +1,4 @@
-package br.com.lucas.santanderbootcamp.todolist
+package br.com.lucas.todo
 
 import org.junit.Test
 

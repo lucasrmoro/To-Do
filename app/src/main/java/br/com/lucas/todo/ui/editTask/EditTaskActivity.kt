@@ -1,4 +1,4 @@
-package br.com.lucas.santanderbootcamp.todolist.ui.editTask
+package br.com.lucas.todo.ui.editTask
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -7,10 +7,14 @@ import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
-import br.com.lucas.santanderbootcamp.todolist.R
-import br.com.lucas.santanderbootcamp.todolist.core.extensions.*
-import br.com.lucas.santanderbootcamp.todolist.database.Task
-import br.com.lucas.santanderbootcamp.todolist.databinding.ActivityEditTaskBinding
+import br.com.lucas.todo.R
+import br.com.lucas.todo.core.extensions.*
+import br.com.lucas.todo.database.Task
+import br.com.lucas.todo.databinding.ActivityEditTaskBinding
+import br.com.lucas.todo.core.extensions.convertIntTimeToString
+import br.com.lucas.todo.core.extensions.convertLongToCompactDate
+import br.com.lucas.todo.core.extensions.formatDateToString
+import br.com.lucas.todo.core.extensions.getColorResCompat
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker

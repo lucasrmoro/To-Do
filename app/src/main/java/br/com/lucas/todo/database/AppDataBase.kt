@@ -1,4 +1,4 @@
-package br.com.lucas.santanderbootcamp.todolist.database
+package br.com.lucas.todo.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

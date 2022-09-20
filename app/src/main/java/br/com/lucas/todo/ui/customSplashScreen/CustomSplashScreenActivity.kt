@@ -1,10 +1,10 @@
-package br.com.lucas.santanderbootcamp.todolist.ui.customSplashScreen
+package br.com.lucas.todo.ui.customSplashScreen
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import br.com.lucas.santanderbootcamp.todolist.databinding.ActivitySplashScreenBinding
-import br.com.lucas.santanderbootcamp.todolist.ui.listTask.ListTaskActivity
+import br.com.lucas.todo.databinding.ActivitySplashScreenBinding
+import br.com.lucas.todo.ui.listTask.ListTaskActivity
 
 
 class CustomSplashScreenActivity : AppCompatActivity() {

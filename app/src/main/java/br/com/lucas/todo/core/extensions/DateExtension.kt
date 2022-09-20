@@ -1,4 +1,4 @@
-package br.com.lucas.santanderbootcamp.todolist.core.extensions
+package br.com.lucas.todo.core.extensions
 
 import java.text.SimpleDateFormat
 import java.util.*
