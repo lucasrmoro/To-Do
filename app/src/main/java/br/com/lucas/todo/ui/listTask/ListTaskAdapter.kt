@@ -1,4 +1,4 @@
-package br.com.lucas.santanderbootcamp.todolist.ui.listTask
+package br.com.lucas.todo.ui.listTask
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -9,14 +9,14 @@ import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import br.com.lucas.santanderbootcamp.todolist.R
-import br.com.lucas.santanderbootcamp.todolist.core.extensions.OnItemClickListener
-import br.com.lucas.santanderbootcamp.todolist.core.extensions.addOnItemClickListener
-import br.com.lucas.santanderbootcamp.todolist.core.extensions.convertIntTimeToString
-import br.com.lucas.santanderbootcamp.todolist.core.extensions.convertLongToFullDate
-import br.com.lucas.santanderbootcamp.todolist.database.Task
-import br.com.lucas.santanderbootcamp.todolist.databinding.ListTaskItemBinding
-import br.com.lucas.santanderbootcamp.todolist.ui.infoTask.InfoTaskActivity
+import br.com.lucas.todo.R
+import br.com.lucas.todo.core.extensions.OnItemClickListener
+import br.com.lucas.todo.core.extensions.addOnItemClickListener
+import br.com.lucas.todo.core.extensions.convertIntTimeToString
+import br.com.lucas.todo.core.extensions.convertLongToFullDate
+import br.com.lucas.todo.database.Task
+import br.com.lucas.todo.databinding.ListTaskItemBinding
+import br.com.lucas.todo.ui.infoTask.InfoTaskActivity
 
 class ListTaskAdapter : ListAdapter<Task, ListTaskAdapter.TaskViewHolder>(DiffCallback()) {
 

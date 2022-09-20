@@ -1,14 +1,14 @@
-package br.com.lucas.santanderbootcamp.todolist.ui.editTask
+package br.com.lucas.todo.ui.editTask
 
 import android.content.Context
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.lucas.santanderbootcamp.todolist.R
-import br.com.lucas.santanderbootcamp.todolist.core.extensions.convertStringToLong
-import br.com.lucas.santanderbootcamp.todolist.database.DataBaseConnect
-import br.com.lucas.santanderbootcamp.todolist.database.Task
+import br.com.lucas.todo.R
+import br.com.lucas.todo.core.extensions.convertStringToLong
+import br.com.lucas.todo.database.DataBaseConnect
+import br.com.lucas.todo.database.Task
 import kotlinx.coroutines.launch
 
 class EditTaskViewModel : ViewModel() {

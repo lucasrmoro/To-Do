@@ -8,7 +8,7 @@ plugins {
 android {
 
     defaultConfig {
-        applicationId "br.com.lucas.santanderbootcamp.todolist"
+        applicationId "br.com.lucas.todo"
         minSdkVersion 22
         compileSdkVersion 32
         targetSdkVersion 32

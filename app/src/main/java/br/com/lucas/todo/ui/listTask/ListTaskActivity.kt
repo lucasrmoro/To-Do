@@ -1,13 +1,13 @@
-package br.com.lucas.santanderbootcamp.todolist.ui.listTask
+package br.com.lucas.todo.ui.listTask
 
 import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import br.com.lucas.santanderbootcamp.todolist.R
-import br.com.lucas.santanderbootcamp.todolist.databinding.ActivityListTaskBinding
-import br.com.lucas.santanderbootcamp.todolist.ui.editTask.EditTaskActivity
+import br.com.lucas.todo.R
+import br.com.lucas.todo.databinding.ActivityListTaskBinding
+import br.com.lucas.todo.ui.editTask.EditTaskActivity
 
 
 class ListTaskActivity : AppCompatActivity() {

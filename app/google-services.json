@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:96931996073:android:2c88d77927f8d2193464b8",
         "android_client_info": {
-          "package_name": "br.com.lucas.santanderbootcamp.todolist"
+          "package_name": "br.com.lucas.todo"
         }
       },
       "oauth_client": [

@@ -1,4 +1,4 @@
-package br.com.lucas.santanderbootcamp.todolist.core.extensions
+package br.com.lucas.todo.core.extensions
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

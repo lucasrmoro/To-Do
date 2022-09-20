@@ -1,11 +1,11 @@
-package br.com.lucas.santanderbootcamp.todolist.ui.listTask
+package br.com.lucas.todo.ui.listTask
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import br.com.lucas.santanderbootcamp.todolist.database.DataBaseConnect
-import br.com.lucas.santanderbootcamp.todolist.database.Task
+import br.com.lucas.todo.database.DataBaseConnect
+import br.com.lucas.todo.database.Task
 import kotlinx.coroutines.launch
 
 class ListTaskViewModel(private val context: Application) : AndroidViewModel(context) {
