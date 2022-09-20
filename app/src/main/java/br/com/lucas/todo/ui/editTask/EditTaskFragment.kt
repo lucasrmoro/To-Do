@@ -1,20 +1,19 @@
 package br.com.lucas.todo.ui.editTask
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import br.com.lucas.todo.R
 import br.com.lucas.todo.core.extensions.*
 import br.com.lucas.todo.database.Task
-import br.com.lucas.todo.databinding.ActivityEditTaskBinding
-import br.com.lucas.todo.core.extensions.convertIntTimeToString
-import br.com.lucas.todo.core.extensions.convertLongToCompactDate
-import br.com.lucas.todo.core.extensions.formatDateToString
-import br.com.lucas.todo.core.extensions.getColorResCompat
+import br.com.lucas.todo.databinding.FragmentEditTaskBinding
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -22,23 +21,27 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import java.util.*
 
-class EditTaskActivity : AppCompatActivity() {
+class EditTaskFragment : Fragment() {
 
-    private lateinit var binding: ActivityEditTaskBinding
+    private var _binding: FragmentEditTaskBinding? = null
+    private val binding get() = _binding!!
     private lateinit var viewModel: EditTaskViewModel
+    private val task by lazy { arguments?.getSerializable(TASK_NAME_KEY) }
 
-    @SuppressLint("ResourceType")
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityEditTaskBinding.inflate(layoutInflater)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentEditTaskBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel = EditTaskViewModel()
-        setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        val task: Task? = intent.getSerializableExtra(TASK_NAME_KEY) as? Task
-
-        verifyingThatTaskAlreadyExistsAndCatchDataFromDB(task)
+        showAppBar()
+        verifyingThatTaskAlreadyExistsAndCatchDataFromDB(task as Task?)
         observingAndVerifyingThatAllFieldsAreFilled()
         insertListeners()
     }
@@ -57,23 +60,24 @@ class EditTaskActivity : AppCompatActivity() {
     }
 
     private fun observingAndVerifyingThatAllFieldsAreFilled() {
-        viewModel.isTaskTitleValid.observe(this) {
+        viewModel.isTaskTitleValid.observe(viewLifecycleOwner) {
             if (it == false) {
                 binding.edtTitle.setTextColor(Color.RED)
                 binding.edtTitleLayout.error = getString(R.string.required_field)
             } else {
-                binding.edtTitle.setTextColor(this.getColorResCompat(android.R.attr.textColorPrimary))
+                context?.getColorResCompat(android.R.attr.textColorPrimary)
+                    ?.let { it1 -> binding.edtTitle.setTextColor(it1) }
                 binding.edtTitleLayout.error = null
             }
         }
 
-        viewModel.isTaskTimeEmpty.observe(this) {
+        viewModel.isTaskTimeEmpty.observe(viewLifecycleOwner) {
             if (it == false) binding.edtHourLayout.error = getString(R.string.required_field)
             else binding.edtHourLayout.error = null
         }
 
 
-        viewModel.isTaskDateEmpty.observe(this) {
+        viewModel.isTaskDateEmpty.observe(viewLifecycleOwner) {
             if (it == false) binding.edtDateLayout.error = getString(R.string.required_field)
             else binding.edtDateLayout.error = null
         }
@@ -92,24 +96,26 @@ class EditTaskActivity : AppCompatActivity() {
     }
 
     private fun insertListeners() {
-        binding.edtDate.setOnClickListener {
+        binding.edtDate.setOnClickListener { view ->
             buildDatePicker()
         }
 
-        binding.edtHour.setOnClickListener {
+        binding.edtHour.setOnClickListener { view ->
             buildTimePicker()
         }
 
-        binding.btnCreateTask.setOnClickListener {
-            viewModel.onSaveEvent(context = this,
-                taskTitle = binding.edtTitle.text.toString(),
-                taskDescription = binding.edtDescription.text.toString(),
-                taskDate = binding.edtDate.text.toString(),
-                closeScreen = { finish() })
+        binding.btnCreateTask.setOnClickListener { view ->
+            context?.let {
+                viewModel.onSaveEvent(context = it,
+                    taskTitle = binding.edtTitle.text.toString(),
+                    taskDescription = binding.edtDescription.text.toString(),
+                    taskDate = binding.edtDate.text.toString(),
+                    closeScreen = { view.findNavController().popBackStack() })
+            }
         }
 
-        binding.btnCancelTask.setOnClickListener {
-            finish()
+        binding.btnCancelTask.setOnClickListener { view ->
+            view.findNavController().popBackStack()
         }
     }
 
@@ -127,7 +133,7 @@ class EditTaskActivity : AppCompatActivity() {
             val selectedDate = Date(it + offset)
             binding.edtDate.setText(selectedDate.formatDateToString())
         }
-        datePicker.show(supportFragmentManager, "DATE_PICKER_TAG")
+        datePicker.show(parentFragmentManager, "DATE_PICKER_TAG")
     }
 
     private fun buildTimePicker() {
@@ -135,7 +141,7 @@ class EditTaskActivity : AppCompatActivity() {
             .setTimeFormat(TimeFormat.CLOCK_24H)
             .setTitleText("          ")
             .build()
-        timePicker.show(supportFragmentManager, "HOUR_PICKER_TAG")
+        timePicker.show(parentFragmentManager, "HOUR_PICKER_TAG")
         timePicker.addOnPositiveButtonClickListener {
             viewModel.convertHourAndMinutesToFullTime(timePicker.hour, timePicker.minute)
             binding.edtHour.setText(viewModel.totalTaskTime?.convertIntTimeToString())
@@ -144,12 +150,12 @@ class EditTaskActivity : AppCompatActivity() {
 
     companion object {
         fun launchNewTaskScreen(context: Context) {
-            val intent = Intent(context, EditTaskActivity::class.java)
+            val intent = Intent(context, EditTaskFragment::class.java)
             context.startActivity(intent)
         }
 
         fun launchEditTaskScreen(context: Context, task: Task?) {
-            val intent = Intent(context, EditTaskActivity::class.java)
+            val intent = Intent(context, EditTaskFragment::class.java)
             intent.putExtra(TASK_NAME_KEY, task)
             context.startActivity(intent)
         }

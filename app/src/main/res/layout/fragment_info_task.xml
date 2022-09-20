@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="24dp"
-        tools:context="br.com.lucas.todo.ui.infoTask.InfoTaskActivity">
+        tools:context="br.com.lucas.todo.ui.infoTask.InfoTaskFragment">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
