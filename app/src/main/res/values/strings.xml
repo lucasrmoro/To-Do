@@ -1,24 +1,34 @@
 <resources>
     <string name="app_name">To Do</string>
+
+    <!-- SPLASH SCREEN -->
+    <string name="made_by_lucas_moro">by Lucas Moro</string>
+    <!-- SPLASH SCREEN -->
+
+    <!-- LIST TASK SCREEN -->
+    <string name="popup_menu_item_edit">Editar</string>
+    <string name="popup_menu_item_delete">Excluir</string>
     <string name="tasks_text">Tarefas</string>
+    <string name="task_title_item">Título da tarefa</string>
+    <string name="successfully_deleted">Tarefa excluída com sucesso!</string>
+    <string name="you_dont_have_a_task_yet">Oops! Você ainda não possui nenhuma tarefa!</string>
+    <string name="description_not_informed">Não informada</string>
+    <!-- LIST TASK SCREEN -->
+
+    <!-- CREATE/EDIT/INFO TASK SCREEN -->
     <string name="create_task">Criar Tarefa</string>
     <string name="title_hint">Título</string>
     <string name="description_hint">Descrição (opcional)</string>
     <string name="date_hint">Data</string>
     <string name="hour_hint">Hora</string>
     <string name="btn_cancel">Cancelar</string>
-    <string name="task_title_item">Título da tarefa</string>
-    <string name="popup_menu_item_edit">Editar</string>
-    <string name="popup_menu_item_delete">Excluir</string>
     <string name="edit_task">Editar Tarefa</string>
     <string name="fill_all_required_fields">Preencha todos os campos!</string>
-    <string name="successfully_edited">Tarefa editada com sucesso!</string>
-    <string name="successfully_created">Tarefa criada com sucesso!</string>
-    <string name="successfully_deleted">Tarefa excluída com sucesso!</string>
-    <string name="you_dont_have_a_task_yet">Oops! Você ainda não possui nenhuma tarefa!</string>
-    <string name="description_not_informed">Não informada</string>
     <string name="task_information">Informações da Tarefa</string>
     <string name="description_text">Descrição</string>
-    <string name="made_by_lucas_moro">by Lucas Moro</string>
     <string name="required_field">* Campo obrigatório</string>
+    <string name="successfully_edited">Tarefa editada com sucesso!</string>
+    <string name="successfully_created">Tarefa criada com sucesso!</string>
+    <!-- CREATE/EDIT TASK SCREEN -->
+
 </resources>
