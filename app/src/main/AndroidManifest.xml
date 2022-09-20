@@ -10,29 +10,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ToDoList">
         <activity
-            android:name="br.com.lucas.todo.ui.customSplashScreen.CustomSplashScreenActivity"
-            android:theme="@style/Theme.SplashScreen"
+            android:name=".ui.MainActivity"
             android:exported="true">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="br.com.lucas.todo.ui.infoTask.InfoTaskActivity"
-            android:exported="true"
-            android:parentActivityName="br.com.lucas.todo.ui.listTask.ListTaskActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="br.com.lucas.todo.ui.listTask.ListTaskActivity"
-            android:exported="true"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name="br.com.lucas.todo.ui.editTask.EditTaskActivity"
-            android:exported="true"
-            android:parentActivityName="br.com.lucas.todo.ui.listTask.ListTaskActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
     </application>
+
 </manifest>

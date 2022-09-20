@@ -1,14 +1,16 @@
 package br.com.lucas.todo.ui.listTask
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.lucas.todo.database.DataBaseConnect
 import br.com.lucas.todo.database.Task
 import kotlinx.coroutines.launch
 
-class ListTaskViewModel(private val context: Application) : AndroidViewModel(context) {
+class ListTaskViewModel(private val context: Context) : ViewModel() {
 
     val taskList = MutableLiveData<List<Task>>()
 

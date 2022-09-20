@@ -2,10 +2,12 @@ package br.com.lucas.todo.ui.listTask
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +18,7 @@ import br.com.lucas.todo.core.extensions.convertIntTimeToString
 import br.com.lucas.todo.core.extensions.convertLongToFullDate
 import br.com.lucas.todo.database.Task
 import br.com.lucas.todo.databinding.ListTaskItemBinding
-import br.com.lucas.todo.ui.infoTask.InfoTaskActivity
+import br.com.lucas.todo.ui.editTask.EditTaskFragment.Companion.TASK_NAME_KEY
 
 class ListTaskAdapter : ListAdapter<Task, ListTaskAdapter.TaskViewHolder>(DiffCallback()) {
 
@@ -30,8 +32,8 @@ class ListTaskAdapter : ListAdapter<Task, ListTaskAdapter.TaskViewHolder>(DiffCa
     fun listenerLaunchInfoTask(context: Context, listOfTasks: RecyclerView) {
         listOfTasks.addOnItemClickListener(object : OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
-                val task = getItem(position)
-                InfoTaskActivity.launchInfoTaskActivity(context, task)
+                val task = Bundle().apply { putSerializable(TASK_NAME_KEY, getItem(position)) }
+                view.findNavController().navigate(R.id.fromListTaskToInfoTask, task)
             }
         })
     }
