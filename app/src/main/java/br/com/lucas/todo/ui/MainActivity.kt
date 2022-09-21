@@ -1,32 +1,38 @@
 package br.com.lucas.todo.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.OnBackPressedCallback
+import android.view.MenuItem
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import br.com.lucas.todo.R
 import br.com.lucas.todo.databinding.ActivityMainBinding
+import br.com.lucas.todo.ui.base.BaseActivity
 
-class MainActivity : AppCompatActivity() {
-
-    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        setupAppBar()
+        setupToolbar()
     }
 
-    private fun setupAppBar() = with(binding) {
-        setSupportActionBar(toolbar)
-        val navHost = supportFragmentManager.findFragmentById(fragmentContainer.id) as NavHostFragment
-        navHost.findNavController().run {
-            toolbar.setupWithNavController(this, AppBarConfiguration(graph))
+    fun hideToolbar() { supportActionBar?.hide() }
+
+    fun showToolbar() { supportActionBar?.show() }
+
+    private fun setupToolbar() {
+        (supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment).run {
+            findNavController().addOnDestinationChangedListener { _, destination, _ ->
+                supportActionBar?.setDisplayHomeAsUpEnabled(destination.id != R.id.listTaskFragment)
+            }
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == android.R.id.home){
+            findNavController(R.id.fragment_container).popBackStack()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

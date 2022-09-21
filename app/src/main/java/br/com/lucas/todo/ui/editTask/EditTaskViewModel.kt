@@ -14,8 +14,8 @@ import kotlinx.coroutines.launch
 class EditTaskViewModel : ViewModel() {
 
     val isTaskTitleValid = MutableLiveData<Boolean>()
-    val isTaskDateEmpty = MutableLiveData<Boolean>()
-    val isTaskTimeEmpty = MutableLiveData<Boolean>()
+    val isTaskDateValid = MutableLiveData<Boolean>()
+    val isTaskTimeValid = MutableLiveData<Boolean>()
 
     var task: Task? = null
         private set
@@ -32,8 +32,8 @@ class EditTaskViewModel : ViewModel() {
         isTaskTitleValid.value = content.length >= 3
     }
 
-    fun checkTaskDateIsEmpty(content: String) {
-        isTaskDateEmpty.value = content.isNotEmpty()
+    fun checkTaskDateIsValid(content: String) {
+        isTaskDateValid.value = content.isNotEmpty()
     }
 
     fun convertHourAndMinutesToFullTime(hour: Int, minutes: Int) {
@@ -41,8 +41,8 @@ class EditTaskViewModel : ViewModel() {
         totalTaskTime = hoursInMinutes + minutes
     }
 
-    fun checkTaskTimeIsEmpty() {
-        isTaskTimeEmpty.value = totalTaskTime != null
+    fun checkTaskTimeIsValid() {
+        isTaskTimeValid.value = totalTaskTime != null
     }
 
     fun onSaveEvent(
@@ -67,12 +67,12 @@ class EditTaskViewModel : ViewModel() {
         closeScreen: () -> Unit
     ) {
         checkTaskTitleIsValid(taskTitle)
-        checkTaskDateIsEmpty(taskDate)
-        checkTaskTimeIsEmpty()
+        checkTaskDateIsValid(taskDate)
+        checkTaskTimeIsValid()
 
         if (isTaskTitleValid.value == true &&
-            isTaskDateEmpty.value == true &&
-            isTaskTimeEmpty.value == true
+            isTaskDateValid.value == true &&
+            isTaskTimeValid.value == true
         ) {
             viewModelScope.launch {
                 DataBaseConnect.getTaskDao(context).insertTask(
@@ -102,12 +102,12 @@ class EditTaskViewModel : ViewModel() {
         closeScreen: () -> Unit
     ) {
         checkTaskTitleIsValid(task.taskTitle)
-        checkTaskDateIsEmpty(task.taskDate.toString())
-        checkTaskTimeIsEmpty()
+        checkTaskDateIsValid(task.taskDate.toString())
+        checkTaskTimeIsValid()
 
         if (isTaskTitleValid.value == true &&
-            isTaskDateEmpty.value == true &&
-            isTaskTimeEmpty.value == true
+            isTaskDateValid.value == true &&
+            isTaskTimeValid.value == true
         ) {
             viewModelScope.launch {
                 DataBaseConnect.getTaskDao(context).updateTask(
