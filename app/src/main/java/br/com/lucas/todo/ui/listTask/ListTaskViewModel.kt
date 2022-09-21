@@ -1,14 +1,16 @@
 package br.com.lucas.todo.ui.listTask
 
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.lucas.todo.database.DataBaseConnect
 import br.com.lucas.todo.database.Task
+import br.com.lucas.todo.database.TaskDao
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ListTaskViewModel(private val context: Context) : ViewModel() {
+@HiltViewModel
+class ListTaskViewModel @Inject constructor(private val taskDao: TaskDao) : ViewModel() {
 
     val taskList = MutableLiveData<List<Task>>()
 
@@ -18,7 +20,7 @@ class ListTaskViewModel(private val context: Context) : ViewModel() {
 
     fun delete(task: Task, toast: () -> Unit) {
         viewModelScope.launch {
-            DataBaseConnect.getTaskDao(context).deleteTask(task)
+            taskDao.deleteTask(task)
             refreshScreen()
             toast()
         }
@@ -26,7 +28,7 @@ class ListTaskViewModel(private val context: Context) : ViewModel() {
 
     fun refreshScreen() {
         viewModelScope.launch {
-            val tasks = DataBaseConnect.getTaskDao(context).getAllTasks()
+            val tasks = taskDao.getAllTasks()
             val sortedTasks = tasks.sortedWith(compareBy({ it.taskDate }, { it.taskTime }))
             taskList.postValue(
                 sortedTasks

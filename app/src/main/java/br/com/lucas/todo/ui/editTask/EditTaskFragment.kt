@@ -2,8 +2,10 @@ package br.com.lucas.todo.ui.editTask
 
 import android.graphics.Color
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import br.com.lucas.todo.R
 import br.com.lucas.todo.core.Constants.TASK_TO_EDIT
@@ -19,16 +21,17 @@ import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
-class EditTaskFragment : BaseFragment<FragmentEditTaskBinding>(FragmentEditTaskBinding::inflate) {
+@AndroidEntryPoint
+class EditTaskFragment :
+    BaseFragment<FragmentEditTaskBinding, EditTaskViewModel>() {
 
-    private lateinit var viewModel: EditTaskViewModel
     private val task by lazy { arguments?.getSerializable(TASK_TO_EDIT) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = EditTaskViewModel()
         verifyingThatTaskAlreadyExistsAndCatchDataFromDB(task as Task?)
         observingAndVerifyingThatAllFieldsAreFilled()
         insertListeners()
@@ -60,7 +63,7 @@ class EditTaskFragment : BaseFragment<FragmentEditTaskBinding>(FragmentEditTaskB
         }
 
         viewModel.isTaskTimeValid.observe(viewLifecycleOwner) { isValid ->
-            if(isValid) {
+            if (isValid) {
                 binding.edtHourLayout.error = null
             } else {
                 binding.edtHourLayout.error = getString(R.string.required_field)
@@ -69,7 +72,7 @@ class EditTaskFragment : BaseFragment<FragmentEditTaskBinding>(FragmentEditTaskB
 
 
         viewModel.isTaskDateValid.observe(viewLifecycleOwner) { isValid ->
-            if(isValid) {
+            if (isValid) {
                 binding.edtDateLayout.error = null
             } else {
                 binding.edtDateLayout.error = getString(R.string.required_field)
@@ -141,4 +144,9 @@ class EditTaskFragment : BaseFragment<FragmentEditTaskBinding>(FragmentEditTaskB
             binding.edtHour.setText(viewModel.totalTaskTime?.convertIntTimeToString())
         }
     }
+
+    override fun setupViewBinding(layoutInflater: LayoutInflater) =
+        FragmentEditTaskBinding.inflate(layoutInflater)
+
+    override fun setupViewModel() = viewModels<EditTaskViewModel>()
 }
