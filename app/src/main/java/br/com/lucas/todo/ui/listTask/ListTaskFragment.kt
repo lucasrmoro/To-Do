@@ -2,26 +2,25 @@ package br.com.lucas.todo.ui.listTask
 
 import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import br.com.lucas.todo.R
 import br.com.lucas.todo.core.Constants.TASK_TO_EDIT
 import br.com.lucas.todo.databinding.FragmentListTaskBinding
 import br.com.lucas.todo.ui.base.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
+class ListTaskFragment : BaseFragment<FragmentListTaskBinding, ListTaskViewModel>() {
 
-class ListTaskFragment : BaseFragment<FragmentListTaskBinding>(FragmentListTaskBinding::inflate) {
-
-    lateinit var viewModel: ListTaskViewModel
     private val adapter by lazy { ListTaskAdapter() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        context?.let {
-            viewModel = ListTaskViewModel(it)
-        }
         viewModel.taskList.observe(
             viewLifecycleOwner
         ) { tasks ->
@@ -70,4 +69,9 @@ class ListTaskFragment : BaseFragment<FragmentListTaskBinding>(FragmentListTaskB
         super.onResume()
         viewModel.refreshScreen()
     }
+
+    override fun setupViewBinding(layoutInflater: LayoutInflater) = FragmentListTaskBinding.inflate(layoutInflater)
+
+    override fun setupViewModel() = viewModels<ListTaskViewModel>()
+
 }

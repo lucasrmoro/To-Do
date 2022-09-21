@@ -2,7 +2,9 @@ package br.com.lucas.todo.ui.infoTask
 
 import android.graphics.Typeface
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import androidx.fragment.app.viewModels
 import br.com.lucas.todo.R
 import br.com.lucas.todo.core.Constants.TASK_TO_EDIT
 import br.com.lucas.todo.core.extensions.convertIntTimeToString
@@ -10,8 +12,12 @@ import br.com.lucas.todo.core.extensions.convertLongToFullDate
 import br.com.lucas.todo.database.Task
 import br.com.lucas.todo.databinding.FragmentInfoTaskBinding
 import br.com.lucas.todo.ui.base.BaseFragment
+import br.com.lucas.todo.ui.base.DummyViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-class InfoTaskFragment : BaseFragment<FragmentInfoTaskBinding>(FragmentInfoTaskBinding::inflate) {
+@AndroidEntryPoint
+class InfoTaskFragment :
+    BaseFragment<FragmentInfoTaskBinding, DummyViewModel>() {
 
     private val task by lazy { arguments?.getSerializable(TASK_TO_EDIT) as Task? }
 
@@ -31,4 +37,10 @@ class InfoTaskFragment : BaseFragment<FragmentInfoTaskBinding>(FragmentInfoTaskB
             }
         }
     }
+
+    override fun setupViewBinding(layoutInflater: LayoutInflater) =
+        FragmentInfoTaskBinding.inflate(layoutInflater)
+
+    override fun setupViewModel() = viewModels<DummyViewModel>()
+
 }

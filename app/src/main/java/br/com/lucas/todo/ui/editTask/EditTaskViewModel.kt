@@ -7,11 +7,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.lucas.todo.R
 import br.com.lucas.todo.core.extensions.convertStringToLong
-import br.com.lucas.todo.database.DataBaseConnect
 import br.com.lucas.todo.database.Task
+import br.com.lucas.todo.database.TaskDao
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class EditTaskViewModel : ViewModel() {
+@HiltViewModel
+class EditTaskViewModel @Inject constructor(
+    private val taskDao: TaskDao
+): ViewModel() {
 
     val isTaskTitleValid = MutableLiveData<Boolean>()
     val isTaskDateValid = MutableLiveData<Boolean>()
@@ -75,7 +80,7 @@ class EditTaskViewModel : ViewModel() {
             isTaskTimeValid.value == true
         ) {
             viewModelScope.launch {
-                DataBaseConnect.getTaskDao(context).insertTask(
+                taskDao.insertTask(
                     Task(
                         taskTitle = taskTitle,
                         taskDescription = taskDescription,
@@ -110,7 +115,7 @@ class EditTaskViewModel : ViewModel() {
             isTaskTimeValid.value == true
         ) {
             viewModelScope.launch {
-                DataBaseConnect.getTaskDao(context).updateTask(
+                taskDao.updateTask(
                     task
                 )
                 Toast.makeText(

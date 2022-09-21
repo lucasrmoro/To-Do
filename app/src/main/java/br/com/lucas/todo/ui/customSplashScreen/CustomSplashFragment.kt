@@ -1,15 +1,19 @@
 package br.com.lucas.todo.ui.customSplashScreen
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import br.com.lucas.todo.R
 import br.com.lucas.todo.core.extensions.getMainActivity
 import br.com.lucas.todo.databinding.FragmentSplashScreenBinding
 import br.com.lucas.todo.ui.base.BaseFragment
+import br.com.lucas.todo.ui.base.DummyViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
-class CustomSplashFragment : BaseFragment<FragmentSplashScreenBinding>(FragmentSplashScreenBinding::inflate) {
+@AndroidEntryPoint
+class CustomSplashFragment : BaseFragment<FragmentSplashScreenBinding, DummyViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -20,5 +24,9 @@ class CustomSplashFragment : BaseFragment<FragmentSplashScreenBinding>(FragmentS
             view.findNavController().navigate(R.id.fromSplashToListTask)
         }
     }
+
+    override fun setupViewBinding(layoutInflater: LayoutInflater) = FragmentSplashScreenBinding.inflate(layoutInflater)
+
+    override fun setupViewModel(): Lazy<DummyViewModel> = viewModels()
 
 }

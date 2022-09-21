@@ -1,19 +1,26 @@
 package br.com.lucas.todo.ui.base
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
 import androidx.viewbinding.ViewBinding
 
-abstract class BaseFragment<T : ViewBinding>(
-    private val bindingInflater: (layoutInflater: LayoutInflater) -> T
-) : Fragment() {
+abstract class BaseFragment<VB : ViewBinding, VM: ViewModel> : Fragment() {
 
-    private var _binding: T? = null
+    private var _binding: VB? = null
     protected val binding get() = _binding!!
+
+    private var _viewModel: Lazy<VM>? = null
+    protected val viewModel: VM get() = _viewModel!!.value
+
+    abstract fun setupViewBinding(layoutInflater: LayoutInflater): VB
+
+    abstract fun setupViewModel(): Lazy<VM>
 
     @CallSuper
     override fun onCreateView(
@@ -21,7 +28,8 @@ abstract class BaseFragment<T : ViewBinding>(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = bindingInflater(inflater)
+        _binding = setupViewBinding(inflater)
+        _viewModel = setupViewModel()
         return binding.root
     }
 
@@ -30,4 +38,5 @@ abstract class BaseFragment<T : ViewBinding>(
         super.onDestroyView()
         _binding = null
     }
+
 }
