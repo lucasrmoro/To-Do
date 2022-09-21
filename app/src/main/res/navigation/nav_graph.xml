@@ -37,19 +37,11 @@
     <fragment
         android:id="@+id/editTaskFragment"
         android:name="br.com.lucas.todo.ui.editTask.EditTaskFragment"
-        android:label="EditTaskFragment">
-        <action
-            android:id="@+id/fromEditTaskToListTask"
-            app:destination="@id/listTaskFragment" />
-    </fragment>
+        android:label="EditTaskFragment"/>
 
     <fragment
         android:id="@+id/infoTaskFragment"
         android:name="br.com.lucas.todo.ui.infoTask.InfoTaskFragment"
-        android:label="InfoTaskFragment">
-        <action
-            android:id="@+id/fromInfoTaskToListTask"
-            app:destination="@id/listTaskFragment" />
-    </fragment>
+        android:label="InfoTaskFragment"/>
 
 </navigation>
