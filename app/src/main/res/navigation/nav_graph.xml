@@ -12,6 +12,7 @@
         <action
             android:id="@+id/fromSplashToListTask"
             app:destination="@id/listTaskFragment"
+            app:enterAnim="@android:anim/fade_in"
             app:popUpTo="@id/customSplashFragment"
             app:popUpToInclusive="true" />
     </fragment>
@@ -23,10 +24,18 @@
         tools:layout="@layout/fragment_list_task">
         <action
             android:id="@+id/fromListTaskToEditTask"
-            app:destination="@id/editTaskFragment" />
+            app:destination="@id/editTaskFragment"
+            app:enterAnim="@anim/slide_fade_in"
+            app:exitAnim="@anim/slide_fade_out"
+            app:popEnterAnim="@anim/slide_fade_in"
+            app:popExitAnim="@anim/slide_fade_out" />
         <action
             android:id="@+id/fromListTaskToInfoTask"
-            app:destination="@id/infoTaskFragment" />
+            app:destination="@id/infoTaskFragment"
+            app:enterAnim="@anim/slide_fade_in"
+            app:exitAnim="@anim/slide_fade_out"
+            app:popEnterAnim="@anim/slide_fade_in"
+            app:popExitAnim="@anim/slide_fade_out" />
         <argument
             android:name="task"
             android:defaultValue="@null"
@@ -37,11 +46,11 @@
     <fragment
         android:id="@+id/editTaskFragment"
         android:name="br.com.lucas.todo.ui.editTask.EditTaskFragment"
-        android:label="EditTaskFragment"/>
+        android:label="EditTaskFragment" />
 
     <fragment
         android:id="@+id/infoTaskFragment"
         android:name="br.com.lucas.todo.ui.infoTask.InfoTaskFragment"
-        android:label="InfoTaskFragment"/>
+        android:label="InfoTaskFragment" />
 
 </navigation>
