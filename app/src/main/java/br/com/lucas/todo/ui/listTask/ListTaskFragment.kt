@@ -2,40 +2,23 @@ package br.com.lucas.todo.ui.listTask
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import br.com.lucas.todo.R
-import br.com.lucas.todo.core.extensions.hideAppBar
+import br.com.lucas.todo.core.Constants.TASK_TO_EDIT
 import br.com.lucas.todo.databinding.FragmentListTaskBinding
-import br.com.lucas.todo.ui.editTask.EditTaskFragment
-import br.com.lucas.todo.ui.editTask.EditTaskFragment.Companion.TASK_NAME_KEY
+import br.com.lucas.todo.ui.base.BaseFragment
 
 
-class ListTaskFragment : Fragment() {
+class ListTaskFragment : BaseFragment<FragmentListTaskBinding>(FragmentListTaskBinding::inflate) {
 
-    private var _binding: FragmentListTaskBinding? = null
-    private val binding get() = _binding!!
     lateinit var viewModel: ListTaskViewModel
     private val adapter by lazy { ListTaskAdapter() }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentListTaskBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        hideAppBar()
+
         context?.let {
             viewModel = ListTaskViewModel(it)
         }
@@ -72,7 +55,7 @@ class ListTaskFragment : Fragment() {
         adapter.listenerLaunchInfoTask(context, binding.recyclerViewTasks)
 
         adapter.listenerEdit = {
-            val task = Bundle().apply { putSerializable(TASK_NAME_KEY, it) }
+            val task = Bundle().apply { putSerializable(TASK_TO_EDIT, it) }
             view?.findNavController()?.navigate(R.id.fromListTaskToEditTask, task)
         }
         adapter.listenerDelete = {
@@ -86,10 +69,5 @@ class ListTaskFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         viewModel.refreshScreen()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
