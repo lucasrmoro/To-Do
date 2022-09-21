@@ -12,13 +12,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import br.com.lucas.todo.R
+import br.com.lucas.todo.core.Constants.TASK_TO_EDIT
 import br.com.lucas.todo.core.extensions.OnItemClickListener
 import br.com.lucas.todo.core.extensions.addOnItemClickListener
 import br.com.lucas.todo.core.extensions.convertIntTimeToString
 import br.com.lucas.todo.core.extensions.convertLongToFullDate
 import br.com.lucas.todo.database.Task
 import br.com.lucas.todo.databinding.ListTaskItemBinding
-import br.com.lucas.todo.ui.editTask.EditTaskFragment.Companion.TASK_NAME_KEY
 
 class ListTaskAdapter : ListAdapter<Task, ListTaskAdapter.TaskViewHolder>(DiffCallback()) {
 
@@ -32,7 +32,7 @@ class ListTaskAdapter : ListAdapter<Task, ListTaskAdapter.TaskViewHolder>(DiffCa
     fun listenerLaunchInfoTask(context: Context, listOfTasks: RecyclerView) {
         listOfTasks.addOnItemClickListener(object : OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
-                val task = Bundle().apply { putSerializable(TASK_NAME_KEY, getItem(position)) }
+                val task = Bundle().apply { putSerializable(TASK_TO_EDIT, getItem(position)) }
                 view.findNavController().navigate(R.id.fromListTaskToInfoTask, task)
             }
         })
