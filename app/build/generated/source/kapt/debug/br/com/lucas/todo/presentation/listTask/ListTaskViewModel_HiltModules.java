@@ -31,7 +31,7 @@ public final class ListTaskViewModel_HiltModules {
 
     @Binds
     @IntoMap
-    @StringKey("br.com.lucas.todo.ui.listTask.ListTaskViewModel")
+    @StringKey("br.com.lucas.todo.presentation.listTask.ListTaskViewModel")
     @HiltViewModelMap
     public abstract ViewModel binds(ListTaskViewModel vm);
   }
@@ -46,7 +46,7 @@ public final class ListTaskViewModel_HiltModules {
     @IntoSet
     @HiltViewModelMap.KeySet
     public static String provide() {
-      return "br.com.lucas.todo.ui.listTask.ListTaskViewModel";
+      return "br.com.lucas.todo.presentation.listTask.ListTaskViewModel";
     }
   }
 }

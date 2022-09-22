@@ -11,7 +11,13 @@ import br.com.lucas.todo.core.di.AppModule;
 import br.com.lucas.todo.core.di.AppModule_ProvideAppContextFactory;
 import br.com.lucas.todo.core.di.AppModule_ProvideDummyViewModelFactory;
 import br.com.lucas.todo.core.di.AppModule_ProvideRoomDBFactory;
+import br.com.lucas.todo.core.di.AppModule_ProvideTaskRepositoryFactory;
 import br.com.lucas.todo.data.db.dao.TaskDao;
+import br.com.lucas.todo.data.db.repository.TaskRepository;
+import br.com.lucas.todo.domain.useCases.DeleteTaskUseCase;
+import br.com.lucas.todo.domain.useCases.GetAllTasksUseCase;
+import br.com.lucas.todo.domain.useCases.InsertTaskUseCase;
+import br.com.lucas.todo.domain.useCases.UpdateTaskUseCase;
 import br.com.lucas.todo.presentation.base.DummyViewModel;
 import br.com.lucas.todo.presentation.base.DummyViewModel_HiltModules_KeyModule_ProvideFactory;
 import br.com.lucas.todo.presentation.customSplashScreen.CustomSplashFragment;
@@ -66,6 +72,8 @@ public final class DaggerAppApplication_HiltComponents_SingletonC extends AppApp
 
   private Provider<TaskDao> provideRoomDBProvider;
 
+  private Provider<TaskRepository> provideTaskRepositoryProvider;
+
   private DaggerAppApplication_HiltComponents_SingletonC(
       ApplicationContextModule applicationContextModuleParam) {
     this.applicationContextModule = applicationContextModuleParam;
@@ -85,11 +93,16 @@ public final class DaggerAppApplication_HiltComponents_SingletonC extends AppApp
     return AppModule_ProvideRoomDBFactory.provideRoomDB(provideAppContextProvider.get());
   }
 
+  private TaskRepository taskRepository() {
+    return AppModule_ProvideTaskRepositoryFactory.provideTaskRepository(provideRoomDBProvider.get());
+  }
+
   @SuppressWarnings("unchecked")
   private void initialize(final ApplicationContextModule applicationContextModuleParam) {
     this.provideDummyViewModelProvider = DoubleCheck.provider(new SwitchingProvider<DummyViewModel>(singletonC, 0));
-    this.provideAppContextProvider = DoubleCheck.provider(new SwitchingProvider<Context>(singletonC, 2));
-    this.provideRoomDBProvider = DoubleCheck.provider(new SwitchingProvider<TaskDao>(singletonC, 1));
+    this.provideAppContextProvider = DoubleCheck.provider(new SwitchingProvider<Context>(singletonC, 3));
+    this.provideRoomDBProvider = DoubleCheck.provider(new SwitchingProvider<TaskDao>(singletonC, 2));
+    this.provideTaskRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<TaskRepository>(singletonC, 1));
   }
 
   @Override
@@ -463,12 +476,28 @@ public final class DaggerAppApplication_HiltComponents_SingletonC extends AppApp
 
     }
 
+    private InsertTaskUseCase insertTaskUseCase() {
+      return new InsertTaskUseCase(singletonC.provideTaskRepositoryProvider.get());
+    }
+
+    private UpdateTaskUseCase updateTaskUseCase() {
+      return new UpdateTaskUseCase(singletonC.provideTaskRepositoryProvider.get());
+    }
+
     private EditTaskViewModel editTaskViewModel() {
-      return new EditTaskViewModel(singletonC.provideRoomDBProvider.get());
+      return new EditTaskViewModel(insertTaskUseCase(), updateTaskUseCase());
+    }
+
+    private DeleteTaskUseCase deleteTaskUseCase() {
+      return new DeleteTaskUseCase(singletonC.provideTaskRepositoryProvider.get());
+    }
+
+    private GetAllTasksUseCase getAllTasksUseCase() {
+      return new GetAllTasksUseCase(singletonC.provideTaskRepositoryProvider.get());
     }
 
     private ListTaskViewModel listTaskViewModel() {
-      return new ListTaskViewModel(singletonC.provideRoomDBProvider.get());
+      return new ListTaskViewModel(deleteTaskUseCase(), getAllTasksUseCase());
     }
 
     @SuppressWarnings("unchecked")
@@ -479,7 +508,7 @@ public final class DaggerAppApplication_HiltComponents_SingletonC extends AppApp
 
     @Override
     public Map<String, Provider<ViewModel>> getHiltViewModelMap() {
-      return MapBuilder.<String, Provider<ViewModel>>newMapBuilder(3).put("br.com.lucas.todo.ui.base.DummyViewModel", (Provider) singletonC.provideDummyViewModelProvider).put("br.com.lucas.todo.ui.editTask.EditTaskViewModel", (Provider) editTaskViewModelProvider).put("br.com.lucas.todo.ui.listTask.ListTaskViewModel", (Provider) listTaskViewModelProvider).build();
+      return MapBuilder.<String, Provider<ViewModel>>newMapBuilder(3).put("br.com.lucas.todo.presentation.base.DummyViewModel", (Provider) singletonC.provideDummyViewModelProvider).put("br.com.lucas.todo.presentation.editTask.EditTaskViewModel", (Provider) editTaskViewModelProvider).put("br.com.lucas.todo.presentation.listTask.ListTaskViewModel", (Provider) listTaskViewModelProvider).build();
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {
@@ -503,10 +532,10 @@ public final class DaggerAppApplication_HiltComponents_SingletonC extends AppApp
       @Override
       public T get() {
         switch (id) {
-          case 0: // br.com.lucas.todo.ui.editTask.EditTaskViewModel 
+          case 0: // br.com.lucas.todo.presentation.editTask.EditTaskViewModel 
           return (T) viewModelCImpl.editTaskViewModel();
 
-          case 1: // br.com.lucas.todo.ui.listTask.ListTaskViewModel 
+          case 1: // br.com.lucas.todo.presentation.listTask.ListTaskViewModel 
           return (T) viewModelCImpl.listTaskViewModel();
 
           default: throw new AssertionError(id);
@@ -599,13 +628,16 @@ public final class DaggerAppApplication_HiltComponents_SingletonC extends AppApp
     @Override
     public T get() {
       switch (id) {
-        case 0: // br.com.lucas.todo.ui.base.DummyViewModel 
+        case 0: // br.com.lucas.todo.presentation.base.DummyViewModel 
         return (T) AppModule_ProvideDummyViewModelFactory.provideDummyViewModel();
 
-        case 1: // br.com.lucas.todo.database.TaskDao 
+        case 1: // br.com.lucas.todo.data.db.repository.TaskRepository 
+        return (T) singletonC.taskRepository();
+
+        case 2: // br.com.lucas.todo.data.db.dao.TaskDao 
         return (T) singletonC.taskDao();
 
-        case 2: // android.content.Context 
+        case 3: // android.content.Context 
         return (T) singletonC.context();
 
         default: throw new AssertionError(id);

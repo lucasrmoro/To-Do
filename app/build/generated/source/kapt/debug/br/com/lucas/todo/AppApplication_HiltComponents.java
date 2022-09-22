@@ -1,7 +1,6 @@
 package br.com.lucas.todo;
 
 import br.com.lucas.todo.core.di.AppModule;
-import br.com.lucas.todo.presentation.MainActivity_GeneratedInjector;
 import br.com.lucas.todo.presentation.base.DummyViewModel_HiltModules;
 import br.com.lucas.todo.presentation.customSplashScreen.CustomSplashFragment_GeneratedInjector;
 import br.com.lucas.todo.presentation.editTask.EditTaskFragment_GeneratedInjector;

@@ -1,6 +1,7 @@
 package br.com.lucas.todo.presentation.listTask;
 
-import br.com.lucas.todo.data.db.dao.TaskDao;
+import br.com.lucas.todo.domain.useCases.DeleteTaskUseCase;
+import br.com.lucas.todo.domain.useCases.GetAllTasksUseCase;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;
 import javax.annotation.processing.Generated;
@@ -16,22 +17,29 @@ import javax.inject.Provider;
     "rawtypes"
 })
 public final class ListTaskViewModel_Factory implements Factory<ListTaskViewModel> {
-  private final Provider<TaskDao> taskDaoProvider;
+  private final Provider<DeleteTaskUseCase> deleteTaskUseCaseProvider;
 
-  public ListTaskViewModel_Factory(Provider<TaskDao> taskDaoProvider) {
-    this.taskDaoProvider = taskDaoProvider;
+  private final Provider<GetAllTasksUseCase> getAllTasksUseCaseProvider;
+
+  public ListTaskViewModel_Factory(Provider<DeleteTaskUseCase> deleteTaskUseCaseProvider,
+      Provider<GetAllTasksUseCase> getAllTasksUseCaseProvider) {
+    this.deleteTaskUseCaseProvider = deleteTaskUseCaseProvider;
+    this.getAllTasksUseCaseProvider = getAllTasksUseCaseProvider;
   }
 
   @Override
   public ListTaskViewModel get() {
-    return newInstance(taskDaoProvider.get());
+    return newInstance(deleteTaskUseCaseProvider.get(), getAllTasksUseCaseProvider.get());
   }
 
-  public static ListTaskViewModel_Factory create(Provider<TaskDao> taskDaoProvider) {
-    return new ListTaskViewModel_Factory(taskDaoProvider);
+  public static ListTaskViewModel_Factory create(
+      Provider<DeleteTaskUseCase> deleteTaskUseCaseProvider,
+      Provider<GetAllTasksUseCase> getAllTasksUseCaseProvider) {
+    return new ListTaskViewModel_Factory(deleteTaskUseCaseProvider, getAllTasksUseCaseProvider);
   }
 
-  public static ListTaskViewModel newInstance(TaskDao taskDao) {
-    return new ListTaskViewModel(taskDao);
+  public static ListTaskViewModel newInstance(DeleteTaskUseCase deleteTaskUseCase,
+      GetAllTasksUseCase getAllTasksUseCase) {
+    return new ListTaskViewModel(deleteTaskUseCase, getAllTasksUseCase);
   }
 }

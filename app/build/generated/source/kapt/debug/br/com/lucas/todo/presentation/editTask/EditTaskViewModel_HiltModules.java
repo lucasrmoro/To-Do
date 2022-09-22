@@ -31,7 +31,7 @@ public final class EditTaskViewModel_HiltModules {
 
     @Binds
     @IntoMap
-    @StringKey("br.com.lucas.todo.ui.editTask.EditTaskViewModel")
+    @StringKey("br.com.lucas.todo.presentation.editTask.EditTaskViewModel")
     @HiltViewModelMap
     public abstract ViewModel binds(EditTaskViewModel vm);
   }
@@ -46,7 +46,7 @@ public final class EditTaskViewModel_HiltModules {
     @IntoSet
     @HiltViewModelMap.KeySet
     public static String provide() {
-      return "br.com.lucas.todo.ui.editTask.EditTaskViewModel";
+      return "br.com.lucas.todo.presentation.editTask.EditTaskViewModel";
     }
   }
 }

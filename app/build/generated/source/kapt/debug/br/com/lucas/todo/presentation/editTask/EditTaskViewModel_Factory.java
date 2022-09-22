@@ -1,6 +1,7 @@
 package br.com.lucas.todo.presentation.editTask;
 
-import br.com.lucas.todo.data.db.dao.TaskDao;
+import br.com.lucas.todo.domain.useCases.InsertTaskUseCase;
+import br.com.lucas.todo.domain.useCases.UpdateTaskUseCase;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;
 import javax.annotation.processing.Generated;
@@ -16,22 +17,29 @@ import javax.inject.Provider;
     "rawtypes"
 })
 public final class EditTaskViewModel_Factory implements Factory<EditTaskViewModel> {
-  private final Provider<TaskDao> taskDaoProvider;
+  private final Provider<InsertTaskUseCase> insertTaskUseCaseProvider;
 
-  public EditTaskViewModel_Factory(Provider<TaskDao> taskDaoProvider) {
-    this.taskDaoProvider = taskDaoProvider;
+  private final Provider<UpdateTaskUseCase> updateTaskUseCaseProvider;
+
+  public EditTaskViewModel_Factory(Provider<InsertTaskUseCase> insertTaskUseCaseProvider,
+      Provider<UpdateTaskUseCase> updateTaskUseCaseProvider) {
+    this.insertTaskUseCaseProvider = insertTaskUseCaseProvider;
+    this.updateTaskUseCaseProvider = updateTaskUseCaseProvider;
   }
 
   @Override
   public EditTaskViewModel get() {
-    return newInstance(taskDaoProvider.get());
+    return newInstance(insertTaskUseCaseProvider.get(), updateTaskUseCaseProvider.get());
   }
 
-  public static EditTaskViewModel_Factory create(Provider<TaskDao> taskDaoProvider) {
-    return new EditTaskViewModel_Factory(taskDaoProvider);
+  public static EditTaskViewModel_Factory create(
+      Provider<InsertTaskUseCase> insertTaskUseCaseProvider,
+      Provider<UpdateTaskUseCase> updateTaskUseCaseProvider) {
+    return new EditTaskViewModel_Factory(insertTaskUseCaseProvider, updateTaskUseCaseProvider);
   }
 
-  public static EditTaskViewModel newInstance(TaskDao taskDao) {
-    return new EditTaskViewModel(taskDao);
+  public static EditTaskViewModel newInstance(InsertTaskUseCase insertTaskUseCase,
+      UpdateTaskUseCase updateTaskUseCase) {
+    return new EditTaskViewModel(insertTaskUseCase, updateTaskUseCase);
   }
 }

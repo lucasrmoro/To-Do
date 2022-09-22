@@ -31,7 +31,7 @@ public final class DummyViewModel_HiltModules {
 
     @Binds
     @IntoMap
-    @StringKey("br.com.lucas.todo.ui.base.DummyViewModel")
+    @StringKey("br.com.lucas.todo.presentation.base.DummyViewModel")
     @HiltViewModelMap
     public abstract ViewModel binds(DummyViewModel vm);
   }
@@ -46,7 +46,7 @@ public final class DummyViewModel_HiltModules {
     @IntoSet
     @HiltViewModelMap.KeySet
     public static String provide() {
-      return "br.com.lucas.todo.ui.base.DummyViewModel";
+      return "br.com.lucas.todo.presentation.base.DummyViewModel";
     }
   }
 }
