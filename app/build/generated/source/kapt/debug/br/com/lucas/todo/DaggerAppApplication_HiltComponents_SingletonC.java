@@ -11,7 +11,9 @@ import br.com.lucas.todo.core.di.AppModule;
 import br.com.lucas.todo.core.di.AppModule_ProvideAppContextFactory;
 import br.com.lucas.todo.core.di.AppModule_ProvideDummyViewModelFactory;
 import br.com.lucas.todo.core.di.AppModule_ProvideRoomDBFactory;
+import br.com.lucas.todo.core.di.AppModule_ProvideTaskDaoFactory;
 import br.com.lucas.todo.core.di.AppModule_ProvideTaskRepositoryFactory;
+import br.com.lucas.todo.data.db.dao.AppDataBase;
 import br.com.lucas.todo.data.db.dao.TaskDao;
 import br.com.lucas.todo.data.db.repository.TaskRepository;
 import br.com.lucas.todo.domain.useCases.DeleteTaskUseCase;
@@ -70,7 +72,9 @@ public final class DaggerAppApplication_HiltComponents_SingletonC extends AppApp
 
   private Provider<Context> provideAppContextProvider;
 
-  private Provider<TaskDao> provideRoomDBProvider;
+  private Provider<AppDataBase> provideRoomDBProvider;
+
+  private Provider<TaskDao> provideTaskDaoProvider;
 
   private Provider<TaskRepository> provideTaskRepositoryProvider;
 
@@ -89,19 +93,24 @@ public final class DaggerAppApplication_HiltComponents_SingletonC extends AppApp
     return AppModule_ProvideAppContextFactory.provideAppContext(ApplicationContextModule_ProvideContextFactory.provideContext(applicationContextModule));
   }
 
-  private TaskDao taskDao() {
+  private AppDataBase appDataBase() {
     return AppModule_ProvideRoomDBFactory.provideRoomDB(provideAppContextProvider.get());
   }
 
+  private TaskDao taskDao() {
+    return AppModule_ProvideTaskDaoFactory.provideTaskDao(provideRoomDBProvider.get());
+  }
+
   private TaskRepository taskRepository() {
-    return AppModule_ProvideTaskRepositoryFactory.provideTaskRepository(provideRoomDBProvider.get());
+    return AppModule_ProvideTaskRepositoryFactory.provideTaskRepository(provideTaskDaoProvider.get());
   }
 
   @SuppressWarnings("unchecked")
   private void initialize(final ApplicationContextModule applicationContextModuleParam) {
     this.provideDummyViewModelProvider = DoubleCheck.provider(new SwitchingProvider<DummyViewModel>(singletonC, 0));
-    this.provideAppContextProvider = DoubleCheck.provider(new SwitchingProvider<Context>(singletonC, 3));
-    this.provideRoomDBProvider = DoubleCheck.provider(new SwitchingProvider<TaskDao>(singletonC, 2));
+    this.provideAppContextProvider = DoubleCheck.provider(new SwitchingProvider<Context>(singletonC, 4));
+    this.provideRoomDBProvider = DoubleCheck.provider(new SwitchingProvider<AppDataBase>(singletonC, 3));
+    this.provideTaskDaoProvider = DoubleCheck.provider(new SwitchingProvider<TaskDao>(singletonC, 2));
     this.provideTaskRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<TaskRepository>(singletonC, 1));
   }
 
@@ -637,7 +646,10 @@ public final class DaggerAppApplication_HiltComponents_SingletonC extends AppApp
         case 2: // br.com.lucas.todo.data.db.dao.TaskDao 
         return (T) singletonC.taskDao();
 
-        case 3: // android.content.Context 
+        case 3: // br.com.lucas.todo.data.db.dao.AppDataBase 
+        return (T) singletonC.appDataBase();
+
+        case 4: // android.content.Context 
         return (T) singletonC.context();
 
         default: throw new AssertionError(id);
