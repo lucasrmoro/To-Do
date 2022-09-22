@@ -1,4 +1,4 @@
-package br.com.lucas.todo.ui.base
+package br.com.lucas.todo.presentation.base
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

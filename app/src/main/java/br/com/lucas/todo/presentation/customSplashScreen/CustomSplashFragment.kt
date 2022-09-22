@@ -1,4 +1,4 @@
-package br.com.lucas.todo.ui.customSplashScreen
+package br.com.lucas.todo.presentation.customSplashScreen
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,8 +8,8 @@ import androidx.navigation.findNavController
 import br.com.lucas.todo.R
 import br.com.lucas.todo.core.extensions.getMainActivity
 import br.com.lucas.todo.databinding.FragmentSplashScreenBinding
-import br.com.lucas.todo.ui.base.BaseFragment
-import br.com.lucas.todo.ui.base.DummyViewModel
+import br.com.lucas.todo.presentation.base.BaseFragment
+import br.com.lucas.todo.presentation.base.DummyViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -3,7 +3,7 @@ package br.com.lucas.todo.core.di
 import android.content.Context
 import androidx.room.Room
 import br.com.lucas.todo.database.AppDataBase
-import br.com.lucas.todo.ui.base.DummyViewModel
+import br.com.lucas.todo.presentation.base.DummyViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

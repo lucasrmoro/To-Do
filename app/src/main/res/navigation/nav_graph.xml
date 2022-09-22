@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/customSplashFragment"
-        android:name="br.com.lucas.todo.ui.customSplashScreen.CustomSplashFragment"
+        android:name="br.com.lucas.todo.presentation.customSplashScreen.CustomSplashFragment"
         android:label="CustomSplashFragment">
         <action
             android:id="@+id/fromSplashToListTask"
@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/listTaskFragment"
-        android:name="br.com.lucas.todo.ui.listTask.ListTaskFragment"
+        android:name="br.com.lucas.todo.presentation.listTask.ListTaskFragment"
         android:label="fragment_list_task"
         tools:layout="@layout/fragment_list_task">
         <action
@@ -45,12 +45,12 @@
 
     <fragment
         android:id="@+id/editTaskFragment"
-        android:name="br.com.lucas.todo.ui.editTask.EditTaskFragment"
+        android:name="br.com.lucas.todo.presentation.editTask.EditTaskFragment"
         android:label="EditTaskFragment" />
 
     <fragment
         android:id="@+id/infoTaskFragment"
-        android:name="br.com.lucas.todo.ui.infoTask.InfoTaskFragment"
+        android:name="br.com.lucas.todo.presentation.infoTask.InfoTaskFragment"
         android:label="InfoTaskFragment" />
 
 </navigation>

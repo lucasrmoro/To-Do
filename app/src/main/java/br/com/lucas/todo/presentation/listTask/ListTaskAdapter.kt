@@ -1,4 +1,4 @@
-package br.com.lucas.todo.ui.listTask
+package br.com.lucas.todo.presentation.listTask
 
 import android.annotation.SuppressLint
 import android.content.Context

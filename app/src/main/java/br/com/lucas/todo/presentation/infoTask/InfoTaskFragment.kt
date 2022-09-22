@@ -1,4 +1,4 @@
-package br.com.lucas.todo.ui.infoTask
+package br.com.lucas.todo.presentation.infoTask
 
 import android.graphics.Typeface
 import android.os.Bundle
@@ -11,8 +11,8 @@ import br.com.lucas.todo.core.extensions.convertIntTimeToString
 import br.com.lucas.todo.core.extensions.convertLongToFullDate
 import br.com.lucas.todo.database.Task
 import br.com.lucas.todo.databinding.FragmentInfoTaskBinding
-import br.com.lucas.todo.ui.base.BaseFragment
-import br.com.lucas.todo.ui.base.DummyViewModel
+import br.com.lucas.todo.presentation.base.BaseFragment
+import br.com.lucas.todo.presentation.base.DummyViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

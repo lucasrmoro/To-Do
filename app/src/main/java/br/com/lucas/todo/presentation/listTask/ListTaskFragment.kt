@@ -1,4 +1,4 @@
-package br.com.lucas.todo.ui.listTask
+package br.com.lucas.todo.presentation.listTask
 
 import android.content.Context
 import android.os.Bundle
@@ -10,7 +10,7 @@ import androidx.navigation.findNavController
 import br.com.lucas.todo.R
 import br.com.lucas.todo.core.Constants.TASK_TO_EDIT
 import br.com.lucas.todo.databinding.FragmentListTaskBinding
-import br.com.lucas.todo.ui.base.BaseFragment
+import br.com.lucas.todo.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

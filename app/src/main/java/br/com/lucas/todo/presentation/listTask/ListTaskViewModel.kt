@@ -1,4 +1,4 @@
-package br.com.lucas.todo.ui.listTask
+package br.com.lucas.todo.presentation.listTask
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

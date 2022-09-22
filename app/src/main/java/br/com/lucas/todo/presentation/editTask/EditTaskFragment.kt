@@ -1,4 +1,4 @@
-package br.com.lucas.todo.ui.editTask
+package br.com.lucas.todo.presentation.editTask
 
 import android.graphics.Color
 import android.os.Bundle
@@ -15,7 +15,7 @@ import br.com.lucas.todo.core.extensions.formatDateToString
 import br.com.lucas.todo.core.extensions.getColorResCompat
 import br.com.lucas.todo.database.Task
 import br.com.lucas.todo.databinding.FragmentEditTaskBinding
-import br.com.lucas.todo.ui.base.BaseFragment
+import br.com.lucas.todo.presentation.base.BaseFragment
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
