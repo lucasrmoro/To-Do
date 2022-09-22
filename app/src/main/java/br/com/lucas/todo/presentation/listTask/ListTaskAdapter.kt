@@ -1,89 +1,39 @@
 package br.com.lucas.todo.presentation.listTask
 
-import android.annotation.SuppressLint
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupMenu
-import androidx.navigation.findNavController
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import br.com.lucas.todo.R
-import br.com.lucas.todo.core.Constants.TASK_TO_EDIT
-import br.com.lucas.todo.core.ext.OnItemClickListener
-import br.com.lucas.todo.core.ext.addOnItemClickListener
 import br.com.lucas.todo.core.ext.convertIntTimeToString
 import br.com.lucas.todo.core.ext.convertLongToFullDate
+import br.com.lucas.todo.core.ext.getLayoutInflater
+import br.com.lucas.todo.core.ext.showPopUp
 import br.com.lucas.todo.databinding.ListTaskItemBinding
 import br.com.lucas.todo.domain.model.Task
+import br.com.lucas.todo.presentation.base.adapter.BaseAdapter
 
-class ListTaskAdapter : ListAdapter<Task, ListTaskAdapter.TaskViewHolder>(DiffCallback()) {
+class ListTaskAdapter(
+    private val listTaskAdapterInterface: ListTaskAdapterInterface
+) : BaseAdapter<ListTaskItemBinding, Task>() {
 
-    var listenerEdit: (Task) -> Unit = {}
-    var listenerDelete: (Task) -> Unit = {}
+    override fun adapterItemViewInflater(
+        parent: ViewGroup,
+        viewType: Int
+    ) = ListTaskItemBinding.inflate(parent.getLayoutInflater(), parent, false)
 
-    fun addTask(tasks: List<Task>) {
-        submitList(tasks)
+    override fun onBind(adapterItem: Task) {
+        binding.root.setOnClickListener { listTaskAdapterInterface.onTaskClicked(adapterItem) }
+        binding.tvTitle.text = adapterItem.taskTitle
+        binding.tvDate.text = adapterItem.taskDate.convertLongToFullDate()
+        binding.tvTime.text = adapterItem.taskTime.convertIntTimeToString()
+        binding.ivMore.setOnClickListener { showPopUp(it, adapterItem) }
     }
 
-    fun listenerLaunchInfoTask(listOfTasks: RecyclerView) {
-        listOfTasks.addOnItemClickListener(object : OnItemClickListener {
-            override fun onItemClicked(position: Int, view: View) {
-                val task = Bundle().apply { putParcelable(TASK_TO_EDIT, getItem(position)) }
-                view.findNavController().navigate(R.id.fromListTaskToInfoTask, task)
+    private fun showPopUp(view: View, task: Task) = with(view) {
+        showPopUp { itemId ->
+            when (itemId) {
+                R.id.popup_menu_edit_action -> listTaskAdapterInterface.onEditOptionClicked(task)
+                R.id.popup_menu_delete_action -> listTaskAdapterInterface.onDeleteOptionClicked(task)
             }
-        })
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder =
-        TaskViewHolder(
-            ListTaskItemBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        )
-
-    override fun onBindViewHolder(holder: TaskViewHolder, position: Int) =
-        holder.bind(getItem(position))
-
-    inner class TaskViewHolder(private val binding: ListTaskItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        @SuppressLint("SetTextI18n")
-        fun bind(task: Task) {
-            binding.tvTitle.text = task.taskTitle
-            binding.tvDate.text = task.taskDate.convertLongToFullDate()
-            binding.tvTime.text = task.taskTime.convertIntTimeToString()
-            binding.ivMore.setOnClickListener {
-                showPopUp(task)
-            }
-        }
-
-        private fun showPopUp(task: Task) {
-            val ivMore = binding.ivMore
-            val popUpMenu = PopupMenu(ivMore.context, ivMore)
-            popUpMenu.menuInflater.inflate(R.menu.popup_menu, popUpMenu.menu)
-            popUpMenu.setOnMenuItemClickListener {
-                when (it.itemId) {
-                    R.id.popup_menu_edit_action -> listenerEdit(task)
-                    R.id.popup_menu_delete_action -> listenerDelete(task)
-                }
-                true
-            }
-            popUpMenu.show()
-        }
-
-    }
-
-    private class DiffCallback: DiffUtil.ItemCallback<Task>(){
-        override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {
-            return oldItem.uid == newItem.uid
-        }
-
-        override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean {
-            return oldItem == newItem
         }
     }
 }
