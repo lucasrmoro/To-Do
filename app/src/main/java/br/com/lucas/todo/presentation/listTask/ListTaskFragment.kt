@@ -51,7 +51,7 @@ class ListTaskFragment : BaseFragment<FragmentListTaskBinding, ListTaskViewModel
             it.findNavController().navigate(R.id.fromListTaskToEditTask, )
         }
 
-        adapter.listenerLaunchInfoTask(context, binding.recyclerViewTasks)
+        adapter.listenerLaunchInfoTask(binding.recyclerViewTasks)
 
         adapter.listenerEdit = {
             val task = Bundle().apply { putParcelable(TASK_TO_EDIT, it) }
