@@ -1,4 +1,4 @@
-package br.com.lucas.todo.data
+package br.com.lucas.todo.data.db.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

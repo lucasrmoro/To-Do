@@ -17,7 +17,7 @@ import br.com.lucas.todo.core.extensions.OnItemClickListener
 import br.com.lucas.todo.core.extensions.addOnItemClickListener
 import br.com.lucas.todo.core.extensions.convertIntTimeToString
 import br.com.lucas.todo.core.extensions.convertLongToFullDate
-import br.com.lucas.todo.data.Task
+import br.com.lucas.todo.data.db.entities.Task
 import br.com.lucas.todo.databinding.ListTaskItemBinding
 
 class ListTaskAdapter : ListAdapter<Task, ListTaskAdapter.TaskViewHolder>(DiffCallback()) {

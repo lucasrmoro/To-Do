@@ -1,6 +1,7 @@
-package br.com.lucas.todo.data
+package br.com.lucas.todo.data.db.dao
 
 import androidx.room.*
+import br.com.lucas.todo.data.db.entities.Task
 
 @Dao
 interface TaskDao {
