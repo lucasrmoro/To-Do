@@ -1,19 +1,19 @@
 package br.com.lucas.todo.data.db.dao
 
 import androidx.room.*
-import br.com.lucas.todo.data.db.entities.Task
+import br.com.lucas.todo.data.db.entities.TaskEntity
 
 @Dao
 interface TaskDao {
     @Insert
-    suspend fun insert(task: Task)
+    suspend fun insert(task: TaskEntity)
 
     @Query("SELECT * FROM task_table")
-    suspend fun getAll(): List<Task>
+    suspend fun getAll(): List<TaskEntity>
 
     @Update
-    suspend fun update(task: Task)
+    suspend fun update(task: TaskEntity)
 
     @Delete
-    suspend fun delete(task: Task)
+    suspend fun delete(task: TaskEntity)
 }

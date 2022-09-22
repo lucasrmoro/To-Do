@@ -13,7 +13,7 @@ import br.com.lucas.todo.core.ext.convertIntTimeToString
 import br.com.lucas.todo.core.ext.convertLongToCompactDate
 import br.com.lucas.todo.core.ext.formatDateToString
 import br.com.lucas.todo.core.ext.getColorResCompat
-import br.com.lucas.todo.data.db.entities.Task
+import br.com.lucas.todo.data.db.entities.TaskEntity
 import br.com.lucas.todo.databinding.FragmentEditTaskBinding
 import br.com.lucas.todo.presentation.base.BaseFragment
 import com.google.android.material.datepicker.CalendarConstraints
@@ -28,7 +28,7 @@ import java.util.*
 class EditTaskFragment :
     BaseFragment<FragmentEditTaskBinding, EditTaskViewModel>() {
 
-    private val task by lazy { arguments?.getParcelable<Task>(TASK_TO_EDIT) }
+    private val task by lazy { arguments?.getParcelable<TaskEntity>(TASK_TO_EDIT) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -37,7 +37,7 @@ class EditTaskFragment :
         insertListeners()
     }
 
-    private fun verifyingThatTaskAlreadyExistsAndCatchDataFromDB(task: Task?) {
+    private fun verifyingThatTaskAlreadyExistsAndCatchDataFromDB(task: TaskEntity?) {
         if (task != null) {
             viewModel.setup(task)
             binding.btnCreateTask.text = getString(R.string.edit_task)

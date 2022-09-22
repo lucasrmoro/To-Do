@@ -4,16 +4,13 @@ import android.content.Context
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import br.com.lucas.todo.R
 import br.com.lucas.todo.core.ext.convertStringToLong
 import br.com.lucas.todo.core.ext.runOnViewModelScope
-import br.com.lucas.todo.data.db.entities.Task
-import br.com.lucas.todo.data.db.dao.TaskDao
+import br.com.lucas.todo.data.db.entities.TaskEntity
 import br.com.lucas.todo.domain.useCases.InsertTaskUseCase
 import br.com.lucas.todo.domain.useCases.UpdateTaskUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,13 +23,13 @@ class EditTaskViewModel @Inject constructor(
     val isTaskDateValid = MutableLiveData<Boolean>()
     val isTaskTimeValid = MutableLiveData<Boolean>()
 
-    var task: Task? = null
+    var task: TaskEntity? = null
         private set
 
     var totalTaskTime: Int? = null
         private set
 
-    fun setup(task: Task) {
+    fun setup(task: TaskEntity) {
         this.task = task
         totalTaskTime = task.taskTime
     }
@@ -85,7 +82,7 @@ class EditTaskViewModel @Inject constructor(
         ) {
             runOnViewModelScope {
                 insertTaskUseCase.execute(
-                    Task(
+                    TaskEntity(
                         taskTitle = taskTitle,
                         taskDescription = taskDescription,
                         taskDate = taskDate.convertStringToLong(),
@@ -107,7 +104,7 @@ class EditTaskViewModel @Inject constructor(
 
     private fun saveSameTask(
         context: Context,
-        task: Task,
+        task: TaskEntity,
         closeScreen: () -> Unit
     ) {
         checkTaskTitleIsValid(task.taskTitle)

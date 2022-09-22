@@ -1,15 +1,15 @@
 package br.com.lucas.todo.data.db.repository
 
-import br.com.lucas.todo.data.db.entities.Task
+import br.com.lucas.todo.data.db.entities.TaskEntity
 
 interface TaskRepository {
 
-    suspend fun insert(task: Task)
+    suspend fun insert(task: TaskEntity)
 
-    suspend fun getAll(): List<Task>
+    suspend fun getAll(): List<TaskEntity>
 
-    suspend fun update(task: Task)
+    suspend fun update(task: TaskEntity)
 
-    suspend fun delete(task: Task)
+    suspend fun delete(task: TaskEntity)
 
 }

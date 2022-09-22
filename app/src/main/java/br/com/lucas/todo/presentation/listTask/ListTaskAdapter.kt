@@ -17,15 +17,15 @@ import br.com.lucas.todo.core.ext.OnItemClickListener
 import br.com.lucas.todo.core.ext.addOnItemClickListener
 import br.com.lucas.todo.core.ext.convertIntTimeToString
 import br.com.lucas.todo.core.ext.convertLongToFullDate
-import br.com.lucas.todo.data.db.entities.Task
+import br.com.lucas.todo.data.db.entities.TaskEntity
 import br.com.lucas.todo.databinding.ListTaskItemBinding
 
-class ListTaskAdapter : ListAdapter<Task, ListTaskAdapter.TaskViewHolder>(DiffCallback()) {
+class ListTaskAdapter : ListAdapter<TaskEntity, ListTaskAdapter.TaskViewHolder>(DiffCallback()) {
 
-    var listenerEdit: (Task) -> Unit = {}
-    var listenerDelete: (Task) -> Unit = {}
+    var listenerEdit: (TaskEntity) -> Unit = {}
+    var listenerDelete: (TaskEntity) -> Unit = {}
 
-    fun addTask(tasks: List<Task>) {
+    fun addTask(tasks: List<TaskEntity>) {
         submitList(tasks)
     }
 
@@ -53,7 +53,7 @@ class ListTaskAdapter : ListAdapter<Task, ListTaskAdapter.TaskViewHolder>(DiffCa
     inner class TaskViewHolder(private val binding: ListTaskItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
-        fun bind(task: Task) {
+        fun bind(task: TaskEntity) {
             binding.tvTitle.text = task.taskTitle
             binding.tvDate.text = task.taskDate.convertLongToFullDate()
             binding.tvTime.text = task.taskTime.convertIntTimeToString()
@@ -62,7 +62,7 @@ class ListTaskAdapter : ListAdapter<Task, ListTaskAdapter.TaskViewHolder>(DiffCa
             }
         }
 
-        private fun showPopUp(task: Task) {
+        private fun showPopUp(task: TaskEntity) {
             val ivMore = binding.ivMore
             val popUpMenu = PopupMenu(ivMore.context, ivMore)
             popUpMenu.menuInflater.inflate(R.menu.popup_menu, popUpMenu.menu)
@@ -78,12 +78,12 @@ class ListTaskAdapter : ListAdapter<Task, ListTaskAdapter.TaskViewHolder>(DiffCa
 
     }
 
-    private class DiffCallback: DiffUtil.ItemCallback<Task>(){
-        override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {
+    private class DiffCallback: DiffUtil.ItemCallback<TaskEntity>(){
+        override fun areItemsTheSame(oldItem: TaskEntity, newItem: TaskEntity): Boolean {
             return oldItem.uid == newItem.uid
         }
 
-        override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean {
+        override fun areContentsTheSame(oldItem: TaskEntity, newItem: TaskEntity): Boolean {
             return oldItem == newItem
         }
     }
