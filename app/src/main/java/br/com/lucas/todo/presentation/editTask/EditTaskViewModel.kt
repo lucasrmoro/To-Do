@@ -80,7 +80,7 @@ class EditTaskViewModel @Inject constructor(
             isTaskTimeValid.value == true
         ) {
             viewModelScope.launch {
-                taskDao.insertTask(
+                taskDao.insert(
                     Task(
                         taskTitle = taskTitle,
                         taskDescription = taskDescription,
@@ -115,7 +115,7 @@ class EditTaskViewModel @Inject constructor(
             isTaskTimeValid.value == true
         ) {
             viewModelScope.launch {
-                taskDao.updateTask(
+                taskDao.update(
                     task
                 )
                 Toast.makeText(

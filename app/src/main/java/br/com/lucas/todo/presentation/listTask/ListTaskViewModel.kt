@@ -20,7 +20,7 @@ class ListTaskViewModel @Inject constructor(private val taskDao: TaskDao) : View
 
     fun delete(task: Task, toast: () -> Unit) {
         viewModelScope.launch {
-            taskDao.deleteTask(task)
+            taskDao.delete(task)
             refreshScreen()
             toast()
         }
@@ -28,7 +28,7 @@ class ListTaskViewModel @Inject constructor(private val taskDao: TaskDao) : View
 
     fun refreshScreen() {
         viewModelScope.launch {
-            val tasks = taskDao.getAllTasks()
+            val tasks = taskDao.getAll()
             val sortedTasks = tasks.sortedWith(compareBy({ it.taskDate }, { it.taskTime }))
             taskList.postValue(
                 sortedTasks
