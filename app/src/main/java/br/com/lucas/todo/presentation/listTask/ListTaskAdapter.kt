@@ -32,7 +32,7 @@ class ListTaskAdapter : ListAdapter<Task, ListTaskAdapter.TaskViewHolder>(DiffCa
     fun listenerLaunchInfoTask(context: Context, listOfTasks: RecyclerView) {
         listOfTasks.addOnItemClickListener(object : OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
-                val task = Bundle().apply { putSerializable(TASK_TO_EDIT, getItem(position)) }
+                val task = Bundle().apply { putParcelable(TASK_TO_EDIT, getItem(position)) }
                 view.findNavController().navigate(R.id.fromListTaskToInfoTask, task)
             }
         })

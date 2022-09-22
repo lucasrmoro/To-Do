@@ -19,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class InfoTaskFragment :
     BaseFragment<FragmentInfoTaskBinding, DummyViewModel>() {
 
-    private val task by lazy { arguments?.getSerializable(TASK_TO_EDIT) as Task? }
+    private val task by lazy { arguments?.getParcelable<Task>(TASK_TO_EDIT) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

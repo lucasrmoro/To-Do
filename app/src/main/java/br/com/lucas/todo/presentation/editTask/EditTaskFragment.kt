@@ -28,11 +28,11 @@ import java.util.*
 class EditTaskFragment :
     BaseFragment<FragmentEditTaskBinding, EditTaskViewModel>() {
 
-    private val task by lazy { arguments?.getSerializable(TASK_TO_EDIT) }
+    private val task by lazy { arguments?.getParcelable<Task>(TASK_TO_EDIT) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        verifyingThatTaskAlreadyExistsAndCatchDataFromDB(task as Task?)
+        verifyingThatTaskAlreadyExistsAndCatchDataFromDB(task)
         observingAndVerifyingThatAllFieldsAreFilled()
         insertListeners()
     }

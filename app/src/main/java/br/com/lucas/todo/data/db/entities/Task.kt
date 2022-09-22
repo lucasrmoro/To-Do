@@ -1,11 +1,13 @@
 package br.com.lucas.todo.data.db.entities
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.io.Serializable
+import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = "task_table")
+@Parcelize
 data class Task(
     @PrimaryKey(autoGenerate = true)
     val uid: Int,
@@ -17,4 +19,4 @@ data class Task(
     var taskDate: Long,
     @ColumnInfo
     var taskTime: Int
-) : Serializable
+) : Parcelable
