@@ -7,15 +7,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.lucas.todo.R
 import br.com.lucas.todo.core.ext.convertStringToLong
+import br.com.lucas.todo.core.ext.runOnViewModelScope
 import br.com.lucas.todo.data.db.entities.Task
 import br.com.lucas.todo.data.db.dao.TaskDao
+import br.com.lucas.todo.domain.useCases.InsertTaskUseCase
+import br.com.lucas.todo.domain.useCases.UpdateTaskUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class EditTaskViewModel @Inject constructor(
-    private val taskDao: TaskDao
+    private val insertTaskUseCase: InsertTaskUseCase,
+    private val updateTaskUseCase: UpdateTaskUseCase
 ): ViewModel() {
 
     val isTaskTitleValid = MutableLiveData<Boolean>()
@@ -79,8 +83,8 @@ class EditTaskViewModel @Inject constructor(
             isTaskDateValid.value == true &&
             isTaskTimeValid.value == true
         ) {
-            viewModelScope.launch {
-                taskDao.insert(
+            runOnViewModelScope {
+                insertTaskUseCase.execute(
                     Task(
                         taskTitle = taskTitle,
                         taskDescription = taskDescription,
@@ -114,10 +118,8 @@ class EditTaskViewModel @Inject constructor(
             isTaskDateValid.value == true &&
             isTaskTimeValid.value == true
         ) {
-            viewModelScope.launch {
-                taskDao.update(
-                    task
-                )
+            runOnViewModelScope {
+                updateTaskUseCase.execute(task)
                 Toast.makeText(
                     context,
                     context.getString(R.string.successfully_edited),

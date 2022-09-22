@@ -8,6 +8,7 @@ class GetAllTasksUseCase @Inject constructor(
     private val taskRepository: TaskRepository
 ) {
 
-    suspend fun execute(): List<Task> = taskRepository.getAll()
+    suspend fun execute(): List<Task> =
+        taskRepository.getAll().sortedWith(compareBy({ it.taskDate }, { it.taskTime }))
 
 }
