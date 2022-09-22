@@ -9,10 +9,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import br.com.lucas.todo.R
 import br.com.lucas.todo.core.Constants.TASK_TO_EDIT
-import br.com.lucas.todo.core.extensions.convertIntTimeToString
-import br.com.lucas.todo.core.extensions.convertLongToCompactDate
-import br.com.lucas.todo.core.extensions.formatDateToString
-import br.com.lucas.todo.core.extensions.getColorResCompat
+import br.com.lucas.todo.core.ext.convertIntTimeToString
+import br.com.lucas.todo.core.ext.convertLongToCompactDate
+import br.com.lucas.todo.core.ext.formatDateToString
+import br.com.lucas.todo.core.ext.getColorResCompat
 import br.com.lucas.todo.data.db.entities.Task
 import br.com.lucas.todo.databinding.FragmentEditTaskBinding
 import br.com.lucas.todo.presentation.base.BaseFragment

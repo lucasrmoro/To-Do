@@ -1,4 +1,4 @@
-package br.com.lucas.todo.core.extensions
+package br.com.lucas.todo.core.ext
 
 import android.content.Context
 import android.util.TypedValue

@@ -13,10 +13,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import br.com.lucas.todo.R
 import br.com.lucas.todo.core.Constants.TASK_TO_EDIT
-import br.com.lucas.todo.core.extensions.OnItemClickListener
-import br.com.lucas.todo.core.extensions.addOnItemClickListener
-import br.com.lucas.todo.core.extensions.convertIntTimeToString
-import br.com.lucas.todo.core.extensions.convertLongToFullDate
+import br.com.lucas.todo.core.ext.OnItemClickListener
+import br.com.lucas.todo.core.ext.addOnItemClickListener
+import br.com.lucas.todo.core.ext.convertIntTimeToString
+import br.com.lucas.todo.core.ext.convertLongToFullDate
 import br.com.lucas.todo.data.db.entities.Task
 import br.com.lucas.todo.databinding.ListTaskItemBinding
 

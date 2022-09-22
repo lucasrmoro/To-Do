@@ -7,8 +7,8 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import br.com.lucas.todo.R
 import br.com.lucas.todo.core.Constants.TASK_TO_EDIT
-import br.com.lucas.todo.core.extensions.convertIntTimeToString
-import br.com.lucas.todo.core.extensions.convertLongToFullDate
+import br.com.lucas.todo.core.ext.convertIntTimeToString
+import br.com.lucas.todo.core.ext.convertLongToFullDate
 import br.com.lucas.todo.data.db.entities.Task
 import br.com.lucas.todo.databinding.FragmentInfoTaskBinding
 import br.com.lucas.todo.presentation.base.BaseFragment

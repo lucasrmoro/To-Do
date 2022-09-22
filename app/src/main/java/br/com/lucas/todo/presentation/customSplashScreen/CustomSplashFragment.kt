@@ -6,7 +6,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import br.com.lucas.todo.R
-import br.com.lucas.todo.core.extensions.getMainActivity
+import br.com.lucas.todo.core.ext.getMainActivity
 import br.com.lucas.todo.databinding.FragmentSplashScreenBinding
 import br.com.lucas.todo.presentation.base.BaseFragment
 import br.com.lucas.todo.presentation.base.DummyViewModel
