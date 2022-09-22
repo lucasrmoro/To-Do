@@ -39,7 +39,7 @@
         <argument
             android:name="task"
             android:defaultValue="@null"
-            app:argType="br.com.lucas.todo.database.Task"
+            app:argType="br.com.lucas.todo.data.db.entities.Task"
             app:nullable="true" />
     </fragment>
 
