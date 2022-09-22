@@ -8,7 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context="br.com.lucas.todo.ui.infoTask.InfoTaskFragment">
+        tools:context="br.com.lucas.todo.presentation.infoTask.InfoTaskFragment">
 
         <TextView
             android:id="@+id/_tv_title"
