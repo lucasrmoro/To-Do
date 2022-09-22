@@ -9,8 +9,8 @@ import br.com.lucas.todo.R
 import br.com.lucas.todo.core.Constants.TASK_TO_EDIT
 import br.com.lucas.todo.core.ext.convertIntTimeToString
 import br.com.lucas.todo.core.ext.convertLongToFullDate
-import br.com.lucas.todo.data.db.entities.TaskEntity
 import br.com.lucas.todo.databinding.FragmentInfoTaskBinding
+import br.com.lucas.todo.domain.model.Task
 import br.com.lucas.todo.presentation.base.BaseFragment
 import br.com.lucas.todo.presentation.base.DummyViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class InfoTaskFragment :
     BaseFragment<FragmentInfoTaskBinding, DummyViewModel>() {
 
-    private val task by lazy { arguments?.getParcelable<TaskEntity>(TASK_TO_EDIT) }
+    private val task by lazy { arguments?.getParcelable<Task>(TASK_TO_EDIT) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

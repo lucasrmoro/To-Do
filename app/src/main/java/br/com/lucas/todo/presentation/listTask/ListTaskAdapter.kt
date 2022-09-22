@@ -1,7 +1,6 @@
 package br.com.lucas.todo.presentation.listTask
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,19 +16,19 @@ import br.com.lucas.todo.core.ext.OnItemClickListener
 import br.com.lucas.todo.core.ext.addOnItemClickListener
 import br.com.lucas.todo.core.ext.convertIntTimeToString
 import br.com.lucas.todo.core.ext.convertLongToFullDate
-import br.com.lucas.todo.data.db.entities.TaskEntity
 import br.com.lucas.todo.databinding.ListTaskItemBinding
+import br.com.lucas.todo.domain.model.Task
 
-class ListTaskAdapter : ListAdapter<TaskEntity, ListTaskAdapter.TaskViewHolder>(DiffCallback()) {
+class ListTaskAdapter : ListAdapter<Task, ListTaskAdapter.TaskViewHolder>(DiffCallback()) {
 
-    var listenerEdit: (TaskEntity) -> Unit = {}
-    var listenerDelete: (TaskEntity) -> Unit = {}
+    var listenerEdit: (Task) -> Unit = {}
+    var listenerDelete: (Task) -> Unit = {}
 
-    fun addTask(tasks: List<TaskEntity>) {
+    fun addTask(tasks: List<Task>) {
         submitList(tasks)
     }
 
-    fun listenerLaunchInfoTask(context: Context, listOfTasks: RecyclerView) {
+    fun listenerLaunchInfoTask(listOfTasks: RecyclerView) {
         listOfTasks.addOnItemClickListener(object : OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
                 val task = Bundle().apply { putParcelable(TASK_TO_EDIT, getItem(position)) }
@@ -53,7 +52,7 @@ class ListTaskAdapter : ListAdapter<TaskEntity, ListTaskAdapter.TaskViewHolder>(
     inner class TaskViewHolder(private val binding: ListTaskItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
-        fun bind(task: TaskEntity) {
+        fun bind(task: Task) {
             binding.tvTitle.text = task.taskTitle
             binding.tvDate.text = task.taskDate.convertLongToFullDate()
             binding.tvTime.text = task.taskTime.convertIntTimeToString()
@@ -62,7 +61,7 @@ class ListTaskAdapter : ListAdapter<TaskEntity, ListTaskAdapter.TaskViewHolder>(
             }
         }
 
-        private fun showPopUp(task: TaskEntity) {
+        private fun showPopUp(task: Task) {
             val ivMore = binding.ivMore
             val popUpMenu = PopupMenu(ivMore.context, ivMore)
             popUpMenu.menuInflater.inflate(R.menu.popup_menu, popUpMenu.menu)
@@ -78,12 +77,12 @@ class ListTaskAdapter : ListAdapter<TaskEntity, ListTaskAdapter.TaskViewHolder>(
 
     }
 
-    private class DiffCallback: DiffUtil.ItemCallback<TaskEntity>(){
-        override fun areItemsTheSame(oldItem: TaskEntity, newItem: TaskEntity): Boolean {
+    private class DiffCallback: DiffUtil.ItemCallback<Task>(){
+        override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {
             return oldItem.uid == newItem.uid
         }
 
-        override fun areContentsTheSame(oldItem: TaskEntity, newItem: TaskEntity): Boolean {
+        override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean {
             return oldItem == newItem
         }
     }
