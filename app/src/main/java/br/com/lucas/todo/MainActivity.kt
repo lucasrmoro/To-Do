@@ -1,4 +1,4 @@
-package br.com.lucas.todo.ui
+package br.com.lucas.todo
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
-import br.com.lucas.todo.R
 import br.com.lucas.todo.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
