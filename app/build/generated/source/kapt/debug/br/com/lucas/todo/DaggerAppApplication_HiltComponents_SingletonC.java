@@ -11,7 +11,7 @@ import br.com.lucas.todo.core.di.AppModule;
 import br.com.lucas.todo.core.di.AppModule_ProvideAppContextFactory;
 import br.com.lucas.todo.core.di.AppModule_ProvideDummyViewModelFactory;
 import br.com.lucas.todo.core.di.AppModule_ProvideRoomDBFactory;
-import br.com.lucas.todo.database.TaskDao;
+import br.com.lucas.todo.data.TaskDao;
 import br.com.lucas.todo.presentation.base.DummyViewModel;
 import br.com.lucas.todo.presentation.base.DummyViewModel_HiltModules_KeyModule_ProvideFactory;
 import br.com.lucas.todo.presentation.customSplashScreen.CustomSplashFragment;

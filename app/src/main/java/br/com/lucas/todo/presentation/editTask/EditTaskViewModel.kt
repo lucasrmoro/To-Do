@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.lucas.todo.R
 import br.com.lucas.todo.core.extensions.convertStringToLong
-import br.com.lucas.todo.database.Task
-import br.com.lucas.todo.database.TaskDao
+import br.com.lucas.todo.data.Task
+import br.com.lucas.todo.data.TaskDao
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

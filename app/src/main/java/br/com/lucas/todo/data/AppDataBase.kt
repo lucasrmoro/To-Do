@@ -1,4 +1,4 @@
-package br.com.lucas.todo.database
+package br.com.lucas.todo.data
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

@@ -9,7 +9,7 @@ import br.com.lucas.todo.R
 import br.com.lucas.todo.core.Constants.TASK_TO_EDIT
 import br.com.lucas.todo.core.extensions.convertIntTimeToString
 import br.com.lucas.todo.core.extensions.convertLongToFullDate
-import br.com.lucas.todo.database.Task
+import br.com.lucas.todo.data.Task
 import br.com.lucas.todo.databinding.FragmentInfoTaskBinding
 import br.com.lucas.todo.presentation.base.BaseFragment
 import br.com.lucas.todo.presentation.base.DummyViewModel

@@ -13,7 +13,7 @@ import br.com.lucas.todo.core.extensions.convertIntTimeToString
 import br.com.lucas.todo.core.extensions.convertLongToCompactDate
 import br.com.lucas.todo.core.extensions.formatDateToString
 import br.com.lucas.todo.core.extensions.getColorResCompat
-import br.com.lucas.todo.database.Task
+import br.com.lucas.todo.data.Task
 import br.com.lucas.todo.databinding.FragmentEditTaskBinding
 import br.com.lucas.todo.presentation.base.BaseFragment
 import com.google.android.material.datepicker.CalendarConstraints

@@ -1,6 +1,6 @@
 package br.com.lucas.todo.presentation.listTask;
 
-import br.com.lucas.todo.database.TaskDao;
+import br.com.lucas.todo.data.TaskDao;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;
 import javax.annotation.processing.Generated;
