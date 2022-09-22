@@ -11,8 +11,8 @@ import br.com.lucas.todo.core.ext.convertIntTimeToString
 import br.com.lucas.todo.core.ext.convertLongToFullDate
 import br.com.lucas.todo.databinding.FragmentInfoTaskBinding
 import br.com.lucas.todo.domain.model.Task
-import br.com.lucas.todo.presentation.base.BaseFragment
-import br.com.lucas.todo.presentation.base.DummyViewModel
+import br.com.lucas.todo.presentation.base.fragment.BaseFragment
+import br.com.lucas.todo.presentation.base.viewmodel.DummyViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -83,11 +83,11 @@ class EditTaskViewModel @Inject constructor(
             runOnViewModelScope {
                 insertTaskUseCase.execute(
                     Task(
+                        id = 0,
                         taskTitle = taskTitle,
                         taskDescription = taskDescription,
                         taskDate = taskDate.convertStringToLong(),
                         taskTime = totalTaskTime!!,
-                        uid = 0
                     )
                 )
                 Toast.makeText(

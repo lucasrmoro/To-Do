@@ -17,9 +17,7 @@ class ListTaskViewModel @Inject constructor(
 
     val taskList = MutableLiveData<List<Task>>()
 
-    fun isTaskListEmpty(): Boolean? {
-        return taskList.value?.isEmpty()
-    }
+    fun isTaskListEmpty() = taskList.value?.isEmpty() == true
 
     fun delete(task: Task, toast: () -> Unit) {
         runOnViewModelScope {
