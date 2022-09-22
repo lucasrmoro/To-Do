@@ -15,7 +15,7 @@ import br.com.lucas.todo.core.ext.formatDateToString
 import br.com.lucas.todo.core.ext.getColorResCompat
 import br.com.lucas.todo.databinding.FragmentEditTaskBinding
 import br.com.lucas.todo.domain.model.Task
-import br.com.lucas.todo.presentation.base.BaseFragment
+import br.com.lucas.todo.presentation.base.fragment.BaseFragment
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker

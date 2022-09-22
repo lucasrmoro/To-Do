@@ -4,7 +4,7 @@ import br.com.lucas.todo.data.db.entities.TaskEntity
 import br.com.lucas.todo.domain.model.Task
 
 fun TaskEntity.toTask() = Task(
-    uid = uid,
+    id = uid,
     taskTitle = taskTitle,
     taskDescription = taskDescription,
     taskDate = taskDate,
@@ -12,7 +12,7 @@ fun TaskEntity.toTask() = Task(
 )
 
 fun Task.toTaskEntity() = TaskEntity(
-    uid = uid,
+    uid = id,
     taskTitle = taskTitle,
     taskDescription = taskDescription,
     taskDate = taskDate,

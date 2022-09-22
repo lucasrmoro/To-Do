@@ -8,8 +8,8 @@ import androidx.navigation.findNavController
 import br.com.lucas.todo.R
 import br.com.lucas.todo.core.ext.getMainActivity
 import br.com.lucas.todo.databinding.FragmentSplashScreenBinding
-import br.com.lucas.todo.presentation.base.BaseFragment
-import br.com.lucas.todo.presentation.base.DummyViewModel
+import br.com.lucas.todo.presentation.base.fragment.BaseFragment
+import br.com.lucas.todo.presentation.base.viewmodel.DummyViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
