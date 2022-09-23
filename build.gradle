@@ -5,7 +5,7 @@ buildscript {
         //Gradle plugins
         kotlin_gradle_plugin_version = '1.7.10'
         google_services_gradle_plugin_version = '4.3.14'
-        android_gradle_plugin_version = '7.3.0'
+        android_gradle_plugin_version = '7.2.0'
 
         //App
         kotlin_version = '1.6.0'
