@@ -1,8 +1,10 @@
 package br.com.lucas.todo.presentation.base.adapter
 
+import java.util.*
+
 
 interface AdapterItem : Equatable {
-    var id: Int
+    val uuid: UUID?
 }
 
 interface Equatable {

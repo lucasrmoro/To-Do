@@ -10,7 +10,9 @@
     <string name="popup_menu_item_delete">Excluir</string>
     <string name="tasks_text">Tarefas</string>
     <string name="task_title_item">Título da tarefa</string>
-    <string name="successfully_deleted">Tarefa excluída com sucesso!</string>
+    <string name="task_successfully_deleted">Tarefa excluída com sucesso!</string>
+    <string name="task_failure_on_delete">Erro ao excluir a tarefa. Por favor, tente novamente mais tarde!</string>
+    <string name="task_failure_on_get_all">Erro ao carregar as tarefas. Por favor, tente novamente mais tarde!</string>
     <string name="you_dont_have_a_task_yet">Oops! Você ainda não possui nenhuma tarefa!</string>
     <string name="description_not_informed">Não informada</string>
     <!-- LIST TASK SCREEN -->
@@ -27,8 +29,10 @@
     <string name="task_information">Informações da Tarefa</string>
     <string name="description_text">Descrição</string>
     <string name="required_field">* Campo obrigatório</string>
-    <string name="successfully_edited">Tarefa editada com sucesso!</string>
-    <string name="successfully_created">Tarefa criada com sucesso!</string>
+    <string name="task_successfully_edited">Tarefa editada com sucesso!</string>
+    <string name="task_successfully_created">Tarefa criada com sucesso!</string>
+    <string name="task_failure_on_create">Erro ao criar a tarefa. Por favor, tente novamente mais tarde!</string>
+    <string name="task_failure_on_update">Erro ao editar a tarefa. Por favor, tente novamente mais tarde!</string>
     <!-- CREATE/EDIT TASK SCREEN -->
 
 </resources>
