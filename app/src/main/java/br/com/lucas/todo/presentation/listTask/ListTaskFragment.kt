@@ -1,7 +1,6 @@
 package br.com.lucas.todo.presentation.listTask
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
@@ -16,7 +15,7 @@ import br.com.lucas.todo.presentation.base.fragment.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ListTaskFragment: BaseFragment<FragmentListTaskBinding>(FragmentListTaskBinding::inflate),
+class ListTaskFragment : BaseFragment<FragmentListTaskBinding>(FragmentListTaskBinding::inflate),
     ListTaskAdapterInterface {
 
     private val adapter by lazy { ListTaskAdapter(this) }
