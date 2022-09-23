@@ -23,7 +23,7 @@ class ListTaskFragment : BaseFragment<FragmentListTaskBinding, ListTaskViewModel
 
     override fun onResume() {
         super.onResume()
-        viewModel.refreshScreen()
+        viewModel.refreshScreen{ showToast(it) }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -71,7 +71,7 @@ class ListTaskFragment : BaseFragment<FragmentListTaskBinding, ListTaskViewModel
     }
 
     override fun onDeleteOptionClicked(task: Task) {
-        viewModel.delete(task) { showToast(R.string.successfully_deleted) }
+        viewModel.delete(task) { showToast(R.string.task_successfully_deleted) }
     }
 
     override fun onTaskClicked(task: Task) {

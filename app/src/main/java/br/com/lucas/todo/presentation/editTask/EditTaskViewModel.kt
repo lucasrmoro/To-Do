@@ -1,12 +1,10 @@
 package br.com.lucas.todo.presentation.editTask
 
-import android.content.Context
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import br.com.lucas.todo.R
-import br.com.lucas.todo.core.ext.convertStringToLong
-import br.com.lucas.todo.core.ext.runOnViewModelScope
+import br.com.lucas.todo.core.ext.isTrue
+import br.com.lucas.todo.core.ext.viewModelCall
 import br.com.lucas.todo.domain.model.Task
 import br.com.lucas.todo.domain.useCases.InsertTaskUseCase
 import br.com.lucas.todo.domain.useCases.UpdateTaskUseCase
@@ -17,123 +15,55 @@ import javax.inject.Inject
 class EditTaskViewModel @Inject constructor(
     private val insertTaskUseCase: InsertTaskUseCase,
     private val updateTaskUseCase: UpdateTaskUseCase
-): ViewModel() {
+) : ViewModel() {
 
     val isTaskTitleValid = MutableLiveData<Boolean>()
     val isTaskDateValid = MutableLiveData<Boolean>()
     val isTaskTimeValid = MutableLiveData<Boolean>()
 
-    var task: Task? = null
-        private set
+    private var isEditMode = false
 
-    var totalTaskTime: Int? = null
-        private set
+    fun setEditModeEnabled() { isEditMode = true }
 
-    fun setup(task: Task) {
-        this.task = task
-        totalTaskTime = task.taskTime
-    }
+    fun checkTaskTitleIsValid(content: String) { isTaskTitleValid.value = content.length >= 3 }
 
-    fun checkTaskTitleIsValid(content: String) {
-        isTaskTitleValid.value = content.length >= 3
-    }
+    fun checkTaskDateIsValid(content: String) { isTaskDateValid.value = content.isNotEmpty() }
 
-    fun checkTaskDateIsValid(content: String) {
-        isTaskDateValid.value = content.isNotEmpty()
-    }
-
-    fun convertHourAndMinutesToFullTime(hour: Int, minutes: Int) {
-        val hoursInMinutes = hour * 60
-        totalTaskTime = hoursInMinutes + minutes
-    }
-
-    fun checkTaskTimeIsValid() {
-        isTaskTimeValid.value = totalTaskTime != null
-    }
+    fun checkTaskTimeIsValid(content: String) { isTaskTimeValid.value = content.isNotEmpty() }
 
     fun onSaveEvent(
-        context: Context, taskTitle: String, taskDescription: String,
-        taskDate: String,
-        closeScreen: (() -> Unit)
-    ) {
-        if (task == null) {
-            saveNewTask(context, taskTitle, taskDescription, taskDate, closeScreen)
-        } else {
-            task!!.taskTitle = taskTitle
-            task!!.taskTime = totalTaskTime!!
-            task!!.taskDate = taskDate.convertStringToLong()
-            task!!.taskDescription = taskDescription
-            saveSameTask(context, task!!, closeScreen)
-        }
-    }
-
-    private fun saveNewTask(
-        context: Context,
-        taskTitle: String, taskDescription: String, taskDate: String,
-        closeScreen: () -> Unit
-    ) {
-        checkTaskTitleIsValid(taskTitle)
-        checkTaskDateIsValid(taskDate)
-        checkTaskTimeIsValid()
-
-        if (isTaskTitleValid.value == true &&
-            isTaskDateValid.value == true &&
-            isTaskTimeValid.value == true
-        ) {
-            runOnViewModelScope {
-                insertTaskUseCase.execute(
-                    Task(
-                        id = 0,
-                        taskTitle = taskTitle,
-                        taskDescription = taskDescription,
-                        taskDate = taskDate.convertStringToLong(),
-                        taskTime = totalTaskTime!!,
-                    )
-                )
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.successfully_created),
-                    Toast.LENGTH_SHORT
-                ).show()
-                closeScreen()
-            }
-        } else {
-            fillAllRequiredFieldsToast(context)
-        }
-    }
-
-    private fun saveSameTask(
-        context: Context,
         task: Task,
-        closeScreen: () -> Unit
+        toast: (Int) -> Unit,
+        onFieldsNotValid: () -> Unit
     ) {
-        checkTaskTitleIsValid(task.taskTitle)
-        checkTaskDateIsValid(task.taskDate.toString())
-        checkTaskTimeIsValid()
-
-        if (isTaskTitleValid.value == true &&
-            isTaskDateValid.value == true &&
-            isTaskTimeValid.value == true
-        ) {
-            runOnViewModelScope {
-                updateTaskUseCase.execute(task)
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.successfully_edited),
-                    Toast.LENGTH_SHORT
-                ).show()
-                closeScreen()
-            }
+        if (areFieldsValid(task)) {
+            viewModelCall(
+                callToDo = {
+                    if (isEditMode) {
+                        updateTaskUseCase.execute(task)
+                    } else {
+                        insertTaskUseCase.execute(task)
+                    }
+                },
+                onSuccess = {
+                    toast(if (isEditMode) R.string.task_successfully_edited else R.string.task_successfully_created)
+                },
+                onError = {
+                    toast(if(isEditMode) R.string.task_failure_on_update else R.string.task_failure_on_create)
+                }
+            )
         } else {
-            fillAllRequiredFieldsToast(context)
+            onFieldsNotValid()
         }
     }
 
-    private fun fillAllRequiredFieldsToast(context: Context) {
-        Toast.makeText(
-            context,
-            context.getString(R.string.fill_all_required_fields),
-            Toast.LENGTH_SHORT
-        ).show()
+    private fun areFieldsValid(task: Task): Boolean {
+        with(task) {
+            checkTaskTitleIsValid(taskTitle)
+            checkTaskDateIsValid(taskDate)
+            checkTaskTimeIsValid(taskTime)
+
+            return isTaskTitleValid.isTrue() && isTaskDateValid.isTrue() && isTaskTimeValid.isTrue()
+        }
     }
 }

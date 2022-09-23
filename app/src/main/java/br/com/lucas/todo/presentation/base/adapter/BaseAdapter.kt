@@ -37,7 +37,7 @@ abstract class BaseAdapter<VB : ViewBinding, O : AdapterItem> :
 
     private class DiffCallback<O : AdapterItem> : DiffUtil.ItemCallback<O>() {
         override fun areItemsTheSame(oldItem: O, newItem: O): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem.uuid == newItem.uuid
         }
 
         override fun areContentsTheSame(oldItem: O, newItem: O): Boolean {

@@ -2,7 +2,8 @@ package br.com.lucas.todo.presentation.listTask
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import br.com.lucas.todo.core.ext.runOnViewModelScope
+import br.com.lucas.todo.R
+import br.com.lucas.todo.core.ext.viewModelCall
 import br.com.lucas.todo.domain.model.Task
 import br.com.lucas.todo.domain.useCases.DeleteTaskUseCase
 import br.com.lucas.todo.domain.useCases.GetAllTasksUseCase
@@ -19,17 +20,20 @@ class ListTaskViewModel @Inject constructor(
 
     fun isTaskListEmpty() = taskList.value?.isEmpty() == true
 
-    fun delete(task: Task, toast: () -> Unit) {
-        runOnViewModelScope {
-            deleteTaskUseCase.execute(task)
-            refreshScreen()
-            toast()
-        }
+    fun delete(task: Task, toast: (Int) -> Unit) {
+        viewModelCall(
+            callToDo = { deleteTaskUseCase.execute(task) },
+            onSuccess = { toast(R.string.task_successfully_deleted) },
+            onError = { toast(R.string.task_failure_on_delete) },
+            onFinishCall = { refreshScreen(toast) }
+        )
     }
 
-    fun refreshScreen() {
-        runOnViewModelScope {
-            taskList.postValue(getAllTasksUseCase.execute())
-        }
+    fun refreshScreen(onError: (Int) -> Unit) {
+        viewModelCall(
+            callToDo = { getAllTasksUseCase.execute() },
+            onSuccess = { taskList.postValue(it) },
+            onError = { onError(R.string.task_failure_on_get_all) }
+        )
     }
 }

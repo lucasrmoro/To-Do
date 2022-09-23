@@ -10,6 +10,9 @@ class GetAllTasksUseCase @Inject constructor(
 ) {
 
     suspend fun execute(): List<Task> =
-        taskRepository.getAll().map { it.toTask() }.sortedWith(compareBy({ it.taskDate }, { it.taskTime }))
+        taskRepository.getAll().run {
+            sortedWith(compareBy({ it.taskDate }, { it.taskTime }))
+            map { it.toTask() }
+        }
 
 }

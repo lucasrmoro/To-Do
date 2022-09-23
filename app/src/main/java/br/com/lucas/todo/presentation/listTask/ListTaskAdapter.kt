@@ -3,8 +3,6 @@ package br.com.lucas.todo.presentation.listTask
 import android.view.View
 import android.view.ViewGroup
 import br.com.lucas.todo.R
-import br.com.lucas.todo.core.ext.convertIntTimeToString
-import br.com.lucas.todo.core.ext.convertLongToFullDate
 import br.com.lucas.todo.core.ext.getLayoutInflater
 import br.com.lucas.todo.core.ext.showPopUp
 import br.com.lucas.todo.databinding.ListTaskItemBinding
@@ -23,8 +21,8 @@ class ListTaskAdapter(
     override fun onBind(adapterItem: Task) {
         binding.root.setOnClickListener { listTaskAdapterInterface.onTaskClicked(adapterItem) }
         binding.tvTitle.text = adapterItem.taskTitle
-        binding.tvDate.text = adapterItem.taskDate.convertLongToFullDate()
-        binding.tvTime.text = adapterItem.taskTime.convertIntTimeToString()
+        binding.tvDate.text = adapterItem.taskDate
+        binding.tvTime.text = adapterItem.taskTime
         binding.ivMore.setOnClickListener { showPopUp(it, adapterItem) }
     }
 

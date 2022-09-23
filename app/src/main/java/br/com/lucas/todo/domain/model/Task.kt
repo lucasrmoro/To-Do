@@ -3,12 +3,13 @@ package br.com.lucas.todo.domain.model
 import android.os.Parcelable
 import br.com.lucas.todo.presentation.base.adapter.AdapterItem
 import kotlinx.parcelize.Parcelize
+import java.util.*
 
 @Parcelize
 data class Task(
-    override var id: Int,
     var taskTitle: String,
     var taskDescription: String,
-    var taskDate: Long,
-    var taskTime: Int
+    var taskDate: String,
+    var taskTime: String,
+    override val uuid: UUID?
 ) : Parcelable, AdapterItem

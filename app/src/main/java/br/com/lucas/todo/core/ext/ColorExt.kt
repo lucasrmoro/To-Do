@@ -1,10 +1,15 @@
 package br.com.lucas.todo.core.ext
 
 import android.content.Context
+import android.graphics.Color
 import android.util.TypedValue
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
+
+fun Context.getDefaultTextColor() = getColorResCompat(android.R.attr.textColorPrimary)
+
+fun getErrorColor() = Color.RED
 
 @ColorInt
 fun Context.getColorResCompat(@AttrRes id: Int): Int {
