@@ -1,7 +1,6 @@
 package br.com.lucas.todo.presentation.editTask
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
@@ -24,8 +23,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
 @AndroidEntryPoint
-class EditTaskFragment :
-    BaseFragment<FragmentEditTaskBinding, EditTaskViewModel>() {
+class EditTaskFragment : BaseFragment<FragmentEditTaskBinding>(FragmentEditTaskBinding::inflate) {
+
+    private val viewModel: EditTaskViewModel by viewModels()
 
     private val taskToEdit by lazy { arguments?.getParcelable<Task>(TASK_TO_EDIT) }
 
@@ -120,11 +120,6 @@ class EditTaskFragment :
                 }
             }.show(parentFragmentManager, TIME_PICKER_TAG)
     }
-
-    override fun setupViewBinding(layoutInflater: LayoutInflater) =
-        FragmentEditTaskBinding.inflate(layoutInflater)
-
-    override fun setupViewModel() = viewModels<EditTaskViewModel>()
 
     companion object {
         private const val DATE_PICKER_TAG = "DATE_PICKER_TAG"

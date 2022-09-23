@@ -6,7 +6,6 @@ import br.com.lucas.todo.data.db.dao.AppDataBase
 import br.com.lucas.todo.data.db.dao.TaskDao
 import br.com.lucas.todo.data.db.repository.TaskRepository
 import br.com.lucas.todo.data.db.repository.TaskRepositoryImpl
-import br.com.lucas.todo.presentation.base.viewmodel.DummyViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,8 +33,4 @@ object AppModule {
     @Singleton
     @Provides
     fun provideTaskRepository(taskDao: TaskDao): TaskRepository = TaskRepositoryImpl(taskDao)
-
-    @Singleton
-    @Provides
-    fun provideDummyViewModel() = DummyViewModel()
 }
