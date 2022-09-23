@@ -2,8 +2,10 @@ package br.com.lucas.todo.core.di
 
 import android.content.Context
 import androidx.room.Room
-import br.com.lucas.todo.database.AppDataBase
-import br.com.lucas.todo.ui.base.DummyViewModel
+import br.com.lucas.todo.data.db.dao.AppDataBase
+import br.com.lucas.todo.data.db.dao.TaskDao
+import br.com.lucas.todo.data.db.repository.TaskRepository
+import br.com.lucas.todo.data.db.repository.TaskRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,9 +24,13 @@ object AppModule {
     @Singleton
     @Provides
     fun provideRoomDB(context: Context) =
-        Room.databaseBuilder(context, AppDataBase::class.java, "todo-db").build().taskDao()
+        Room.databaseBuilder(context, AppDataBase::class.java, "todo-db").build()
 
     @Singleton
     @Provides
-    fun provideDummyViewModel() = DummyViewModel()
+    fun provideTaskDao(appDataBase: AppDataBase) = appDataBase.taskDao()
+
+    @Singleton
+    @Provides
+    fun provideTaskRepository(taskDao: TaskDao): TaskRepository = TaskRepositoryImpl(taskDao)
 }

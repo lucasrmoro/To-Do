@@ -1,8 +1,10 @@
 package br.com.lucas.todo.presentation.listTask
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import br.com.lucas.todo.R
 import br.com.lucas.todo.core.Constants.TASK_TO_EDIT
@@ -10,17 +12,15 @@ import br.com.lucas.todo.core.ext.gone
 import br.com.lucas.todo.core.ext.visible
 import br.com.lucas.todo.databinding.FragmentListTaskBinding
 import br.com.lucas.todo.domain.model.Task
-import br.com.lucas.todo.presentation.common.generic.adapter.GenericAdapter
-import br.com.lucas.todo.presentation.common.base.fragment.BaseFragment
-import br.com.lucas.todo.presentation.common.generic.components.GenericDialog
-import br.com.lucas.todo.presentation.listTask.adapter.ListTaskAdapterCallback
+import br.com.lucas.todo.presentation.base.fragment.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ListTaskFragment : BaseFragment<FragmentListTaskBinding, ListTaskViewModel>(FragmentListTaskBinding::inflate),
-    ListTaskAdapterCallback {
+class ListTaskFragment: BaseFragment<FragmentListTaskBinding>(FragmentListTaskBinding::inflate),
+    ListTaskAdapterInterface {
 
-    private val adapter by lazy { GenericAdapter(this) }
+    private val adapter by lazy { ListTaskAdapter(this) }
+    private val viewModel: ListTaskViewModel by viewModels()
 
     override fun onResume() {
         super.onResume()
@@ -29,43 +29,25 @@ class ListTaskFragment : BaseFragment<FragmentListTaskBinding, ListTaskViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupToolbarMenu()
-        setupRecyclerView()
+        setupAdapter()
         setupListeners()
         setupObservers()
     }
 
     private fun setupObservers() {
         viewModel.taskList.observe(viewLifecycleOwner) { taskList ->
-            adapter.submitList(taskList)
+            adapter.setupList(taskList)
             checkEmptyState()
-        }
-
-
-        viewModel.hasSelectedTasks.observe(viewLifecycleOwner) { hasSelectedTasks ->
-            if (hasSelectedTasks) {
-                showMenuItem(R.id.delete_tasks)
-            } else {
-                hideMenuItem(R.id.delete_tasks)
-            }
         }
     }
 
-    private fun setupRecyclerView() {
+    private fun setupAdapter() {
         binding.recyclerViewTasks.adapter = adapter
-        binding.recyclerViewTasks.itemAnimator = null
     }
 
     private fun setupListeners() {
         binding.fabAddTask.setOnClickListener {
             it.findNavController().navigate(R.id.fromListTaskToEditTask)
-        }
-    }
-
-    private fun setupToolbarMenu() {
-        createToolbarMenu(R.menu.list_task_screen_menu) { menuItem ->
-            if (menuItem.itemId == R.id.delete_tasks)
-                showDeleteSelectedTasksConfirmationDialog()
         }
     }
 
@@ -79,32 +61,17 @@ class ListTaskFragment : BaseFragment<FragmentListTaskBinding, ListTaskViewModel
         }
     }
 
-    private fun showDeleteSelectedTasksConfirmationDialog() {
-        context?.let { ctx ->
-            GenericDialog.Builder(ctx)
-                .setTitle(resources.getQuantityString(
-                        R.plurals.delete_selected_tasks_dialog_title,
-                        viewModel.selectedTasksQuantity,
-                        viewModel.selectedTasksQuantity
-                    ))
-                .setBodyMessage(resources.getQuantityString(
-                        R.plurals.delete_selected_tasks_dialog_body_message,
-                        viewModel.selectedTasksQuantity,
-                        viewModel.selectedTasksQuantity
-                    ))
-                .setPositiveButtonText(getString(R.string.yes))
-                .setOnPositiveButtonClickListener { viewModel.deleteSelectedTasks { showToast(it) } }
-                .setNegativeButtonText(getString(R.string.no))
-                .build()
-        }
-    }
-
-    override fun onTaskClicked(task: Task) {
+    override fun onEditOptionClicked(task: Task) {
         view?.findNavController()
             ?.navigate(R.id.fromListTaskToEditTask, bundleOf(TASK_TO_EDIT to task))
     }
 
-    override fun syncSelection(isSelected: Boolean, task: Task) {
-        viewModel.syncSelection(isSelected, task)
+    override fun onDeleteOptionClicked(task: Task) {
+        viewModel.delete(task) { showToast(R.string.task_successfully_deleted) }
+    }
+
+    override fun onTaskClicked(task: Task) {
+        view?.findNavController()
+            ?.navigate(R.id.fromListTaskToInfoTask, bundleOf(TASK_TO_EDIT to task))
     }
 }

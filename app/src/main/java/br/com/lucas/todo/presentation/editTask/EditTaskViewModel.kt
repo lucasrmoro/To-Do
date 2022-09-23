@@ -9,6 +9,7 @@ import br.com.lucas.todo.domain.model.Task
 import br.com.lucas.todo.domain.useCases.InsertTaskUseCase
 import br.com.lucas.todo.domain.useCases.UpdateTaskUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,12 +22,11 @@ class EditTaskViewModel @Inject constructor(
     val isTaskDateValid = MutableLiveData<Boolean>()
     val isTaskTimeValid = MutableLiveData<Boolean>()
 
-    private var task: Task =
-        Task(title = "", description = "", date = "", minute = "", hour = "")
+    private var taskToEdit: Task? = null
     private var isEditMode = false
 
     fun setEditModeEnabled(task: Task) {
-        this.task = task
+        taskToEdit = task
         isEditMode = true
     }
 
@@ -46,45 +46,50 @@ class EditTaskViewModel @Inject constructor(
         taskTitle: String,
         taskDescription: String,
         taskDate: String,
-        taskHour: String,
-        taskMinute: String,
-        toast: (Int) -> Unit = {},
-        onFieldsNotValid: () -> Unit = {}
+        taskTime: String,
+        toast: (Int) -> Unit,
+        onFieldsNotValid: () -> Unit
     ) {
-        val taskToSave = task.copy(
-            title = taskTitle,
-            description = taskDescription,
-            date = taskDate,
-            minute = taskMinute,
-            hour = taskHour
+        val task = if (isEditMode.not()) Task(
+            uuid = UUID.randomUUID(),
+            taskTitle = taskTitle,
+            taskDescription = taskDescription,
+            taskDate = taskDate,
+            taskTime = taskTime
+        ) else taskToEdit?.copy(
+            taskTitle = taskTitle,
+            taskDescription = taskDescription,
+            taskDate = taskDate,
+            taskTime = taskTime
         )
-
-        if (areFieldsValid(taskToSave)) {
-            viewModelCall(
-                callToDo = {
-                    if (isEditMode) {
-                        updateTaskUseCase.execute(taskToSave)
-                    } else {
-                        insertTaskUseCase.execute(taskToSave)
+        task?.let {
+            if (areFieldsValid(task)) {
+                viewModelCall(
+                    callToDo = {
+                        if (isEditMode) {
+                            updateTaskUseCase.execute(task)
+                        } else {
+                            insertTaskUseCase.execute(task)
+                        }
+                    },
+                    onSuccess = {
+                        toast(if (isEditMode) R.string.task_successfully_edited else R.string.task_successfully_created)
+                    },
+                    onError = {
+                        toast(if (isEditMode) R.string.task_failure_on_update else R.string.task_failure_on_create)
                     }
-                },
-                onSuccess = {
-                    toast(if (isEditMode) R.string.task_successfully_edited else R.string.task_successfully_created)
-                },
-                onError = {
-                    toast(if (isEditMode) R.string.task_failure_on_update else R.string.task_failure_on_create)
-                }
-            )
-        } else {
-            onFieldsNotValid()
+                )
+            } else {
+                onFieldsNotValid()
+            }
         }
     }
 
     private fun areFieldsValid(task: Task): Boolean {
         with(task) {
-            checkTaskTitleIsValid(title)
-            checkTaskDateIsValid(date)
-            checkTaskTimeIsValid(hour)
+            checkTaskTitleIsValid(taskTitle)
+            checkTaskDateIsValid(taskDate)
+            checkTaskTimeIsValid(taskTime)
 
             return isTaskTitleValid.isTrue() && isTaskDateValid.isTrue() && isTaskTimeValid.isTrue()
         }

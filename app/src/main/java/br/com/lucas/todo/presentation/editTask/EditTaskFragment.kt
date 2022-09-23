@@ -3,14 +3,17 @@ package br.com.lucas.todo.presentation.editTask
 import android.os.Bundle
 import android.view.View
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import br.com.lucas.todo.R
 import br.com.lucas.todo.core.Constants.TASK_TO_EDIT
-import br.com.lucas.todo.core.ext.*
-import br.com.lucas.todo.core.util.DateUtil
+import br.com.lucas.todo.core.ext.errorState
+import br.com.lucas.todo.core.ext.formatLongToStringDate
+import br.com.lucas.todo.core.ext.getHoursAndMinutesFormatted
+import br.com.lucas.todo.core.ext.getStringText
 import br.com.lucas.todo.databinding.FragmentEditTaskBinding
 import br.com.lucas.todo.domain.model.Task
-import br.com.lucas.todo.presentation.common.base.fragment.BaseFragment
+import br.com.lucas.todo.presentation.base.fragment.BaseFragment
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -18,13 +21,11 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
-import javax.inject.Inject
 
 @AndroidEntryPoint
-class EditTaskFragment : BaseFragment<FragmentEditTaskBinding, EditTaskViewModel>(FragmentEditTaskBinding::inflate) {
+class EditTaskFragment : BaseFragment<FragmentEditTaskBinding>(FragmentEditTaskBinding::inflate) {
 
-    @Inject
-    lateinit var dateUtil: DateUtil
+    private val viewModel: EditTaskViewModel by viewModels()
 
     private val taskToEdit by lazy { arguments?.getParcelable<Task>(TASK_TO_EDIT) }
 
@@ -39,10 +40,10 @@ class EditTaskFragment : BaseFragment<FragmentEditTaskBinding, EditTaskViewModel
         task?.run {
             viewModel.setEditModeEnabled(this)
             btnCreateTask.text = getString(R.string.edit_task)
-            edtTitle.setText(title)
-            edtDescription.setText(description)
-            edtDate.setText(date)
-            edtTime.setText("$hour:$minute")
+            edtTitle.setText(taskTitle)
+            edtDescription.setText(taskDescription)
+            edtDate.setText(taskDate)
+            edtHour.setText(taskTime)
         }
     }
 
@@ -63,20 +64,19 @@ class EditTaskFragment : BaseFragment<FragmentEditTaskBinding, EditTaskViewModel
 
         edtDate.doAfterTextChanged { viewModel.checkTaskDateIsValid(it.toString()) }
 
-        edtTime.doAfterTextChanged { viewModel.checkTaskTimeIsValid(it.toString()) }
+        edtHour.doAfterTextChanged { viewModel.checkTaskTimeIsValid(it.toString()) }
     }
 
     private fun setupListeners() {
         binding.edtDate.setOnClickListener { showDatePicker() }
-        binding.edtTime.setOnClickListener { showTimePicker() }
+        binding.edtHour.setOnClickListener { showTimePicker() }
         binding.btnCreateTask.setOnClickListener { view ->
             with(binding) {
                 viewModel.onSaveEvent(
                     taskTitle = edtTitle.getStringText(),
                     taskDescription = edtDescription.getStringText(),
                     taskDate = edtDate.getStringText(),
-                    taskHour = edtTime.getHour(),
-                    taskMinute = edtTime.getMinute(),
+                    taskTime = edtHour.getStringText(),
                     toast = {
                         showToast(it)
                         view.findNavController().popBackStack()
@@ -101,7 +101,7 @@ class EditTaskFragment : BaseFragment<FragmentEditTaskBinding, EditTaskViewModel
             .build()
             .apply {
                 addOnPositiveButtonClickListener {
-                    binding.edtDate.setText(dateUtil.formatLongToStringDate(it))
+                    binding.edtDate.setText(it.formatLongToStringDate())
                 }
             }.show(parentFragmentManager, DATE_PICKER_TAG)
     }
@@ -113,7 +113,7 @@ class EditTaskFragment : BaseFragment<FragmentEditTaskBinding, EditTaskViewModel
             .build()
             .apply {
                 addOnPositiveButtonClickListener {
-                    binding.edtTime.setText(getHoursAndMinutesFormatted())
+                    binding.edtHour.setText(getHoursAndMinutesFormatted())
                 }
             }.show(parentFragmentManager, TIME_PICKER_TAG)
     }
