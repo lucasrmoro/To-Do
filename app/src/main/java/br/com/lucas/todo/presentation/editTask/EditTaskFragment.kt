@@ -38,7 +38,7 @@ class EditTaskFragment : BaseFragment<FragmentEditTaskBinding>(FragmentEditTaskB
 
     private fun setupViewAccordingToEditMode(task: Task?) = with(binding) {
         task?.run {
-            viewModel.setEditModeEnabled()
+            viewModel.setEditModeEnabled(this)
             btnCreateTask.text = getString(R.string.edit_task)
             edtTitle.setText(taskTitle)
             edtDescription.setText(taskDescription)
@@ -73,13 +73,10 @@ class EditTaskFragment : BaseFragment<FragmentEditTaskBinding>(FragmentEditTaskB
         binding.btnCreateTask.setOnClickListener { view ->
             with(binding) {
                 viewModel.onSaveEvent(
-                    task = Task(
-                        edtTitle.getStringText(),
-                        edtDescription.getStringText(),
-                        edtDate.getStringText(),
-                        edtHour.getStringText(),
-                        taskToEdit?.uuid
-                    ),
+                    taskTitle = edtTitle.getStringText(),
+                    taskDescription = edtDescription.getStringText(),
+                    taskDate = edtDate.getStringText(),
+                    taskTime = edtHour.getStringText(),
                     toast = {
                         showToast(it)
                         view.findNavController().popBackStack()

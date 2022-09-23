@@ -18,7 +18,7 @@ class ListTaskAdapter(
         viewType: Int
     ) = ListTaskItemBinding.inflate(parent.getLayoutInflater(), parent, false)
 
-    override fun onBind(adapterItem: Task) {
+    override fun onBind(binding: ListTaskItemBinding, adapterItem: Task) {
         binding.root.setOnClickListener { listTaskAdapterInterface.onTaskClicked(adapterItem) }
         binding.tvTitle.text = adapterItem.taskTitle
         binding.tvDate.text = adapterItem.taskDate
