@@ -6,42 +6,40 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 
-abstract class BaseAdapter<VB : ViewBinding, O : AdapterItem> :
-    ListAdapter<O, BaseAdapter<VB, O>.GenericViewHolder>(DiffCallback<O>()) {
+abstract class BaseAdapter<VB : ViewBinding, T> :
+    ListAdapter<T, BaseAdapter<VB, T>.GenericViewHolder>(DiffCallback()) where T : DiffUtilEquality<T> {
 
-    private var _binding: VB? = null
-    protected val binding get() = _binding!!
-
-    fun setupList(adapterItemsList: List<O>) {
+    fun setupList(adapterItemsList: List<T>) {
         submitList(adapterItemsList)
     }
 
     protected abstract fun adapterItemViewInflater(parent: ViewGroup, viewType: Int): VB
 
-    protected abstract fun onBind(adapterItem: O)
+    protected abstract fun onBind(binding: VB, adapterItem: T)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenericViewHolder {
-        _binding = adapterItemViewInflater(parent, viewType)
-        return GenericViewHolder()
+        return GenericViewHolder(adapterItemViewInflater(parent, viewType))
     }
 
     override fun onBindViewHolder(holder: GenericViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
-    override fun getItemCount(): Int = currentList.size
+    override fun getItemCount() = currentList.size
 
-    inner class GenericViewHolder : RecyclerView.ViewHolder(binding.root) {
-        fun bind(adapterItem: O) { onBind(adapterItem) }
+    inner class GenericViewHolder(private val binding: VB) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(adapterItem: T) {
+            onBind(binding, adapterItem)
+        }
     }
 
-    private class DiffCallback<O : AdapterItem> : DiffUtil.ItemCallback<O>() {
-        override fun areItemsTheSame(oldItem: O, newItem: O): Boolean {
-            return oldItem.uuid == newItem.uuid
+    private class DiffCallback<T : DiffUtilEquality<T>> : DiffUtil.ItemCallback<T>() {
+        override fun areItemsTheSame(oldItem: T, newItem: T): Boolean {
+            return oldItem.areItemsTheSame(newItem)
         }
 
-        override fun areContentsTheSame(oldItem: O, newItem: O): Boolean {
-            return oldItem == newItem
+        override fun areContentsTheSame(oldItem: T, newItem: T): Boolean {
+            return oldItem.areContentsTheSame(newItem)
         }
     }
 }

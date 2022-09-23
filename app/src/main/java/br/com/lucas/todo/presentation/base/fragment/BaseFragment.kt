@@ -8,17 +8,14 @@ import android.widget.Toast
 import androidx.annotation.CallSuper
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
 import androidx.viewbinding.ViewBinding
 
-abstract class BaseFragment<VB : ViewBinding, VM : ViewModel> : Fragment(),
-    BaseFragmentInterface<VB, VM> {
+abstract class BaseFragment<VB : ViewBinding>(
+    private val inflater: (LayoutInflater, ViewGroup?, Boolean) -> VB,
+) : Fragment(), BaseFragmentInterface {
 
     private var _binding: VB? = null
     protected val binding get() = _binding!!
-
-    private var _viewModel: Lazy<VM>? = null
-    protected val viewModel: VM get() = _viewModel!!.value
 
     @CallSuper
     override fun showToast(@StringRes message: Int, duration: Int) {
@@ -33,8 +30,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel> : Fragment(),
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = setupViewBinding(inflater)
-        _viewModel = setupViewModel()
+        _binding = inflater(inflater, container, false)
         return binding.root
     }
 
@@ -43,5 +39,4 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel> : Fragment(),
         super.onDestroyView()
         _binding = null
     }
-
 }

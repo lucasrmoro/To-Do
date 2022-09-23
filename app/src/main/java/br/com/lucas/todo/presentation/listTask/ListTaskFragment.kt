@@ -16,14 +16,15 @@ import br.com.lucas.todo.presentation.base.fragment.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ListTaskFragment : BaseFragment<FragmentListTaskBinding, ListTaskViewModel>(),
+class ListTaskFragment: BaseFragment<FragmentListTaskBinding>(FragmentListTaskBinding::inflate),
     ListTaskAdapterInterface {
 
     private val adapter by lazy { ListTaskAdapter(this) }
+    private val viewModel: ListTaskViewModel by viewModels()
 
     override fun onResume() {
         super.onResume()
-        viewModel.refreshScreen{ showToast(it) }
+        viewModel.refreshScreen { showToast(it) }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -59,11 +60,6 @@ class ListTaskFragment : BaseFragment<FragmentListTaskBinding, ListTaskViewModel
             recyclerViewTasks.visible()
         }
     }
-
-    override fun setupViewBinding(layoutInflater: LayoutInflater) =
-        FragmentListTaskBinding.inflate(layoutInflater)
-
-    override fun setupViewModel(): Lazy<ListTaskViewModel> = viewModels()
 
     override fun onEditOptionClicked(task: Task) {
         view?.findNavController()
