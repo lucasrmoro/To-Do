@@ -46,7 +46,8 @@ class EditTaskViewModel @Inject constructor(
         taskTitle: String,
         taskDescription: String,
         taskDate: String,
-        taskTime: String,
+        taskHour: String,
+        taskMinute: String,
         toast: (Int) -> Unit,
         onFieldsNotValid: () -> Unit
     ) {
@@ -55,12 +56,15 @@ class EditTaskViewModel @Inject constructor(
             taskTitle = taskTitle,
             taskDescription = taskDescription,
             taskDate = taskDate,
-            taskTime = taskTime
+            taskHour = taskHour,
+            taskMinute = taskMinute,
+            isSelected = false
         ) else taskToEdit?.copy(
             taskTitle = taskTitle,
             taskDescription = taskDescription,
             taskDate = taskDate,
-            taskTime = taskTime
+            taskMinute = taskMinute,
+            taskHour = taskHour
         )
         task?.let {
             if (areFieldsValid(task)) {
@@ -89,7 +93,7 @@ class EditTaskViewModel @Inject constructor(
         with(task) {
             checkTaskTitleIsValid(taskTitle)
             checkTaskDateIsValid(taskDate)
-            checkTaskTimeIsValid(taskTime)
+            checkTaskTimeIsValid("$taskHour")
 
             return isTaskTitleValid.isTrue() && isTaskDateValid.isTrue() && isTaskTimeValid.isTrue()
         }
