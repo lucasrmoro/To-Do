@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navEditTaskScreen"
+    app:startDestination="@id/editTaskFragment">
+
+    <fragment
+        android:id="@+id/editTaskFragment"
+        android:name="br.com.lucas.todo.presentation.editTask.EditTaskFragment"
+        tools:layout="@layout/fragment_edit_task" />
+
+</navigation>

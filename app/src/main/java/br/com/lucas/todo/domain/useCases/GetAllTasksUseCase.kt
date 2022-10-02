@@ -17,7 +17,7 @@ class GetAllTasksUseCase @Inject constructor(
                     TaskEntity::taskDate,
                     TaskEntity::taskTime
                 ).thenByDescending(TaskEntity::taskTitle)
-            ).asReversed()
+            )
         }.map { it.toTask() }
 
 }

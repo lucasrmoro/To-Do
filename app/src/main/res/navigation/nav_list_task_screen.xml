@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navListTaskScreen"
+    app:startDestination="@id/listTaskFragment">
+
+    <fragment
+        android:id="@+id/listTaskFragment"
+        android:name="br.com.lucas.todo.presentation.listTask.ListTaskFragment"
+        tools:layout="@layout/fragment_list_task">
+        <argument
+            android:name="task"
+            android:defaultValue="@null"
+            app:argType="br.com.lucas.todo.domain.model.Task"
+            app:nullable="true" />
+        <action
+            android:id="@+id/fromListTaskToEditTask"
+            app:destination="@id/navEditTaskScreen" />
+    </fragment>
+    <include app:graph="@navigation/nav_edit_task_screen" />
+
+</navigation>

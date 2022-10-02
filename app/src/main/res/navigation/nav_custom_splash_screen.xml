@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navCustomSplashScreen"
+    app:startDestination="@id/customSplashFragment">
+
+    <fragment
+        android:id="@+id/customSplashFragment"
+        android:name="br.com.lucas.todo.presentation.customSplashScreen.CustomSplashFragment"
+        tools:layout="@layout/fragment_splash_screen">
+        <action
+            android:id="@+id/fromSplashToListTask"
+            app:destination="@id/navListTaskScreen"
+            app:enterAnim="@android:anim/fade_in"
+            app:popUpTo="@id/customSplashFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <include app:graph="@navigation/nav_list_task_screen" />
+
+</navigation>
