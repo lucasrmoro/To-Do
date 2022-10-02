@@ -7,9 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.CallSuper
+import androidx.annotation.IdRes
 import androidx.annotation.MenuRes
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import br.com.lucas.todo.core.ext.getMainActivity
@@ -31,15 +31,31 @@ abstract class BaseFragment<VB : ViewBinding>(
         }
     }
 
+    protected fun showMenuItem(@IdRes menuItemId: Int) {
+        toolbarMenu?.showMenuItem(menuItemId)
+    }
+
+    protected fun hideMenuItem(@IdRes menuItemId: Int) {
+        toolbarMenu?.hideMenuItem(menuItemId)
+    }
+
     protected fun createToolbarMenu(
         @MenuRes menuLayout: Int,
         onMenuItemClicked: (menuItem: MenuItem) -> Unit
     ) {
-        toolbarMenu = getMainActivity()?.let { GenericToolbarMenu(it) }
-        toolbarMenu?.create(menuLayout) {
-            onMenuItemClicked(it)
-            true
+        toolbarMenu ?: let {
+            toolbarMenu = getMainActivity()?.let { GenericToolbarMenu(it) }?.also {
+                it.create(menuLayout) { menuItem ->
+                    onMenuItemClicked(menuItem)
+                    true
+                }
+            }
         }
+    }
+
+    private fun destroyToolbarMenu() {
+        toolbarMenu?.destroy()
+        toolbarMenu = null
     }
 
     @CallSuper
@@ -53,15 +69,10 @@ abstract class BaseFragment<VB : ViewBinding>(
     }
 
     @CallSuper
-    override fun onPause() {
-        super.onPause()
-        toolbarMenu?.destroy()
-        toolbarMenu = null
+    override fun onDestroyView() {
+        _binding = null
+        destroyToolbarMenu()
+        super.onDestroyView()
     }
 
-    @CallSuper
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 }
