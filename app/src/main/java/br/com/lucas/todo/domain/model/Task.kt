@@ -11,7 +11,9 @@ data class Task(
     var taskTitle: String,
     var taskDescription: String,
     var taskDate: String,
-    var taskTime: String
+    var taskHour: String,
+    var taskMinute: String,
+    var isSelected: Boolean
 ) : Parcelable, DiffUtilEquality<Task> {
 
     override fun areItemsTheSame(toCompare: Task): Boolean =

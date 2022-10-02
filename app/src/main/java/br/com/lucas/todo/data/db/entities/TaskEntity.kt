@@ -16,5 +16,7 @@ data class TaskEntity(
     @ColumnInfo
     var taskDate: Long,
     @ColumnInfo
-    var taskTime: Int
+    var taskTime: Int,
+    @ColumnInfo
+    var isSelected: Boolean
 )

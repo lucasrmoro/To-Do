@@ -9,7 +9,9 @@ fun TaskEntity.toTask() = Task(
     taskTitle = taskTitle,
     taskDescription = taskDescription,
     taskDate = taskDate.formatLongToStringDate(),
-    taskTime = taskTime.formatIntTimeToHoursAndMinutes()
+    taskHour = taskTime.toHour(),
+    taskMinute = taskTime.toMinute(),
+    isSelected = isSelected
 )
 
 fun Task.toTaskEntity() = TaskEntity(
@@ -17,7 +19,8 @@ fun Task.toTaskEntity() = TaskEntity(
     taskTitle = taskTitle,
     taskDescription = taskDescription,
     taskDate = taskDate.formatStringDateToLong(),
-    taskTime = taskTime.formatHoursAndMinutesToIntTime()
+    taskTime = formatHoursAndMinutesToIntTime(taskHour, taskMinute),
+    isSelected = isSelected
 )
 
 fun Task?.currentOrNewRandomUUID(): UUID = this?.uuid ?: UUID.randomUUID()
