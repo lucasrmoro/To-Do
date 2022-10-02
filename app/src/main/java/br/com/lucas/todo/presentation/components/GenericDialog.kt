@@ -19,7 +19,7 @@ class GenericDialog @JvmOverloads constructor(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val alertDialogBuilder = Builder(context, R.style.MyCustomTheme)
+        val alertDialogBuilder = Builder(context, R.style.AlertDialogTheme)
 
         with(alertDialogBuilder) {
             setCancelable(isDismissible)
