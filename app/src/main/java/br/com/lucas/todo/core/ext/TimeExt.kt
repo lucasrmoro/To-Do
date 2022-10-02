@@ -13,13 +13,26 @@ fun Int.formatIntTimeToHoursAndMinutes(): String {
     return "$hoursText:$minutesText"
 }
 
-fun String.formatHoursAndMinutesToIntTime(): Int {
-    val entireTime = split(':')
-    val hours = entireTime[0].toInt()
-    val minutes = entireTime[1].toInt()
+fun formatHoursAndMinutesToIntTime(hour: String, minute: String): Int {
+    val hours = hour.toInt()
+    val minutes = minute.toInt()
     val hoursInMinutes = hours * 60
 
     return hoursInMinutes + minutes
+}
+
+fun formatHoursAndMinutesToDisplayableTime(hours: String, minutes: String): String {
+    return "$hours:$minutes"
+}
+
+fun Int.toHour(): String {
+    val hours = this / 60
+    return if (hours in 0..9) "0$hours" else hours.toString()
+}
+
+fun Int.toMinute(): String {
+    val minutes = (((this / 60) * 60) - this).absoluteValue
+    return if (minutes in 0..9) "0$minutes" else minutes.toString()
 }
 
 fun MaterialTimePicker.getHoursAndMinutesFormatted() = String.format("%02d:%02d", hour, minute)
