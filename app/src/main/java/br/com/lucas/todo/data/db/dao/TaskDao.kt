@@ -2,6 +2,7 @@ package br.com.lucas.todo.data.db.dao
 
 import androidx.room.*
 import br.com.lucas.todo.data.db.entities.TaskEntity
+import java.util.*
 
 @Dao
 interface TaskDao {
@@ -16,4 +17,8 @@ interface TaskDao {
 
     @Delete
     suspend fun delete(task: TaskEntity)
+
+    @Query("DELETE FROM task_table WHERE isSelected = 1")
+    suspend fun deleteSelected()
+
 }

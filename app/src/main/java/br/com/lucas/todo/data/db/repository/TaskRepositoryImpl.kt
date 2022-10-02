@@ -2,6 +2,7 @@ package br.com.lucas.todo.data.db.repository
 
 import br.com.lucas.todo.data.db.dao.TaskDao
 import br.com.lucas.todo.data.db.entities.TaskEntity
+import java.util.*
 import javax.inject.Inject
 
 class TaskRepositoryImpl @Inject constructor(
@@ -15,5 +16,7 @@ class TaskRepositoryImpl @Inject constructor(
     override suspend fun update(task: TaskEntity) { taskDao.update(task) }
 
     override suspend fun delete(task: TaskEntity) { taskDao.delete(task) }
+
+    override suspend fun deleteSelected() { taskDao.deleteSelected() }
 
 }

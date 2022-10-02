@@ -12,4 +12,5 @@ interface TaskRepository {
 
     suspend fun delete(task: TaskEntity)
 
+    suspend fun deleteSelected()
 }
