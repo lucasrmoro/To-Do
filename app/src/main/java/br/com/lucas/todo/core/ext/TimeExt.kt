@@ -13,9 +13,9 @@ fun Int.formatIntTimeToHoursAndMinutes(): String {
     return "$hoursText:$minutesText"
 }
 
-fun formatHoursAndMinutesToIntTime(hour: String, minute: String): Int {
-    val hours = hour.toInt()
-    val minutes = minute.toInt()
+fun formatHoursAndMinutesToIntTime(hour: String?, minute: String?): Int {
+    val hours = if (hour?.isEmpty() == true) 0 else hour?.toInt() ?: 0
+    val minutes = if(minute?.isEmpty() == true) 0 else minute?.toInt() ?: 0
     val hoursInMinutes = hours * 60
 
     return hoursInMinutes + minutes
