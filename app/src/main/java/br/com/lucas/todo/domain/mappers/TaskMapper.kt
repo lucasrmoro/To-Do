@@ -12,12 +12,12 @@ class TaskMapper: BaseMapper<TaskEntity, Task> {
     override fun mapToDomainModel(entity: TaskEntity): Task {
         return Task(
             uuid = entity.uuid,
-            taskTitle = entity.taskTitle.orEmpty(),
-            taskDescription = entity.taskDescription.orEmpty(),
+            taskTitle = entity.taskTitle,
+            taskDescription = entity.taskDescription,
             taskDate = DateUtil.formatLongToStringDate(entity.taskDate),
-            taskHour = entity.taskTime?.toHour().orEmpty(),
-            taskMinute = entity.taskTime?.toMinute().orEmpty(),
-            isSelected = entity.isSelected ?: false
+            taskHour = entity.taskTime.toHour(),
+            taskMinute = entity.taskTime.toMinute(),
+            isSelected = entity.isSelected
         )
     }
 
