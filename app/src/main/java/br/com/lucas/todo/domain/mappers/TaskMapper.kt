@@ -3,23 +3,20 @@ package br.com.lucas.todo.domain.mappers
 import br.com.lucas.todo.core.ext.*
 import br.com.lucas.todo.core.util.DateUtil
 import br.com.lucas.todo.data.db.entities.TaskEntity
-import br.com.lucas.todo.domain.mappers.base.BaseMapper
 import br.com.lucas.todo.domain.model.Task
+import br.com.lucas.todo.domain.mappers.base.BaseMapper
 import java.util.*
-import javax.inject.Inject
 
-class TaskMapper @Inject constructor(
-    private val dateUtil: DateUtil
-): BaseMapper<TaskEntity, Task> {
+class TaskMapper: BaseMapper<TaskEntity, Task> {
 
     override fun mapToDomainModel(entity: TaskEntity): Task {
         return Task(
             uuid = entity.uuid,
-            title = entity.title,
-            description = entity.description,
-            date = dateUtil.formatLongToStringDate(entity.date),
-            hour = entity.time.toHour(),
-            minute = entity.time.toMinute(),
+            taskTitle = entity.taskTitle,
+            taskDescription = entity.taskDescription,
+            taskDate = DateUtil.formatLongToStringDate(entity.taskDate),
+            taskHour = entity.taskTime.toHour(),
+            taskMinute = entity.taskTime.toMinute(),
             isSelected = entity.isSelected
         )
     }
@@ -27,10 +24,10 @@ class TaskMapper @Inject constructor(
     override fun mapToEntity(domainModel: Task): TaskEntity {
         return TaskEntity(
             uuid = domainModel.uuid ?: UUID.randomUUID(),
-            title = domainModel.title,
-            description = domainModel.description,
-            date = dateUtil.formatStringDateToLong(domainModel.date),
-            time = formatHoursAndMinutesToIntTime(domainModel.hour, domainModel.minute),
+            taskTitle = domainModel.taskTitle,
+            taskDescription = domainModel.taskDescription,
+            taskDate = DateUtil.formatStringDateToLong(domainModel.taskDate),
+            taskTime = formatHoursAndMinutesToIntTime(domainModel.taskHour, domainModel.taskMinute),
             isSelected = domainModel.isSelected
         )
     }
@@ -42,5 +39,4 @@ class TaskMapper @Inject constructor(
     override fun mapToEntities(listDomainModel: List<Task>): List<TaskEntity> {
         return listDomainModel.map { mapToEntity(it) }
     }
-
 }

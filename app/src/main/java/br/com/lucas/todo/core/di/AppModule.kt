@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import br.com.lucas.todo.data.db.dao.AppDataBase
 import br.com.lucas.todo.data.db.dao.TaskDao
+import br.com.lucas.todo.domain.mappers.TaskMapper
 import br.com.lucas.todo.data.db.repository.TaskRepository
 import br.com.lucas.todo.data.db.repository.TaskRepositoryImpl
 import dagger.Module
@@ -33,4 +34,8 @@ object AppModule {
     @Singleton
     @Provides
     fun provideTaskRepository(taskDao: TaskDao): TaskRepository = TaskRepositoryImpl(taskDao)
+
+    @Singleton
+    @Provides
+    fun provideTaskEntityMapper(): TaskMapper = TaskMapper()
 }

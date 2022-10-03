@@ -7,11 +7,13 @@ import java.util.*
 
 @Parcelize
 data class Task(
-    var uuid: UUID,
-    var taskTitle: String,
-    var taskDescription: String,
-    var taskDate: String,
-    var taskTime: String
+    val uuid: UUID? = null,
+    val taskTitle: String,
+    val taskDescription: String,
+    val taskDate: String,
+    val taskHour: String,
+    val taskMinute: String,
+    val isSelected: Boolean = false
 ) : Parcelable, DiffUtilEquality<Task> {
 
     override fun areItemsTheSame(toCompare: Task): Boolean =

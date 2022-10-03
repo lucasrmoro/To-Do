@@ -7,7 +7,7 @@ import timber.log.Timber
 
 fun <Call> ViewModel.viewModelCall(
     callToDo: suspend () -> Call?,
-    onSuccess: suspend (Call) -> Unit = {},
+    onSuccess: (Call) -> Unit = {},
     onError: (e: Exception) -> Unit = {},
     onFinishCall: () -> Unit = {}
 ) {

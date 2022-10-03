@@ -8,9 +8,7 @@ import br.com.lucas.todo.core.ext.viewModelCall
 import br.com.lucas.todo.domain.model.Task
 import br.com.lucas.todo.domain.useCases.DeleteSelectedTasksUseCase
 import br.com.lucas.todo.domain.useCases.GetAllTasksUseCase
-import br.com.lucas.todo.domain.useCases.GetTasksCategorizedByDateUseCase
 import br.com.lucas.todo.domain.useCases.UpdateTaskUseCase
-import br.com.lucas.todo.presentation.common.generic.adapter.model.AdapterItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -18,20 +16,19 @@ import javax.inject.Inject
 class ListTaskViewModel @Inject constructor(
     private val updateTaskUseCase: UpdateTaskUseCase,
     private val getAllTasksUseCase: GetAllTasksUseCase,
-    private val getTasksCategorizedByDateUseCase: GetTasksCategorizedByDateUseCase,
     private val deleteSelectedTasksUseCase: DeleteSelectedTasksUseCase
 ) : ViewModel() {
 
-    private var _taskList = MutableLiveData<List<AdapterItem>>()
-    val taskList: LiveData<List<AdapterItem>>
+    private var _taskList = MutableLiveData<List<Task>>()
+    val taskList: LiveData<List<Task>>
         get() = _taskList
 
     private var _hasSelectedTasks = MutableLiveData<Boolean>()
     val hasSelectedTasks: LiveData<Boolean>
         get() = _hasSelectedTasks
 
-    var selectedTasksQuantity: Int = 0
-        private set
+    val selectedTasksQuantity: Int
+        get() = _taskList.value?.filter { it.isSelected }?.size ?: 0
 
     fun isTaskListEmpty() = taskList.value?.isEmpty() != false
 
@@ -55,9 +52,8 @@ class ListTaskViewModel @Inject constructor(
         viewModelCall(
             callToDo = { getAllTasksUseCase.execute() },
             onSuccess = { dbTaskList ->
-                _taskList.postValue(getTasksCategorizedByDateUseCase.execute(dbTaskList))
+                _taskList.postValue(dbTaskList)
                 _hasSelectedTasks.value = dbTaskList.any { it.isSelected } == true
-                selectedTasksQuantity = dbTaskList.filter { it.isSelected }.size
             },
             onError = { onError(R.string.task_failure_on_get_all) },
         )

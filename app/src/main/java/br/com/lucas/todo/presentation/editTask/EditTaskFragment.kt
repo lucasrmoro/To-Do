@@ -7,10 +7,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import br.com.lucas.todo.R
 import br.com.lucas.todo.core.Constants.TASK_TO_EDIT
-import br.com.lucas.todo.core.ext.errorState
-import br.com.lucas.todo.core.ext.formatLongToStringDate
-import br.com.lucas.todo.core.ext.getHoursAndMinutesFormatted
-import br.com.lucas.todo.core.ext.getStringText
+import br.com.lucas.todo.core.ext.*
+import br.com.lucas.todo.core.util.DateUtil
 import br.com.lucas.todo.databinding.FragmentEditTaskBinding
 import br.com.lucas.todo.domain.model.Task
 import br.com.lucas.todo.presentation.base.fragment.BaseFragment
@@ -43,7 +41,7 @@ class EditTaskFragment : BaseFragment<FragmentEditTaskBinding>(FragmentEditTaskB
             edtTitle.setText(taskTitle)
             edtDescription.setText(taskDescription)
             edtDate.setText(taskDate)
-            edtHour.setText(taskTime)
+            edtTime.setText("$taskHour:$taskMinute")
         }
     }
 
@@ -64,19 +62,20 @@ class EditTaskFragment : BaseFragment<FragmentEditTaskBinding>(FragmentEditTaskB
 
         edtDate.doAfterTextChanged { viewModel.checkTaskDateIsValid(it.toString()) }
 
-        edtHour.doAfterTextChanged { viewModel.checkTaskTimeIsValid(it.toString()) }
+        edtTime.doAfterTextChanged { viewModel.checkTaskTimeIsValid(it.toString()) }
     }
 
     private fun setupListeners() {
         binding.edtDate.setOnClickListener { showDatePicker() }
-        binding.edtHour.setOnClickListener { showTimePicker() }
+        binding.edtTime.setOnClickListener { showTimePicker() }
         binding.btnCreateTask.setOnClickListener { view ->
             with(binding) {
                 viewModel.onSaveEvent(
                     taskTitle = edtTitle.getStringText(),
                     taskDescription = edtDescription.getStringText(),
                     taskDate = edtDate.getStringText(),
-                    taskTime = edtHour.getStringText(),
+                    taskHour = edtTime.getHour(),
+                    taskMinute = edtTime.getMinute(),
                     toast = {
                         showToast(it)
                         view.findNavController().popBackStack()
@@ -101,7 +100,7 @@ class EditTaskFragment : BaseFragment<FragmentEditTaskBinding>(FragmentEditTaskB
             .build()
             .apply {
                 addOnPositiveButtonClickListener {
-                    binding.edtDate.setText(it.formatLongToStringDate())
+                    binding.edtDate.setText(DateUtil.formatLongToStringDate(it))
                 }
             }.show(parentFragmentManager, DATE_PICKER_TAG)
     }
@@ -113,7 +112,7 @@ class EditTaskFragment : BaseFragment<FragmentEditTaskBinding>(FragmentEditTaskB
             .build()
             .apply {
                 addOnPositiveButtonClickListener {
-                    binding.edtHour.setText(getHoursAndMinutesFormatted())
+                    binding.edtTime.setText(getHoursAndMinutesFormatted())
                 }
             }.show(parentFragmentManager, TIME_PICKER_TAG)
     }
