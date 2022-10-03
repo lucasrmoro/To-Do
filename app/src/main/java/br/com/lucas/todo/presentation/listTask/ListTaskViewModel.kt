@@ -28,9 +28,9 @@ class ListTaskViewModel @Inject constructor(
         get() = _hasSelectedTasks
 
     val selectedTasksQuantity: Int
-        get() = _taskList.value?.filter { it.isSelected }?.size ?: 1
+        get() = _taskList.value?.filter { it.isSelected }?.size ?: 0
 
-    fun isTaskListEmpty() = taskList.value?.isEmpty() == true
+    fun isTaskListEmpty() = taskList.value?.isEmpty() != false
 
     fun syncSelection(isSelected: Boolean, task: Task) {
         viewModelCall(
@@ -39,7 +39,7 @@ class ListTaskViewModel @Inject constructor(
         )
     }
 
-    fun deleteSelectedTasks(toast: (Int) -> Unit) {
+    fun deleteSelectedTasks(toast: (Int) -> Unit = { }) {
         viewModelCall(
             callToDo = { deleteSelectedTasksUseCase.execute() },
             onSuccess = { toast(R.string.task_successfully_deleted) },
@@ -51,10 +51,10 @@ class ListTaskViewModel @Inject constructor(
     fun refreshScreen(onError: (Int) -> Unit = { }) {
         viewModelCall(
             callToDo = { getAllTasksUseCase.execute() },
-            onSuccess = {
-                _taskList.postValue(it)
-                _hasSelectedTasks.value = it?.any { it.isSelected } == true
-                        },
+            onSuccess = { dbTaskList ->
+                _taskList.postValue(dbTaskList)
+                _hasSelectedTasks.value = dbTaskList.any { it.isSelected } == true
+            },
             onError = { onError(R.string.task_failure_on_get_all) },
         )
     }

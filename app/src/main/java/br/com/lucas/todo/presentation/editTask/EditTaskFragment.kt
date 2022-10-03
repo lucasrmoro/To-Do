@@ -8,6 +8,7 @@ import androidx.navigation.findNavController
 import br.com.lucas.todo.R
 import br.com.lucas.todo.core.Constants.TASK_TO_EDIT
 import br.com.lucas.todo.core.ext.*
+import br.com.lucas.todo.core.util.DateUtil
 import br.com.lucas.todo.databinding.FragmentEditTaskBinding
 import br.com.lucas.todo.domain.model.Task
 import br.com.lucas.todo.presentation.base.fragment.BaseFragment
@@ -99,7 +100,7 @@ class EditTaskFragment : BaseFragment<FragmentEditTaskBinding>(FragmentEditTaskB
             .build()
             .apply {
                 addOnPositiveButtonClickListener {
-                    binding.edtDate.setText(it.formatLongToStringDate())
+                    binding.edtDate.setText(DateUtil.formatLongToStringDate(it))
                 }
             }.show(parentFragmentManager, DATE_PICKER_TAG)
     }
