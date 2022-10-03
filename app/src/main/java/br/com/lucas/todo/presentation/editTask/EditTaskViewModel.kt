@@ -9,7 +9,6 @@ import br.com.lucas.todo.domain.model.Task
 import br.com.lucas.todo.domain.useCases.InsertTaskUseCase
 import br.com.lucas.todo.domain.useCases.UpdateTaskUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,11 +21,12 @@ class EditTaskViewModel @Inject constructor(
     val isTaskDateValid = MutableLiveData<Boolean>()
     val isTaskTimeValid = MutableLiveData<Boolean>()
 
-    private var taskToEdit: Task? = null
+    private var task: Task =
+        Task(taskTitle = "", taskDescription = "", taskDate = "", taskMinute = "", taskHour = "")
     private var isEditMode = false
 
     fun setEditModeEnabled(task: Task) {
-        taskToEdit = task
+        this.task = task
         isEditMode = true
     }
 
@@ -48,44 +48,35 @@ class EditTaskViewModel @Inject constructor(
         taskDate: String,
         taskHour: String,
         taskMinute: String,
-        toast: (Int) -> Unit,
-        onFieldsNotValid: () -> Unit
+        toast: (Int) -> Unit = {},
+        onFieldsNotValid: () -> Unit = {}
     ) {
-        val task = if (isEditMode.not()) Task(
-            uuid = UUID.randomUUID(),
-            taskTitle = taskTitle,
-            taskDescription = taskDescription,
-            taskDate = taskDate,
-            taskHour = taskHour,
-            taskMinute = taskMinute,
-            isSelected = false
-        ) else taskToEdit?.copy(
+        val taskToSave = task.copy(
             taskTitle = taskTitle,
             taskDescription = taskDescription,
             taskDate = taskDate,
             taskMinute = taskMinute,
             taskHour = taskHour
         )
-        task?.let {
-            if (areFieldsValid(task)) {
-                viewModelCall(
-                    callToDo = {
-                        if (isEditMode) {
-                            updateTaskUseCase.execute(task)
-                        } else {
-                            insertTaskUseCase.execute(task)
-                        }
-                    },
-                    onSuccess = {
-                        toast(if (isEditMode) R.string.task_successfully_edited else R.string.task_successfully_created)
-                    },
-                    onError = {
-                        toast(if (isEditMode) R.string.task_failure_on_update else R.string.task_failure_on_create)
+
+        if (areFieldsValid(taskToSave)) {
+            viewModelCall(
+                callToDo = {
+                    if (isEditMode) {
+                        updateTaskUseCase.execute(taskToSave)
+                    } else {
+                        insertTaskUseCase.execute(taskToSave)
                     }
-                )
-            } else {
-                onFieldsNotValid()
-            }
+                },
+                onSuccess = {
+                    toast(if (isEditMode) R.string.task_successfully_edited else R.string.task_successfully_created)
+                },
+                onError = {
+                    toast(if (isEditMode) R.string.task_failure_on_update else R.string.task_failure_on_create)
+                }
+            )
+        } else {
+            onFieldsNotValid()
         }
     }
 
@@ -93,7 +84,7 @@ class EditTaskViewModel @Inject constructor(
         with(task) {
             checkTaskTitleIsValid(taskTitle)
             checkTaskDateIsValid(taskDate)
-            checkTaskTimeIsValid("$taskHour")
+            checkTaskTimeIsValid(taskHour)
 
             return isTaskTitleValid.isTrue() && isTaskDateValid.isTrue() && isTaskTimeValid.isTrue()
         }
