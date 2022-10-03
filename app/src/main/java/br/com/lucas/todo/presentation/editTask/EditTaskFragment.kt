@@ -38,10 +38,10 @@ class EditTaskFragment : BaseFragment<FragmentEditTaskBinding>(FragmentEditTaskB
         task?.run {
             viewModel.setEditModeEnabled(this)
             btnCreateTask.text = getString(R.string.edit_task)
-            edtTitle.setText(taskTitle)
-            edtDescription.setText(taskDescription)
-            edtDate.setText(taskDate)
-            edtTime.setText("$taskHour:$taskMinute")
+            edtTitle.setText(title)
+            edtDescription.setText(description)
+            edtDate.setText(date)
+            edtTime.setText("$hour:$minute")
         }
     }
 

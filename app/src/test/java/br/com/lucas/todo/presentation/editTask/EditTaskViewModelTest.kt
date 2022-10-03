@@ -52,11 +52,11 @@ class EditTaskViewModelTest {
             coVerify(exactly = 1) {
                 insertTaskUseCase.execute(
                     Task(
-                        taskTitle = "titleTask1",
-                        taskHour = "14",
-                        taskMinute = "10",
-                        taskDescription = "descriptionTask1",
-                        taskDate = "25/10/2022"
+                        title = "titleTask1",
+                        hour = "14",
+                        minute = "10",
+                        description = "descriptionTask1",
+                        date = "25/10/2022"
                     )
                 )
             }
@@ -135,11 +135,11 @@ class EditTaskViewModelTest {
             viewModel.setEditModeEnabled(
                 Task(
                     uuid = uuid,
-                    taskTitle = "titleTask1",
-                    taskHour = "14",
-                    taskMinute = "10",
-                    taskDescription = "descriptionTask1",
-                    taskDate = "25/10/2022"
+                    title = "titleTask1",
+                    hour = "14",
+                    minute = "10",
+                    description = "descriptionTask1",
+                    date = "25/10/2022"
                 )
             )
 
@@ -156,11 +156,11 @@ class EditTaskViewModelTest {
                 updateTaskUseCase.execute(
                     Task(
                         uuid = uuid,
-                        taskTitle = "titleTask2",
-                        taskHour = "09",
-                        taskMinute = "05",
-                        taskDescription = "descriptionTask1",
-                        taskDate = "25/10/2022"
+                        title = "titleTask2",
+                        hour = "09",
+                        minute = "05",
+                        description = "descriptionTask1",
+                        date = "25/10/2022"
                     )
                 )
             }
@@ -174,11 +174,11 @@ class EditTaskViewModelTest {
             viewModel.setEditModeEnabled(
                 Task(
                     uuid = uuid,
-                    taskTitle = "titleTask1",
-                    taskHour = "14",
-                    taskMinute = "10",
-                    taskDescription = "descriptionTask1",
-                    taskDate = "25/10/2022"
+                    title = "titleTask1",
+                    hour = "14",
+                    minute = "10",
+                    description = "descriptionTask1",
+                    date = "25/10/2022"
                 )
             )
 
@@ -202,11 +202,11 @@ class EditTaskViewModelTest {
             viewModel.setEditModeEnabled(
                 Task(
                     uuid = uuid,
-                    taskTitle = "titleTask1",
-                    taskHour = "14",
-                    taskMinute = "10",
-                    taskDescription = "descriptionTask1",
-                    taskDate = "25/10/2022"
+                    title = "titleTask1",
+                    hour = "14",
+                    minute = "10",
+                    description = "descriptionTask1",
+                    date = "25/10/2022"
                 )
             )
 
@@ -230,11 +230,11 @@ class EditTaskViewModelTest {
             viewModel.setEditModeEnabled(
                 Task(
                     uuid = uuid,
-                    taskTitle = "titleTask1",
-                    taskHour = "14",
-                    taskMinute = "10",
-                    taskDescription = "descriptionTask1",
-                    taskDate = "25/10/2022"
+                    title = "titleTask1",
+                    hour = "14",
+                    minute = "10",
+                    description = "descriptionTask1",
+                    date = "25/10/2022"
                 )
             )
 

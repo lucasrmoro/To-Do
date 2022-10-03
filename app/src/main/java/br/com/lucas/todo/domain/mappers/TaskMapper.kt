@@ -12,11 +12,11 @@ class TaskMapper: BaseMapper<TaskEntity, Task> {
     override fun mapToDomainModel(entity: TaskEntity): Task {
         return Task(
             uuid = entity.uuid,
-            taskTitle = entity.title,
-            taskDescription = entity.description,
-            taskDate = DateUtil.formatLongToStringDate(entity.date),
-            taskHour = entity.time.toHour(),
-            taskMinute = entity.time.toMinute(),
+            title = entity.title,
+            description = entity.description,
+            date = DateUtil.formatLongToStringDate(entity.date),
+            hour = entity.time.toHour(),
+            minute = entity.time.toMinute(),
             isSelected = entity.isSelected
         )
     }
@@ -24,10 +24,10 @@ class TaskMapper: BaseMapper<TaskEntity, Task> {
     override fun mapToEntity(domainModel: Task): TaskEntity {
         return TaskEntity(
             uuid = domainModel.uuid ?: UUID.randomUUID(),
-            title = domainModel.taskTitle,
-            description = domainModel.taskDescription,
-            date = DateUtil.formatStringDateToLong(domainModel.taskDate),
-            time = formatHoursAndMinutesToIntTime(domainModel.taskHour, domainModel.taskMinute),
+            title = domainModel.title,
+            description = domainModel.description,
+            date = DateUtil.formatStringDateToLong(domainModel.date),
+            time = formatHoursAndMinutesToIntTime(domainModel.hour, domainModel.minute),
             isSelected = domainModel.isSelected
         )
     }
