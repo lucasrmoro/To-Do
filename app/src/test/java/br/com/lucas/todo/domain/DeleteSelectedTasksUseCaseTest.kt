@@ -5,19 +5,12 @@ import br.com.lucas.todo.domain.useCases.DeleteSelectedTasksUseCase
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
-import org.junit.Before
 import org.junit.Test
 
 class DeleteSelectedTasksUseCaseTest {
 
-    private lateinit var taskRepository: TaskRepository
-    private lateinit var deleteSelectedTasksUseCase: DeleteSelectedTasksUseCase
-
-    @Before
-    fun setup() {
-        taskRepository = mockk(relaxed = true)
-        deleteSelectedTasksUseCase = DeleteSelectedTasksUseCase(taskRepository)
-    }
+    private val taskRepository = mockk<TaskRepository>(relaxed = true)
+    private val deleteSelectedTasksUseCase = DeleteSelectedTasksUseCase(taskRepository)
 
     @Test
     fun `delete selected tasks`() {

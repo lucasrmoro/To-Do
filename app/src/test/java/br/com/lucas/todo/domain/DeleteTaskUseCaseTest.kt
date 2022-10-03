@@ -1,51 +1,39 @@
 package br.com.lucas.todo.domain
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import br.com.lucas.todo.data.db.entities.TaskEntity
+import br.com.lucas.todo.domain.mappers.TaskMapper
 import br.com.lucas.todo.data.db.repository.TaskRepository
 import br.com.lucas.todo.domain.model.Task
 import br.com.lucas.todo.domain.useCases.DeleteTaskUseCase
+import br.com.lucas.todo.rules.CoroutinesTestRule
+import br.com.lucas.todo.rules.TimberRule
+import br.com.lucas.todo.testProviders.MockedTasksProvider
 import io.mockk.coVerify
 import io.mockk.mockk
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import java.util.*
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class DeleteTaskUseCaseTest {
 
-    private lateinit var taskRepository: TaskRepository
-    private lateinit var deleteTaskUseCase: DeleteTaskUseCase
-
-    private val uuidTaskEntity = UUID.randomUUID()
-    private val taskEntity = TaskEntity(
-        uuid = uuidTaskEntity,
-        taskTitle = "titleTask",
-        taskDescription = "descriptionTask",
-        taskDate = 1666666800000,
-        taskTime = 850,
-        isSelected = false
-    )
-    private val task = Task(
-        uuid = uuidTaskEntity,
-        taskTitle = "titleTask",
-        taskHour = "14",
-        taskMinute = "10",
-        taskDescription = "descriptionTask",
-        taskDate = "25/10/2022",
-        isSelected = false,
-    )
-
-    @Before
-    fun setup() {
-        taskRepository = mockk(relaxed = true)
-        deleteTaskUseCase = DeleteTaskUseCase(taskRepository)
-    }
+    private val mockedTasksProvider = MockedTasksProvider()
+    private val taskMapper = TaskMapper()
+    private val taskRepository = mockk<TaskRepository>(relaxed = true)
+    private val deleteTaskUseCase = DeleteTaskUseCase(taskRepository, taskMapper)
 
     @Test
     fun `delete task`() {
-        runBlocking {
-            deleteTaskUseCase.execute(task)
-            coVerify(exactly = 1) { taskRepository.delete(taskEntity) }
+        runTest {
+            deleteTaskUseCase.execute(mockedTasksProvider.task1)
+
+            coVerify(exactly = 1) { taskRepository.delete(mockedTasksProvider.taskEntity1) }
         }
     }
 }
