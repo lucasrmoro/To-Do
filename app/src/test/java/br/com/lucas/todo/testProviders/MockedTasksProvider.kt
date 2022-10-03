@@ -12,26 +12,26 @@ class MockedTasksProvider {
 
     val taskEntity1 = TaskEntity(
         uuid = uuidTaskEntity1,
-        taskTitle = "titleTask1",
-        taskDescription = "descriptionTask1",
-        taskDate = 1666666800000,
-        taskTime = 850,
+        title = "titleTask1",
+        description = "descriptionTask1",
+        date = 1666666800000,
+        time = 850,
         isSelected = false
     )
     val taskEntity2 = TaskEntity(
         uuid = uuidTaskEntity2,
-        taskTitle = "titleTask2",
-        taskDescription = "descriptionTask2",
-        taskDate = 1666321200000,
-        taskTime = 150,
+        title = "titleTask2",
+        description = "descriptionTask2",
+        date = 1666321200000,
+        time = 150,
         isSelected = false
     )
     val taskEntity3 = TaskEntity(
         uuid = uuidTaskEntity3,
-        taskTitle = "titleTask3",
-        taskDescription = "descriptionTask3",
-        taskDate = 1666666800000,
-        taskTime = 550,
+        title = "titleTask3",
+        description = "descriptionTask3",
+        date = 1666666800000,
+        time = 550,
         isSelected = false
     )
     val task1 = Task(

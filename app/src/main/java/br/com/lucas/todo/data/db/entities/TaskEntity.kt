@@ -10,13 +10,13 @@ data class TaskEntity(
     @PrimaryKey
     val uuid: UUID,
     @ColumnInfo
-    var taskTitle: String,
+    var title: String,
     @ColumnInfo
-    var taskDescription: String,
+    var description: String,
     @ColumnInfo
-    var taskDate: Long,
+    var date: Long,
     @ColumnInfo
-    var taskTime: Int,
+    var time: Int,
     @ColumnInfo
     var isSelected: Boolean
 )

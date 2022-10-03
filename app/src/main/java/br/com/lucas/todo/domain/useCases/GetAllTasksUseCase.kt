@@ -16,9 +16,9 @@ class GetAllTasksUseCase @Inject constructor(
         val tasksSorted = taskRepository.getAll().run {
             sortedWith(
                 compareBy(
-                    TaskEntity::taskDate,
-                    TaskEntity::taskTime
-                ).thenByDescending(TaskEntity::taskTitle)
+                    TaskEntity::date,
+                    TaskEntity::time
+                ).thenByDescending(TaskEntity::title)
             )
         }
         return taskMapper.mapToDomainModels(tasksSorted)
