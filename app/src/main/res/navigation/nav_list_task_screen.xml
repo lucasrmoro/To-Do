@@ -16,7 +16,11 @@
             app:nullable="true" />
         <action
             android:id="@+id/fromListTaskToEditTask"
-            app:destination="@id/navEditTaskScreen" />
+            app:destination="@id/navEditTaskScreen"
+            app:enterAnim="@anim/slide_fade_in"
+            app:exitAnim="@anim/slide_fade_out"
+            app:popEnterAnim="@anim/slide_fade_in"
+            app:popExitAnim="@anim/slide_fade_out" />
     </fragment>
     <include app:graph="@navigation/nav_edit_task_screen" />
 
