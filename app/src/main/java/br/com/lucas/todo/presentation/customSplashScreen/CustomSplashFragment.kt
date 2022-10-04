@@ -16,7 +16,7 @@ class CustomSplashFragment : BaseFragment<FragmentSplashScreenBinding>(FragmentS
         super.onViewCreated(view, savedInstanceState)
         getMainActivity()?.hideToolbar()
         binding.ivCheck.alpha = 0f
-        binding.ivCheck.animate().setDuration(3000).alpha(1f).withEndAction {
+        binding.ivCheck.animate().setDuration(1500).alpha(1f).withEndAction {
             getMainActivity()?.showToolbar()
             view.findNavController().navigate(R.id.fromSplashToListTask)
         }
