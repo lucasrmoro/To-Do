@@ -25,13 +25,13 @@ class ListTaskAdapter(
         }
 
         binding.root.setOnClickListener { listTaskAdapterInterface.onTaskClicked(adapterItem) }
-        binding.tvTitle.text = adapterItem.taskTitle
+        binding.tvTitle.text = adapterItem.title
         binding.tvTitle.isSelected = adapterItem.isSelected
         binding.tvTitle.showStrikeThrough(adapterItem.isSelected)
         binding.tvTitle.isItalic(adapterItem.isSelected)
-        binding.tvHour.text = adapterItem.taskHour
+        binding.tvHour.text = adapterItem.hour
         binding.tvHour.isSelected = adapterItem.isSelected
-        binding.tvMinute.text = adapterItem.taskMinute
+        binding.tvMinute.text = adapterItem.minute
         binding.tvMinute.isSelected = adapterItem.isSelected
         binding.checkbox.setCheckedSilent(adapterItem.isSelected, checkboxListener)
         binding.checkbox.setOnCheckedChangeListener(checkboxListener)

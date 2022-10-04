@@ -8,11 +8,11 @@ import java.util.*
 @Parcelize
 data class Task(
     val uuid: UUID? = null,
-    val taskTitle: String,
-    val taskDescription: String,
-    val taskDate: String,
-    val taskHour: String,
-    val taskMinute: String,
+    val title: String,
+    val description: String,
+    val date: String,
+    val hour: String,
+    val minute: String,
     val isSelected: Boolean = false
 ) : Parcelable, DiffUtilEquality<Task> {
 

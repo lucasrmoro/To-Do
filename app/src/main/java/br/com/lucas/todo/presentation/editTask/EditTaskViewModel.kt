@@ -22,7 +22,7 @@ class EditTaskViewModel @Inject constructor(
     val isTaskTimeValid = MutableLiveData<Boolean>()
 
     private var task: Task =
-        Task(taskTitle = "", taskDescription = "", taskDate = "", taskMinute = "", taskHour = "")
+        Task(title = "", description = "", date = "", minute = "", hour = "")
     private var isEditMode = false
 
     fun setEditModeEnabled(task: Task) {
@@ -52,11 +52,11 @@ class EditTaskViewModel @Inject constructor(
         onFieldsNotValid: () -> Unit = {}
     ) {
         val taskToSave = task.copy(
-            taskTitle = taskTitle,
-            taskDescription = taskDescription,
-            taskDate = taskDate,
-            taskMinute = taskMinute,
-            taskHour = taskHour
+            title = taskTitle,
+            description = taskDescription,
+            date = taskDate,
+            minute = taskMinute,
+            hour = taskHour
         )
 
         if (areFieldsValid(taskToSave)) {
@@ -82,9 +82,9 @@ class EditTaskViewModel @Inject constructor(
 
     private fun areFieldsValid(task: Task): Boolean {
         with(task) {
-            checkTaskTitleIsValid(taskTitle)
-            checkTaskDateIsValid(taskDate)
-            checkTaskTimeIsValid(taskHour)
+            checkTaskTitleIsValid(title)
+            checkTaskDateIsValid(date)
+            checkTaskTimeIsValid(hour)
 
             return isTaskTitleValid.isTrue() && isTaskDateValid.isTrue() && isTaskTimeValid.isTrue()
         }

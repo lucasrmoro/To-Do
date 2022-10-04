@@ -12,53 +12,53 @@ class MockedTasksProvider {
 
     val taskEntity1 = TaskEntity(
         uuid = uuidTaskEntity1,
-        taskTitle = "titleTask1",
-        taskDescription = "descriptionTask1",
-        taskDate = 1666666800000,
-        taskTime = 850,
+        title = "titleTask1",
+        description = "descriptionTask1",
+        date = 1666666800000,
+        time = 850,
         isSelected = false
     )
     val taskEntity2 = TaskEntity(
         uuid = uuidTaskEntity2,
-        taskTitle = "titleTask2",
-        taskDescription = "descriptionTask2",
-        taskDate = 1666321200000,
-        taskTime = 150,
+        title = "titleTask2",
+        description = "descriptionTask2",
+        date = 1666321200000,
+        time = 150,
         isSelected = false
     )
     val taskEntity3 = TaskEntity(
         uuid = uuidTaskEntity3,
-        taskTitle = "titleTask3",
-        taskDescription = "descriptionTask3",
-        taskDate = 1666666800000,
-        taskTime = 550,
+        title = "titleTask3",
+        description = "descriptionTask3",
+        date = 1666666800000,
+        time = 550,
         isSelected = false
     )
     val task1 = Task(
         uuid = uuidTaskEntity1,
-        taskTitle = "titleTask1",
-        taskHour = "14",
-        taskMinute = "10",
-        taskDescription = "descriptionTask1",
-        taskDate = "25/10/2022",
+        title = "titleTask1",
+        hour = "14",
+        minute = "10",
+        description = "descriptionTask1",
+        date = "25/10/2022",
         isSelected = false,
     )
     val task2 = Task(
         uuid = uuidTaskEntity2,
-        taskTitle = "titleTask2",
-        taskHour = "02",
-        taskMinute = "30",
-        taskDescription = "descriptionTask2",
-        taskDate = "21/10/2022",
+        title = "titleTask2",
+        hour = "02",
+        minute = "30",
+        description = "descriptionTask2",
+        date = "21/10/2022",
         isSelected = false,
     )
     val task3 = Task(
         uuid = uuidTaskEntity3,
-        taskTitle = "titleTask3",
-        taskHour = "09",
-        taskMinute = "10",
-        taskDescription = "descriptionTask3",
-        taskDate = "25/10/2022",
+        title = "titleTask3",
+        hour = "09",
+        minute = "10",
+        description = "descriptionTask3",
+        date = "25/10/2022",
         isSelected = false,
     )
 
