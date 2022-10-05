@@ -11,7 +11,7 @@ import br.com.lucas.todo.core.ext.*
 import br.com.lucas.todo.core.util.DateUtil
 import br.com.lucas.todo.databinding.FragmentEditTaskBinding
 import br.com.lucas.todo.domain.model.Task
-import br.com.lucas.todo.presentation.base.fragment.BaseFragment
+import br.com.lucas.todo.presentation.common.base.fragment.BaseFragment
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -19,9 +19,13 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class EditTaskFragment : BaseFragment<FragmentEditTaskBinding>(FragmentEditTaskBinding::inflate) {
+
+    @Inject
+    lateinit var dateUtil: DateUtil
 
     private val viewModel: EditTaskViewModel by viewModels()
 
@@ -100,7 +104,7 @@ class EditTaskFragment : BaseFragment<FragmentEditTaskBinding>(FragmentEditTaskB
             .build()
             .apply {
                 addOnPositiveButtonClickListener {
-                    binding.edtDate.setText(DateUtil.formatLongToStringDate(it))
+                    binding.edtDate.setText(dateUtil.formatLongToStringDate(it))
                 }
             }.show(parentFragmentManager, DATE_PICKER_TAG)
     }

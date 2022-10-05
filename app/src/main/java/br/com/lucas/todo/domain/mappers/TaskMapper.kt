@@ -3,18 +3,21 @@ package br.com.lucas.todo.domain.mappers
 import br.com.lucas.todo.core.ext.*
 import br.com.lucas.todo.core.util.DateUtil
 import br.com.lucas.todo.data.db.entities.TaskEntity
-import br.com.lucas.todo.domain.model.Task
 import br.com.lucas.todo.domain.mappers.base.BaseMapper
+import br.com.lucas.todo.domain.model.Task
 import java.util.*
+import javax.inject.Inject
 
-class TaskMapper: BaseMapper<TaskEntity, Task> {
+class TaskMapper @Inject constructor(
+    private val dateUtil: DateUtil
+): BaseMapper<TaskEntity, Task> {
 
     override fun mapToDomainModel(entity: TaskEntity): Task {
         return Task(
             uuid = entity.uuid,
             title = entity.title,
             description = entity.description,
-            date = DateUtil.formatLongToStringDate(entity.date),
+            date = dateUtil.formatLongToStringDate(entity.date),
             hour = entity.time.toHour(),
             minute = entity.time.toMinute(),
             isSelected = entity.isSelected
@@ -26,7 +29,7 @@ class TaskMapper: BaseMapper<TaskEntity, Task> {
             uuid = domainModel.uuid ?: UUID.randomUUID(),
             title = domainModel.title,
             description = domainModel.description,
-            date = DateUtil.formatStringDateToLong(domainModel.date),
+            date = dateUtil.formatStringDateToLong(domainModel.date),
             time = formatHoursAndMinutesToIntTime(domainModel.hour, domainModel.minute),
             isSelected = domainModel.isSelected
         )
@@ -39,4 +42,5 @@ class TaskMapper: BaseMapper<TaskEntity, Task> {
     override fun mapToEntities(listDomainModel: List<Task>): List<TaskEntity> {
         return listDomainModel.map { mapToEntity(it) }
     }
+
 }

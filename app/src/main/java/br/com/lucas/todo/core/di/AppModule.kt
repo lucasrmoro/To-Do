@@ -1,7 +1,12 @@
 package br.com.lucas.todo.core.di
 
+import android.app.Application
 import android.content.Context
+import android.content.res.loader.ResourcesProvider
 import androidx.room.Room
+import br.com.lucas.todo.core.providers.ResourcesProviderImpl
+import br.com.lucas.todo.core.providers.ResourcesProviderInterface
+import br.com.lucas.todo.core.util.DateUtil
 import br.com.lucas.todo.data.db.dao.AppDataBase
 import br.com.lucas.todo.data.db.dao.TaskDao
 import br.com.lucas.todo.domain.mappers.TaskMapper
@@ -39,5 +44,15 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideTaskEntityMapper(): TaskMapper = TaskMapper()
+    fun provideResourcesProvider(application: Application): ResourcesProviderInterface =
+        ResourcesProviderImpl(application.resources)
+
+    @Singleton
+    @Provides
+    fun provideDateUtil(resourcesProviderInterface: ResourcesProviderInterface) = DateUtil(resourcesProviderInterface)
+
+    @Singleton
+    @Provides
+    fun provideTaskEntityMapper(dateUtil: DateUtil): TaskMapper = TaskMapper(dateUtil)
+
 }
