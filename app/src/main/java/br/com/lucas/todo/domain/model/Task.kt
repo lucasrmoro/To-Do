@@ -1,7 +1,8 @@
 package br.com.lucas.todo.domain.model
 
 import android.os.Parcelable
-import br.com.lucas.todo.presentation.base.adapter.DiffUtilEquality
+import br.com.lucas.todo.presentation.common.generic.adapter.model.AdapterItem
+import br.com.lucas.todo.presentation.common.generic.adapter.model.AdapterItemType
 import kotlinx.parcelize.Parcelize
 import java.util.*
 
@@ -14,12 +15,14 @@ data class Task(
     val hour: String,
     val minute: String,
     val isSelected: Boolean = false
-) : Parcelable, DiffUtilEquality<Task> {
+) : Parcelable, AdapterItem {
 
-    override fun areItemsTheSame(toCompare: Task): Boolean =
-        this.uuid == toCompare.uuid
+    override fun itemViewType() = AdapterItemType.TASK_ITEM
 
-    override fun areContentsTheSame(toCompare: Task): Boolean =
+    override fun areItemsTheSame(toCompare: Any) =
+        this.uuid == (toCompare as? Task)?.uuid
+
+    override fun areContentsTheSame(toCompare: Any) =
         this == toCompare
 
 }

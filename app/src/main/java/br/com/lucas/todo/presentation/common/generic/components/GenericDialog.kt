@@ -1,4 +1,4 @@
-package br.com.lucas.todo.presentation.components
+package br.com.lucas.todo.presentation.common.generic.components
 
 import android.content.Context
 import android.os.Bundle

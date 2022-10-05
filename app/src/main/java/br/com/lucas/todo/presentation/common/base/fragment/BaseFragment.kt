@@ -1,4 +1,4 @@
-package br.com.lucas.todo.presentation.base.fragment
+package br.com.lucas.todo.presentation.common.base.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,7 +13,7 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import br.com.lucas.todo.core.ext.getMainActivity
-import br.com.lucas.todo.presentation.components.GenericToolbarMenu
+import br.com.lucas.todo.presentation.common.generic.components.GenericToolbarMenu
 
 abstract class BaseFragment<VB : ViewBinding>(
     private val inflater: (LayoutInflater, ViewGroup?, Boolean) -> VB,

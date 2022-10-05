@@ -2,7 +2,6 @@ package br.com.lucas.todo.presentation.listTask
 
 import android.os.Bundle
 import android.view.View
-import androidx.annotation.IdRes
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
@@ -12,15 +11,17 @@ import br.com.lucas.todo.core.ext.gone
 import br.com.lucas.todo.core.ext.visible
 import br.com.lucas.todo.databinding.FragmentListTaskBinding
 import br.com.lucas.todo.domain.model.Task
-import br.com.lucas.todo.presentation.base.fragment.BaseFragment
-import br.com.lucas.todo.presentation.components.GenericDialog
+import br.com.lucas.todo.presentation.common.generic.adapter.GenericAdapter
+import br.com.lucas.todo.presentation.common.base.fragment.BaseFragment
+import br.com.lucas.todo.presentation.common.generic.components.GenericDialog
+import br.com.lucas.todo.presentation.listTask.adapter.ListTaskAdapterCallback
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ListTaskFragment : BaseFragment<FragmentListTaskBinding>(FragmentListTaskBinding::inflate),
-    ListTaskAdapterInterface {
+    ListTaskAdapterCallback {
 
-    private val adapter by lazy { ListTaskAdapter(this) }
+    private val adapter by lazy { GenericAdapter(this) }
     private val viewModel: ListTaskViewModel by viewModels()
 
     override fun onResume() {
@@ -39,9 +40,10 @@ class ListTaskFragment : BaseFragment<FragmentListTaskBinding>(FragmentListTaskB
 
     private fun setupObservers() {
         viewModel.taskList.observe(viewLifecycleOwner) { taskList ->
-            adapter.setupList(taskList)
+            adapter.submitList(taskList)
             checkEmptyState()
         }
+
 
         viewModel.hasSelectedTasks.observe(viewLifecycleOwner) { hasSelectedTasks ->
             if (hasSelectedTasks) {
@@ -100,12 +102,6 @@ class ListTaskFragment : BaseFragment<FragmentListTaskBinding>(FragmentListTaskB
         }
     }
 
-    private fun getMenuItemIndex(@IdRes menuItemId: Int): Int {
-        return when(menuItemId) {
-            R.id.delete_tasks -> 0
-            else -> -1
-        }
-    }
     override fun onTaskClicked(task: Task) {
         view?.findNavController()
             ?.navigate(R.id.fromListTaskToEditTask, bundleOf(TASK_TO_EDIT to task))

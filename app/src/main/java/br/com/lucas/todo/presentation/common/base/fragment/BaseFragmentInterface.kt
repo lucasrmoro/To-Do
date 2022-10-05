@@ -1,4 +1,4 @@
-package br.com.lucas.todo.presentation.base.fragment
+package br.com.lucas.todo.presentation.common.base.fragment
 
 import androidx.annotation.StringRes
 import com.google.android.material.snackbar.Snackbar

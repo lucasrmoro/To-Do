@@ -6,7 +6,7 @@ import androidx.navigation.findNavController
 import br.com.lucas.todo.R
 import br.com.lucas.todo.core.ext.getMainActivity
 import br.com.lucas.todo.databinding.FragmentSplashScreenBinding
-import br.com.lucas.todo.presentation.base.fragment.BaseFragment
+import br.com.lucas.todo.presentation.common.base.fragment.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
