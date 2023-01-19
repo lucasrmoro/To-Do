@@ -3,7 +3,6 @@ package br.com.lucas.todo.core.util
 import android.text.format.DateUtils
 import br.com.lucas.todo.R
 import br.com.lucas.todo.core.Constants
-import br.com.lucas.todo.core.ext.*
 import br.com.lucas.todo.core.providers.ResourcesProviderInterface
 import timber.log.Timber
 import java.text.ParseException
@@ -58,7 +57,7 @@ class DateUtil @Inject constructor(
 
     fun getFormattedYear(date: String?): String {
         return when {
-            isPastYear(date) -> res.getString(R.string.past_month)
+            isPastYear(date) -> res.getString(R.string.past_year)
             isNextYear(date) -> res.getString(R.string.next_year)
             else -> getYear(date)
         }
