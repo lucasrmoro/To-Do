@@ -3,7 +3,6 @@ package br.com.lucas.todo.presentation.editTask
 import android.os.Bundle
 import android.view.View
 import androidx.core.widget.doAfterTextChanged
-import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import br.com.lucas.todo.R
 import br.com.lucas.todo.core.Constants.TASK_TO_EDIT
@@ -22,12 +21,10 @@ import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class EditTaskFragment : BaseFragment<FragmentEditTaskBinding>(FragmentEditTaskBinding::inflate) {
+class EditTaskFragment : BaseFragment<FragmentEditTaskBinding, EditTaskViewModel>(FragmentEditTaskBinding::inflate) {
 
     @Inject
     lateinit var dateUtil: DateUtil
-
-    private val viewModel: EditTaskViewModel by viewModels()
 
     private val taskToEdit by lazy { arguments?.getParcelable<Task>(TASK_TO_EDIT) }
 

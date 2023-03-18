@@ -7,10 +7,11 @@ import br.com.lucas.todo.R
 import br.com.lucas.todo.core.ext.getMainActivity
 import br.com.lucas.todo.databinding.FragmentSplashScreenBinding
 import br.com.lucas.todo.presentation.common.base.fragment.BaseFragment
+import br.com.lucas.todo.presentation.common.base.viewModel.DummyViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CustomSplashFragment : BaseFragment<FragmentSplashScreenBinding>(FragmentSplashScreenBinding::inflate) {
+class CustomSplashFragment : BaseFragment<FragmentSplashScreenBinding, DummyViewModel>(FragmentSplashScreenBinding::inflate) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -3,7 +3,6 @@ package br.com.lucas.todo.presentation.listTask
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
-import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import br.com.lucas.todo.R
 import br.com.lucas.todo.core.Constants.TASK_TO_EDIT
@@ -18,16 +17,14 @@ import br.com.lucas.todo.presentation.listTask.adapter.ListTaskAdapterCallback
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ListTaskFragment : BaseFragment<FragmentListTaskBinding>(FragmentListTaskBinding::inflate),
+class ListTaskFragment : BaseFragment<FragmentListTaskBinding, ListTaskViewModel>(FragmentListTaskBinding::inflate),
     ListTaskAdapterCallback {
 
     private val adapter by lazy { GenericAdapter(this) }
-    private val viewModel: ListTaskViewModel by viewModels()
 
     override fun onResume() {
         super.onResume()
         viewModel.refreshScreen { showToast(it) }
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

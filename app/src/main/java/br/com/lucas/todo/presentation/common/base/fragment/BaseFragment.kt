@@ -11,16 +11,23 @@ import androidx.annotation.IdRes
 import androidx.annotation.MenuRes
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import br.com.lucas.todo.core.ext.getMainActivity
 import br.com.lucas.todo.presentation.common.generic.components.GenericToolbarMenu
+import java.lang.reflect.ParameterizedType
 
-abstract class BaseFragment<VB : ViewBinding>(
+abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
     private val inflater: (LayoutInflater, ViewGroup?, Boolean) -> VB,
 ) : Fragment(), BaseFragmentInterface {
 
     private var _binding: VB? = null
     protected val binding get() = _binding!!
+
+    private var _viewModel: VM? = null
+    protected val viewModel: VM
+        get() = _viewModel ?: throw IllegalArgumentException("ViewModel not found")
 
     private var toolbarMenu: GenericToolbarMenu? = null
 
@@ -58,6 +65,13 @@ abstract class BaseFragment<VB : ViewBinding>(
         toolbarMenu = null
     }
 
+    @Suppress("UNCHECKED_CAST")
+    private fun getViewModelClass() = (javaClass.genericSuperclass as ParameterizedType)
+            .actualTypeArguments
+            .firstOrNull { it is Class<*> && ViewModel::class.java.isAssignableFrom(it) }
+            ?.let { it as Class<VM> }
+            ?: throw IllegalStateException("ViewModel class not found")
+
     @CallSuper
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,6 +79,7 @@ abstract class BaseFragment<VB : ViewBinding>(
         savedInstanceState: Bundle?
     ): View? {
         _binding = inflater(inflater, container, false)
+        _viewModel = ViewModelProvider(this)[getViewModelClass()]
         return binding.root
     }
 
