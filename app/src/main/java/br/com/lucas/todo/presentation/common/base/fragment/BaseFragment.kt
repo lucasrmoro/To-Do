@@ -23,7 +23,8 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
 ) : Fragment(), BaseFragmentInterface {
 
     private var _binding: VB? = null
-    protected val binding get() = _binding!!
+    protected val binding
+        get() = _binding ?: throw IllegalArgumentException("ViewBiding not found")
 
     private var _viewModel: VM? = null
     protected val viewModel: VM
@@ -67,10 +68,10 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
 
     @Suppress("UNCHECKED_CAST")
     private fun getViewModelClass() = (javaClass.genericSuperclass as ParameterizedType)
-            .actualTypeArguments
-            .firstOrNull { it is Class<*> && ViewModel::class.java.isAssignableFrom(it) }
-            ?.let { it as Class<VM> }
-            ?: throw IllegalStateException("ViewModel class not found")
+        .actualTypeArguments
+        .firstOrNull { it is Class<*> && ViewModel::class.java.isAssignableFrom(it) }
+        ?.let { it as Class<VM> }
+        ?: throw IllegalStateException("ViewModel class not found")
 
     @CallSuper
     override fun onCreateView(
