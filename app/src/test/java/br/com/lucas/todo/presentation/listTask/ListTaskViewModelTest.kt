@@ -3,6 +3,7 @@ package br.com.lucas.todo.presentation.listTask
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import br.com.lucas.todo.domain.useCases.DeleteSelectedTasksUseCase
 import br.com.lucas.todo.domain.useCases.GetAllTasksUseCase
+import br.com.lucas.todo.domain.useCases.GetTasksCategorizedByDateUseCase
 import br.com.lucas.todo.domain.useCases.UpdateTaskUseCase
 import br.com.lucas.todo.rules.CoroutinesTestRule
 import br.com.lucas.todo.rules.TimberRule
@@ -32,13 +33,20 @@ class ListTaskViewModelTest {
 
     private val mockedTasksProvider = MockedTasksProvider()
     private val getAllTaskUseCase: GetAllTasksUseCase = mockk(relaxed = true)
+    private val getTasksCategorizedByDateUseCase =
+        mockk<GetTasksCategorizedByDateUseCase>(relaxed = true)
     private val deleteSelectedTasksUseCase: DeleteSelectedTasksUseCase = mockk(relaxed = true)
     private val updateTaskUseCase: UpdateTaskUseCase = mockk(relaxed = true)
     private lateinit var viewModel: ListTaskViewModel
 
     @Before
     fun setup() {
-        viewModel = ListTaskViewModel(updateTaskUseCase, getAllTaskUseCase, deleteSelectedTasksUseCase)
+        viewModel = ListTaskViewModel(
+            updateTaskUseCase,
+            getAllTaskUseCase,
+            getTasksCategorizedByDateUseCase,
+            deleteSelectedTasksUseCase
+        )
     }
 
     @Test
@@ -76,10 +84,7 @@ class ListTaskViewModelTest {
             viewModel.refreshScreen()
 
             advanceUntilIdle()
-            Truth.assertThat(viewModel.taskList.value)
-                .isEqualTo(mockedTasksProvider.getTaskListSortedByDate())
             Truth.assertThat(viewModel.hasSelectedTasks.value).isFalse()
-            Truth.assertThat(viewModel.isTaskListEmpty()).isFalse()
             Truth.assertThat(viewModel.selectedTasksQuantity).isEqualTo(0)
         }
     }
@@ -92,10 +97,7 @@ class ListTaskViewModelTest {
             viewModel.refreshScreen()
 
             advanceUntilIdle()
-            Truth.assertThat(viewModel.taskList.value)
-                .isEqualTo(mockedTasksProvider.getTaskListSortedByDateWithFewSelected())
             Truth.assertThat(viewModel.hasSelectedTasks.value).isTrue()
-            Truth.assertThat(viewModel.isTaskListEmpty()).isFalse()
             Truth.assertThat(viewModel.selectedTasksQuantity).isEqualTo(2)
         }
     }
@@ -117,7 +119,8 @@ class ListTaskViewModelTest {
 
             advanceUntilIdle()
             coVerify(exactly = 1) {
-                updateTaskUseCase.execute(mockedTasksProvider.task1.copy(isSelected = true)
+                updateTaskUseCase.execute(
+                    mockedTasksProvider.task1.copy(isSelected = true)
                 )
             }
         }

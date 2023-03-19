@@ -2,16 +2,16 @@ package br.com.lucas.todo.core.di
 
 import android.app.Application
 import android.content.Context
-import android.content.res.loader.ResourcesProvider
 import androidx.room.Room
-import br.com.lucas.todo.core.providers.ResourcesProviderImpl
-import br.com.lucas.todo.core.providers.ResourcesProviderInterface
-import br.com.lucas.todo.core.util.DateUtil
+import br.com.lucas.todo.core.providers.date.DateProvider
+import br.com.lucas.todo.core.providers.date.DateProviderImpl
+import br.com.lucas.todo.core.providers.resources.ResourcesProvider
+import br.com.lucas.todo.core.providers.resources.ResourcesProviderImpl
 import br.com.lucas.todo.data.db.dao.AppDataBase
 import br.com.lucas.todo.data.db.dao.TaskDao
-import br.com.lucas.todo.domain.mappers.TaskMapper
 import br.com.lucas.todo.data.db.repository.TaskRepository
 import br.com.lucas.todo.data.db.repository.TaskRepositoryImpl
+import br.com.lucas.todo.domain.mappers.TaskMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -44,15 +44,16 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideResourcesProvider(application: Application): ResourcesProviderInterface =
+    fun provideResourcesProvider(application: Application): ResourcesProvider =
         ResourcesProviderImpl(application.resources)
 
     @Singleton
     @Provides
-    fun provideDateUtil(resourcesProviderInterface: ResourcesProviderInterface) = DateUtil(resourcesProviderInterface)
+    fun provideDateUtil(resourcesProvider: ResourcesProvider): DateProvider =
+        DateProviderImpl(resourcesProvider)
 
     @Singleton
     @Provides
-    fun provideTaskEntityMapper(dateUtil: DateUtil): TaskMapper = TaskMapper(dateUtil)
+    fun provideTaskEntityMapper(dateProvider: DateProvider): TaskMapper = TaskMapper(dateProvider)
 
 }

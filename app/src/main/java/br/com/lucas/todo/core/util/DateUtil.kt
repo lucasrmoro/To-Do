@@ -3,7 +3,7 @@ package br.com.lucas.todo.core.util
 import android.text.format.DateUtils
 import br.com.lucas.todo.R
 import br.com.lucas.todo.core.Constants
-import br.com.lucas.todo.core.providers.ResourcesProviderInterface
+import br.com.lucas.todo.core.providers.resources.ResourcesProvider
 import timber.log.Timber
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -11,7 +11,7 @@ import java.util.*
 import javax.inject.Inject
 
 class DateUtil @Inject constructor(
-    private val res: ResourcesProviderInterface
+    private val res: ResourcesProvider
 ) {
 
     private val locale = Locale(Constants.PT, Constants.BR)

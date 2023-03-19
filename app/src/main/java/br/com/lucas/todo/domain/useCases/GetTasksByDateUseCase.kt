@@ -1,11 +1,11 @@
 package br.com.lucas.todo.domain.useCases
 
-import br.com.lucas.todo.core.util.DateUtil
+import br.com.lucas.todo.core.providers.date.DateProvider
 import br.com.lucas.todo.domain.model.Task
 import javax.inject.Inject
 
 class GetTasksByDateUseCase @Inject constructor(
-    private val dateUtil: DateUtil
+    private val dateProvider: DateProvider
 ) {
 
     fun execute(
@@ -14,7 +14,7 @@ class GetTasksByDateUseCase @Inject constructor(
         monthDesired: String?,
         yearDesired: String?
     ) = taskList.filter { task ->
-        task.date == dateUtil.getStringDateBy(dayDesired, monthDesired, yearDesired)
+        task.date == dateProvider.getStringDateBy(dayDesired, monthDesired, yearDesired)
     }
 
 }

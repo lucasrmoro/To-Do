@@ -10,14 +10,15 @@ import br.com.lucas.todo.core.ext.gone
 import br.com.lucas.todo.core.ext.visible
 import br.com.lucas.todo.databinding.FragmentListTaskBinding
 import br.com.lucas.todo.domain.model.Task
-import br.com.lucas.todo.presentation.common.generic.adapter.GenericAdapter
-import br.com.lucas.todo.presentation.common.base.fragment.BaseFragment
-import br.com.lucas.todo.presentation.common.generic.components.GenericDialog
-import br.com.lucas.todo.presentation.listTask.adapter.ListTaskAdapterCallback
+import br.com.lucas.todo.core.base.fragment.BaseFragment
+import br.com.lucas.todo.presentation.components.GenericAdapter
+import br.com.lucas.todo.presentation.components.GenericDialog
+import br.com.lucas.todo.presentation.adapter.callbacks.ListTaskAdapterCallback
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ListTaskFragment : BaseFragment<FragmentListTaskBinding, ListTaskViewModel>(FragmentListTaskBinding::inflate),
+class ListTaskFragment :
+    BaseFragment<FragmentListTaskBinding, ListTaskViewModel>(FragmentListTaskBinding::inflate),
     ListTaskAdapterCallback {
 
     private val adapter by lazy { GenericAdapter(this) }
@@ -40,7 +41,6 @@ class ListTaskFragment : BaseFragment<FragmentListTaskBinding, ListTaskViewModel
             adapter.submitList(taskList)
             checkEmptyState()
         }
-
 
         viewModel.hasSelectedTasks.observe(viewLifecycleOwner) { hasSelectedTasks ->
             if (hasSelectedTasks) {
@@ -82,16 +82,20 @@ class ListTaskFragment : BaseFragment<FragmentListTaskBinding, ListTaskViewModel
     private fun showDeleteSelectedTasksConfirmationDialog() {
         context?.let { ctx ->
             GenericDialog.Builder(ctx)
-                .setTitle(resources.getQuantityString(
+                .setTitle(
+                    resources.getQuantityString(
                         R.plurals.delete_selected_tasks_dialog_title,
                         viewModel.selectedTasksQuantity,
                         viewModel.selectedTasksQuantity
-                    ))
-                .setBodyMessage(resources.getQuantityString(
+                    )
+                )
+                .setBodyMessage(
+                    resources.getQuantityString(
                         R.plurals.delete_selected_tasks_dialog_body_message,
                         viewModel.selectedTasksQuantity,
                         viewModel.selectedTasksQuantity
-                    ))
+                    )
+                )
                 .setPositiveButtonText(getString(R.string.yes))
                 .setOnPositiveButtonClickListener { viewModel.deleteSelectedTasks { showToast(it) } }
                 .setNegativeButtonText(getString(R.string.no))

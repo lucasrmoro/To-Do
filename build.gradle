@@ -18,6 +18,7 @@ buildscript {
         firebase_bom_version = '28.4.0'
         hilt_version = '2.38.1'
         timber_version = '5.0.1'
+        coroutine_version = '1.6.4'
 
         //Tests
         junit_version = '4.13.2'

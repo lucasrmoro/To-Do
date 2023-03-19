@@ -1,35 +1,35 @@
 package br.com.lucas.todo.domain.useCases
 
-import br.com.lucas.todo.core.util.DateUtil
+import br.com.lucas.todo.core.providers.date.DateProvider
+import br.com.lucas.todo.domain.model.DayHeader
+import br.com.lucas.todo.domain.model.MonthHeader
 import br.com.lucas.todo.domain.model.Task
-import br.com.lucas.todo.presentation.common.generic.adapter.model.AdapterItem
-import br.com.lucas.todo.presentation.listTask.adapter.model.DayHeader
-import br.com.lucas.todo.presentation.listTask.adapter.model.MonthHeader
-import br.com.lucas.todo.presentation.listTask.adapter.model.YearHeader
+import br.com.lucas.todo.domain.model.YearHeader
+import br.com.lucas.todo.domain.model.adapter.AdapterItem
 import javax.inject.Inject
 
 class GetTasksCategorizedByDateUseCase @Inject constructor(
     private val getTasksByDateUseCase: GetTasksByDateUseCase,
-    private val dateUtil: DateUtil
+    private val dateProvider: DateProvider
 ) {
 
     fun execute(taskList: List<Task>): List<AdapterItem> {
         val taskListCategorizedByDate = mutableListOf<AdapterItem>()
         val datesOfTasks = taskList.map { it.date }.toSet().toList()
 
-        dateUtil.getYearsFrom(datesOfTasks)?.forEach { year ->
-            if (dateUtil.isCurrentYear(year).not())
-                taskListCategorizedByDate.add(YearHeader(dateUtil.getFormattedYear(year)))
+        dateProvider.getYearsFrom(datesOfTasks).forEach { year ->
+            if (dateProvider.isCurrentYear(year).not())
+                taskListCategorizedByDate.add(YearHeader(dateProvider.getFormattedYear(year)))
 
-            dateUtil.getMonthsFrom(datesOfTasks, year)?.forEach { month ->
-                if (dateUtil.isCurrentMonth(month, year).not())
+            dateProvider.getMonthsFrom(datesOfTasks, year).forEach { month ->
+                if (dateProvider.isCurrentMonth(month, year).not())
                     taskListCategorizedByDate.add(
-                        MonthHeader(dateUtil.getFormattedMonthFrom(month, year))
+                        MonthHeader(dateProvider.getFormattedMonthFrom(month, year))
                     )
 
-                dateUtil.getDaysFrom(datesOfTasks, month, year)?.forEach { day ->
+                dateProvider.getDaysFrom(datesOfTasks, month, year).forEach { day ->
                     taskListCategorizedByDate.add(
-                        DayHeader(dateUtil.getFormattedDay(day, month, year))
+                        DayHeader(dateProvider.getFormattedDay(day, month, year))
                     )
 
                     val tasksFilteredByDate =

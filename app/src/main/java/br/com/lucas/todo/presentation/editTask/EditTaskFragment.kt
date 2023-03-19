@@ -6,11 +6,11 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.findNavController
 import br.com.lucas.todo.R
 import br.com.lucas.todo.core.Constants.TASK_TO_EDIT
+import br.com.lucas.todo.core.base.fragment.BaseFragment
 import br.com.lucas.todo.core.ext.*
-import br.com.lucas.todo.core.util.DateUtil
+import br.com.lucas.todo.core.providers.date.DateProvider
 import br.com.lucas.todo.databinding.FragmentEditTaskBinding
 import br.com.lucas.todo.domain.model.Task
-import br.com.lucas.todo.presentation.common.base.fragment.BaseFragment
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -21,10 +21,11 @@ import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class EditTaskFragment : BaseFragment<FragmentEditTaskBinding, EditTaskViewModel>(FragmentEditTaskBinding::inflate) {
+class EditTaskFragment :
+    BaseFragment<FragmentEditTaskBinding, EditTaskViewModel>(FragmentEditTaskBinding::inflate) {
 
     @Inject
-    lateinit var dateUtil: DateUtil
+    lateinit var dateUtil: DateProvider
 
     private val taskToEdit by lazy { arguments?.getParcelable<Task>(TASK_TO_EDIT) }
 

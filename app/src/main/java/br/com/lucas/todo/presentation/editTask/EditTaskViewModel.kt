@@ -1,21 +1,22 @@
 package br.com.lucas.todo.presentation.editTask
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import br.com.lucas.todo.R
+import br.com.lucas.todo.core.base.viewModel.BaseViewModel
 import br.com.lucas.todo.core.ext.isTrue
-import br.com.lucas.todo.core.ext.viewModelCall
+import br.com.lucas.todo.core.ext.safeCall
 import br.com.lucas.todo.domain.model.Task
 import br.com.lucas.todo.domain.useCases.InsertTaskUseCase
 import br.com.lucas.todo.domain.useCases.UpdateTaskUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class EditTaskViewModel @Inject constructor(
     private val insertTaskUseCase: InsertTaskUseCase,
     private val updateTaskUseCase: UpdateTaskUseCase
-) : ViewModel() {
+) : BaseViewModel() {
 
     val isTaskTitleValid = MutableLiveData<Boolean>()
     val isTaskDateValid = MutableLiveData<Boolean>()
@@ -51,32 +52,34 @@ class EditTaskViewModel @Inject constructor(
         toast: (Int) -> Unit = {},
         onFieldsNotValid: () -> Unit = {}
     ) {
-        val taskToSave = task.copy(
-            title = taskTitle,
-            description = taskDescription,
-            date = taskDate,
-            minute = taskMinute,
-            hour = taskHour
-        )
-
-        if (areFieldsValid(taskToSave)) {
-            viewModelCall(
-                callToDo = {
-                    if (isEditMode) {
-                        updateTaskUseCase.execute(taskToSave)
-                    } else {
-                        insertTaskUseCase.execute(taskToSave)
-                    }
-                },
-                onSuccess = {
-                    toast(if (isEditMode) R.string.task_successfully_edited else R.string.task_successfully_created)
-                },
-                onError = {
-                    toast(if (isEditMode) R.string.task_failure_on_update else R.string.task_failure_on_create)
-                }
+        launch {
+            val taskToSave = task.copy(
+                title = taskTitle,
+                description = taskDescription,
+                date = taskDate,
+                minute = taskMinute,
+                hour = taskHour
             )
-        } else {
-            onFieldsNotValid()
+
+            if (areFieldsValid(taskToSave)) {
+                safeCall(
+                    callToDo = {
+                        if (isEditMode) {
+                            updateTaskUseCase.execute(taskToSave)
+                        } else {
+                            insertTaskUseCase.execute(taskToSave)
+                        }
+                    },
+                    onSuccess = {
+                        toast(if (isEditMode) R.string.task_successfully_edited else R.string.task_successfully_created)
+                    },
+                    onError = {
+                        toast(if (isEditMode) R.string.task_failure_on_update else R.string.task_failure_on_create)
+                    }
+                )
+            } else {
+                onFieldsNotValid()
+            }
         }
     }
 

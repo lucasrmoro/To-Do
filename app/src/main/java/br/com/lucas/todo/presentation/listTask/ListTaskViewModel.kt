@@ -2,16 +2,17 @@ package br.com.lucas.todo.presentation.listTask
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import br.com.lucas.todo.R
-import br.com.lucas.todo.core.ext.viewModelCall
+import br.com.lucas.todo.core.base.viewModel.BaseViewModel
+import br.com.lucas.todo.core.ext.safeCall
 import br.com.lucas.todo.domain.model.Task
 import br.com.lucas.todo.domain.useCases.DeleteSelectedTasksUseCase
 import br.com.lucas.todo.domain.useCases.GetAllTasksUseCase
 import br.com.lucas.todo.domain.useCases.GetTasksCategorizedByDateUseCase
 import br.com.lucas.todo.domain.useCases.UpdateTaskUseCase
-import br.com.lucas.todo.presentation.common.generic.adapter.model.AdapterItem
+import br.com.lucas.todo.domain.model.adapter.AdapterItem
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,7 +21,7 @@ class ListTaskViewModel @Inject constructor(
     private val getAllTasksUseCase: GetAllTasksUseCase,
     private val getTasksCategorizedByDateUseCase: GetTasksCategorizedByDateUseCase,
     private val deleteSelectedTasksUseCase: DeleteSelectedTasksUseCase
-) : ViewModel() {
+) : BaseViewModel() {
 
     private var _taskList = MutableLiveData<List<AdapterItem>>()
     val taskList: LiveData<List<AdapterItem>>
@@ -33,33 +34,40 @@ class ListTaskViewModel @Inject constructor(
     var selectedTasksQuantity: Int = 0
         private set
 
-    fun isTaskListEmpty() = taskList.value?.isEmpty() != false
+    fun isTaskListEmpty() =
+        taskList.value?.isEmpty() == true
 
     fun syncSelection(isSelected: Boolean, task: Task) {
-        viewModelCall(
-            callToDo = { updateTaskUseCase.execute(task.copy(isSelected = isSelected)) },
-            onFinishCall = { refreshScreen() }
-        )
+        launch {
+            safeCall(
+                callToDo = { updateTaskUseCase.execute(task.copy(isSelected = isSelected)) },
+                onFinishCall = { refreshScreen() }
+            )
+        }
     }
 
     fun deleteSelectedTasks(toast: (Int) -> Unit = { }) {
-        viewModelCall(
-            callToDo = { deleteSelectedTasksUseCase.execute() },
-            onSuccess = { toast(R.string.task_successfully_deleted) },
-            onError = { toast(R.string.tasks_failure_on_delete) },
-            onFinishCall = { refreshScreen(toast) }
-        )
+        launch {
+            safeCall(
+                callToDo = { deleteSelectedTasksUseCase.execute() },
+                onSuccess = { toast(R.string.task_successfully_deleted) },
+                onError = { toast(R.string.tasks_failure_on_delete) },
+                onFinishCall = { refreshScreen(toast) }
+            )
+        }
     }
 
     fun refreshScreen(onError: (Int) -> Unit = { }) {
-        viewModelCall(
-            callToDo = { getAllTasksUseCase.execute() },
-            onSuccess = { dbTaskList ->
-                _taskList.postValue(getTasksCategorizedByDateUseCase.execute(dbTaskList))
-                _hasSelectedTasks.value = dbTaskList.any { it.isSelected } == true
-                selectedTasksQuantity = dbTaskList.filter { it.isSelected }.size
-            },
-            onError = { onError(R.string.task_failure_on_get_all) },
-        )
+        launch {
+            safeCall(
+                callToDo = { getAllTasksUseCase.execute() },
+                onSuccess = { dbTaskList ->
+                    _taskList.postValue(getTasksCategorizedByDateUseCase.execute(dbTaskList))
+                    _hasSelectedTasks.value = dbTaskList.any { it.isSelected } == true
+                    selectedTasksQuantity = dbTaskList.filter { it.isSelected }.size
+                },
+                onError = { onError(R.string.task_failure_on_get_all) }
+            )
+        }
     }
 }

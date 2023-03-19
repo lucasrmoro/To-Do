@@ -1,8 +1,8 @@
 package br.com.lucas.todo.domain.model
 
 import android.os.Parcelable
-import br.com.lucas.todo.presentation.common.generic.adapter.model.AdapterItem
-import br.com.lucas.todo.presentation.common.generic.adapter.model.AdapterItemType
+import br.com.lucas.todo.domain.model.adapter.AdapterItem
+import br.com.lucas.todo.domain.model.adapter.AdapterItemType
 import kotlinx.parcelize.Parcelize
 import java.util.*
 
