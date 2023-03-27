@@ -53,7 +53,7 @@ workflows:
             - gradlew_path: "$PROJECT_LOCATION/gradlew"
       - change-android-versioncode-and-versionname@1:
           inputs:
-            - build_gradle_path: "$PROJECT_LOCATION/$MODULE/build.gradle"
+            - build_gradle_path: "$PROJECT_LOCATION/$MODULE/build.gradle.kts"
       - android-lint@0:
           inputs:
             - project_location: "$PROJECT_LOCATION"

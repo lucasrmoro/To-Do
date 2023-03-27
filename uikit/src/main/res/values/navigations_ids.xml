@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="navCustomSplashScreen" type="id" />
+    <item name="navListTaskScreen" type="id" />
+    <item name="navEditTaskScreen" type="id" />
+    <string name="deep_link" translatable="false">todo://br.com.lucas.todoapp/module/{id}</string>
+
+</resources>
