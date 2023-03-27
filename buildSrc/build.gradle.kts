@@ -1,11 +1,11 @@
 object InternalDep {
-    const val android_build_tools = "com.android.tools.build:gradle:7.2.0"
-    const val kotlin_gradle_plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.10"
+    const val android_build_tools = "com.android.tools.build:gradle:7.4.2"
+    const val kotlin_gradle_plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.10"
     const val quadrant_gradle_plugin = "gradle.plugin.com.gaelmarhic:quadrant:1.5"
     const val google_services_plugin = "com.google.gms:google-services:4.3.10"
     const val firebase_crashlytics_plugin = "com.google.firebase:firebase-crashlytics-gradle:2.7.1"
     const val firebase_performance_plugin = "com.google.firebase:perf-plugin:1.4.0"
-    const val hilt_plugin = "com.google.dagger:hilt-android-gradle-plugin:2.38.1"
+    const val hilt_plugin = "com.google.dagger:hilt-android-gradle-plugin:2.45"
 }
 
 gradlePlugin {

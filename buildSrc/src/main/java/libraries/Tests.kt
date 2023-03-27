@@ -6,7 +6,7 @@ object Tests: DependencyContainer {
     private const val junit_version = "4.12"
     private const val espresso_version = "3.3.0"
     private const val mockk_version = "1.10.6"
-    private const val kotlinx_coroutines_test_version = "1.6.0"
+    private const val kotlinx_coroutines_test_version = "1.8.10"
     private const val androidx_arch_core_test_version = "2.1.0"
 
     private const val truth = "com.google.truth:truth:$truth_version"
