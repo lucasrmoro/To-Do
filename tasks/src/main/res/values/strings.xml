@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="module_title">Tasks</string>
+
     <string name="yes">Sim</string>
     <string name="no">Não</string>
 
