@@ -3,10 +3,10 @@ package br.com.tasks.core.di
 import android.content.Context
 import androidx.room.Room
 import br.com.core.util.DateUtil
-import br.com.tasks.data.db.dao.AppDataBase
 import br.com.lucas.todo.data.db.dao.TaskDao
 import br.com.lucas.todo.data.db.repository.TaskRepository
 import br.com.lucas.todo.data.db.repository.TaskRepositoryImpl
+import br.com.tasks.data.db.dao.AppDataBase
 import br.com.tasks.domain.mappers.TaskMapper
 import dagger.Module
 import dagger.Provides
@@ -21,7 +21,7 @@ object TasksModule {
 
     @Singleton
     @Provides
-    fun provideRoomDB(context: Context) =
+    fun provideRoomDB(@ApplicationContext context: Context) =
         Room.databaseBuilder(context, AppDataBase::class.java, "todo-db")
             .fallbackToDestructiveMigration()
             .build()
