@@ -9,9 +9,7 @@ import androidx.core.view.forEach
 import androidx.navigation.findNavController
 import br.com.lucas.todo.R
 import br.com.lucas.todo.databinding.ActivityMainBinding
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }

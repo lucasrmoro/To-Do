@@ -9,7 +9,7 @@ object ConstPlugins {
     const val BUILD_TYPE_RELEASE = "release"
     const val JVM_TARGET = "1.8"
     const val BUILD_TOOLS_VERSION = "30.0.3"
-    const val COMPILE_SDK_VERSION = 32
+    const val COMPILE_SDK_VERSION = 33
     const val MIN_SDK_VERSION = 21
     const val VERSION_CODE = 1
     const val APPLICATION_ID = "br.com.lucas.todo"

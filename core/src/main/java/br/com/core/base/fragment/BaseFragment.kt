@@ -11,9 +11,9 @@ import androidx.annotation.MenuRes
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import java.lang.reflect.ParameterizedType
+import org.koin.android.viewmodel.ext.android.viewModel
 
 abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
     private val inflater: (LayoutInflater, ViewGroup?, Boolean) -> VB,
@@ -23,9 +23,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
     protected val binding
         get() = _binding ?: throw IllegalArgumentException("ViewBiding not found")
 
-    private var _viewModel: VM? = null
-    protected val viewModel: VM
-        get() = _viewModel ?: throw IllegalArgumentException("ViewModel not found")
+    protected val viewModel: VM by viewModel(clazz = getViewModelClass())
 
     @CallSuper
     override fun showToast(@StringRes message: Int, duration: Int) {
@@ -45,7 +43,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
     private fun getViewModelClass() = (javaClass.genericSuperclass as ParameterizedType)
         .actualTypeArguments
         .firstOrNull { it is Class<*> && ViewModel::class.java.isAssignableFrom(it) }
-        ?.let { it as Class<VM> }
+        ?.let { it as Class<VM> }?.kotlin
         ?: throw IllegalStateException("ViewModel class not found")
 
     @CallSuper
@@ -55,7 +53,6 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
         savedInstanceState: Bundle?
     ): View? {
         _binding = inflater(inflater, container, false)
-        _viewModel = ViewModelProvider(this)[getViewModelClass()]
         return binding.root
     }
 

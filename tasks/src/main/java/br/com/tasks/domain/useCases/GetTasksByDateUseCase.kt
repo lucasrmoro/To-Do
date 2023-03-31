@@ -2,9 +2,8 @@ package br.com.tasks.domain.useCases
 
 import br.com.core.util.DateUtil
 import br.com.uikit.adapter.model.Task
-import javax.inject.Inject
 
-class GetTasksByDateUseCase @Inject constructor(
+class GetTasksByDateUseCase constructor(
     private val dateUtil: DateUtil
 ) {
 

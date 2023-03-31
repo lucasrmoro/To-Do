@@ -8,9 +8,8 @@ import timber.log.Timber
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import javax.inject.Inject
 
-class DateUtil @Inject constructor(
+class DateUtil constructor(
     private val res: ResourcesProviderInterface
 ) {
 

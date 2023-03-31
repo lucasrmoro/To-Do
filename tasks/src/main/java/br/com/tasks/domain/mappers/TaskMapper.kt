@@ -2,15 +2,14 @@ package br.com.tasks.domain.mappers
 
 import br.com.core.base.mapper.BaseMapper
 import br.com.core.util.DateUtil
-import br.com.lucas.todo.data.db.entities.TaskEntity
+import br.com.tasks.data.db.entities.TaskEntity
 import br.com.uikit.adapter.model.Task
 import br.com.uikit.extensions.formatHoursAndMinutesToIntTime
 import br.com.uikit.extensions.toHour
 import br.com.uikit.extensions.toMinute
 import java.util.*
-import javax.inject.Inject
 
-class TaskMapper @Inject constructor(
+class TaskMapper constructor(
     private val dateUtil: DateUtil
 ): BaseMapper<TaskEntity, Task> {
 

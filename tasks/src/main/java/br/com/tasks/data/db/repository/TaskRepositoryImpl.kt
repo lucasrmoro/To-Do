@@ -1,11 +1,9 @@
-package br.com.lucas.todo.data.db.repository
+package br.com.tasks.data.db.repository
 
-import br.com.lucas.todo.data.db.dao.TaskDao
-import br.com.lucas.todo.data.db.entities.TaskEntity
-import java.util.*
-import javax.inject.Inject
+import br.com.tasks.data.db.dao.TaskDao
+import br.com.tasks.data.db.entities.TaskEntity
 
-class TaskRepositoryImpl @Inject constructor(
+class TaskRepositoryImpl constructor(
     private val taskDao: TaskDao
 ): TaskRepository {
 

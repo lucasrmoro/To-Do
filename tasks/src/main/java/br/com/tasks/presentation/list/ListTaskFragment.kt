@@ -14,9 +14,7 @@ import br.com.uikit.adapter.model.Task
 import br.com.uikit.components.GenericDialog
 import br.com.uikit.extensions.gone
 import br.com.uikit.extensions.visible
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class ListTaskFragment : BaseFragment<FragmentListTaskBinding, ListTaskViewModel>(FragmentListTaskBinding::inflate),
     ListTaskAdapterCallback {
 

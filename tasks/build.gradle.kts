@@ -4,7 +4,6 @@ import modules.BuildModules.APP
 plugins {
     id("com.android.dynamic-feature")
     id("android-config-plugin")
-    id("kotlin-kapt")
     id("kotlin-parcelize")
 }
 

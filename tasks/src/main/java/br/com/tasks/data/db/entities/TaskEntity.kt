@@ -1,4 +1,4 @@
-package br.com.lucas.todo.data.db.entities
+package br.com.tasks.data.db.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

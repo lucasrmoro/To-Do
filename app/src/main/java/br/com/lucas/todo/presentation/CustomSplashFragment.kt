@@ -1,6 +1,5 @@
 package br.com.lucas.todo.presentation
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import br.com.core.base.viewModel.DummyViewModel
@@ -8,9 +7,7 @@ import br.com.core.extensions.startActivityByName
 import br.com.lucas.todo.databinding.FragmentSplashScreenBinding
 import br.com.core.base.fragment.BaseFragment
 import com.gaelmarhic.quadrant.QuadrantConstants
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class CustomSplashFragment : BaseFragment<FragmentSplashScreenBinding, DummyViewModel>(
     FragmentSplashScreenBinding::inflate) {
 

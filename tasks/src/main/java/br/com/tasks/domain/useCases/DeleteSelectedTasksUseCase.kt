@@ -1,9 +1,8 @@
 package br.com.tasks.domain.useCases
 
-import br.com.lucas.todo.data.db.repository.TaskRepository
-import javax.inject.Inject
+import br.com.tasks.data.db.repository.TaskRepository
 
-class DeleteSelectedTasksUseCase @Inject constructor(
+class DeleteSelectedTasksUseCase constructor(
     private val taskRepository: TaskRepository
 ) {
 

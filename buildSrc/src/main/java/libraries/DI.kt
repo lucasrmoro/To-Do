@@ -2,13 +2,11 @@ package libraries
 
 object DI : DependencyContainer {
 
-    private const val hilt_version = "2.45"
+    private const val koin_version = "2.2.3"
 
-    private const val hilt = "com.google.dagger:hilt-android:$hilt_version"
-    private const val hiltCompiler = "com.google.dagger:hilt-compiler:$hilt_version"
+    const val android = "io.insert-koin:koin-android:$koin_version"
+    const val viewModel = "io.insert-koin:koin-android-viewmodel:$koin_version"
 
-    override val all: List<String> = listOf(hilt)
-
-    override val kapt = listOf(hiltCompiler)
+    override val all: List<String> = listOf(android, viewModel)
 
 }

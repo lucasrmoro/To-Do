@@ -1,6 +1,6 @@
-package br.com.lucas.todo.data.db.repository
+package br.com.tasks.data.db.repository
 
-import br.com.lucas.todo.data.db.entities.TaskEntity
+import br.com.tasks.data.db.entities.TaskEntity
 
 interface TaskRepository {
 

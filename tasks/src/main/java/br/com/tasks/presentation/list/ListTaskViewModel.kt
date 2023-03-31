@@ -11,11 +11,8 @@ import br.com.tasks.domain.useCases.UpdateTaskUseCase
 import br.com.uikit.adapter.model.AdapterItem
 import br.com.uikit.adapter.model.Task
 import br.com.uikit.extensions.viewModelCall
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
-@HiltViewModel
-class ListTaskViewModel @Inject constructor(
+class ListTaskViewModel constructor(
     private val updateTaskUseCase: UpdateTaskUseCase,
     private val getAllTasksUseCase: GetAllTasksUseCase,
     private val getTasksCategorizedByDateUseCase: GetTasksCategorizedByDateUseCase,

@@ -16,17 +16,14 @@ import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
-import dagger.hilt.android.AndroidEntryPoint
+import org.koin.android.ext.android.inject
 import java.util.*
-import javax.inject.Inject
 
-@AndroidEntryPoint
-class EditTaskFragment : BaseFragment<FragmentEditTaskBinding, EditTaskViewModel>(FragmentEditTaskBinding::inflate) {
-
-    @Inject
-    lateinit var dateUtil: DateUtil
+class EditTaskFragment: BaseFragment<FragmentEditTaskBinding, EditTaskViewModel>(FragmentEditTaskBinding::inflate) {
 
     private val taskToEdit by lazy { arguments?.getParcelable<Task>(TASK_TO_EDIT) }
+
+    private val dateUtil: DateUtil by inject()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

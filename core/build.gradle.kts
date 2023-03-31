@@ -2,9 +2,9 @@ import extensions.implementationAll
 import modules.BuildModules.UIKIT
 
 plugins {
+    id("kotlin-kapt")
     id("com.android.library")
     id("android-config-plugin")
-    id("kotlin-kapt")
     id("com.gaelmarhic.quadrant")
 }
 

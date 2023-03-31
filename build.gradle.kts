@@ -16,6 +16,7 @@ allprojects {
         mavenCentral()
         google()
         maven(url = JITPACK)
+        maven("https://maven.pkg.jetbrains.space/public/p/ktor/eap")
     }
 }
 

@@ -8,11 +8,7 @@ import br.com.tasks.domain.useCases.UpdateTaskUseCase
 import br.com.uikit.adapter.model.Task
 import br.com.uikit.extensions.isTrue
 import br.com.uikit.extensions.viewModelCall
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
-
-@HiltViewModel
-class EditTaskViewModel @Inject constructor(
+class EditTaskViewModel constructor(
     private val insertTaskUseCase: InsertTaskUseCase,
     private val updateTaskUseCase: UpdateTaskUseCase
 ) : ViewModel() {

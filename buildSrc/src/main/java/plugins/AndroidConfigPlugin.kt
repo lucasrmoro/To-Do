@@ -22,10 +22,8 @@ class AndroidConfigPlugin : BaseAndroidConfigPlugin() {
 
     private fun Project.applyDependenciesSettings() {
         this.dependencies {
-            apply(plugin = "dagger.hilt.android.plugin")
             apply(plugin = "kotlin-kapt")
             DI.all.forEach { add(IMPLEMENTATION, it) }
-            DI.kapt.forEach { add(KAPT, it) }
             Google.all.forEach { add(IMPLEMENTATION, it) }
             Android.all.forEach { add(IMPLEMENTATION, it) }
             Android.kapt.forEach { add(KAPT, it) }
